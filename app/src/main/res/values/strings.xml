@@ -1,0 +1,26 @@
+<resources>
+    <string name="app_name">Vocabulary Trainer</string>
+    <string name="vocabulary_collections_path" translatable="false">/storage/emulated/0/Vocabulary Trainer</string>
+    <string name="vocabulary_collection_language_specification" translatable="false">%s \u2194 %s</string>
+    <string name="answer">Answer</string>
+    <string name="check_answers_button">Check Answers</string>
+    <string name="correct_answer_info">Your answer is correct!</string>
+    <string name="click_next_info">Click on \'Next\' to go to the next vocabulary.</string>
+    <string name="error_hints_above_info">Tap on the fields with the wrong answers to see the corrects answers.</string>
+    <string name="wrong_answer_info">Your answer is wrong!</string>
+    <string name="correct_answers_info">Your answers are correct!</string>
+    <string name="wrong_answers_info">Your answers are not correct!</string>
+    <string name="other_correct_answer_click_next_info">Correct Answers: \n%s \nClick on \'Next\' to go to the next vocabulary</string>
+    <string name="correct_answers">Correct Answers: \n%s</string>
+    <string name="correct_answer">Correct Answer: %s</string>
+    <string name="answer_hint">Answer in %s</string>
+    <string name="back_button_text">Back</string>
+    <string name="next_button_text">Next</string>
+    <string name="language_name_infinitive" translatable="false">%s (infinitive)</string>
+    <string name="language_name_simple_past" translatable="false">%s (simple past)</string>
+    <string name="language_name_past_participle" translatable="false">%s (past participle)</string>
+    <string name="progress_indication" translatable="false">%s/%s</string>
+    <string name="check_answer_button">Check Answer</string>
+    <string name="select_language_direction">Select direction of language</string>
+    <string name="cancel">Cancel</string>
+</resources>
