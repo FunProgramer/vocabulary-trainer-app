@@ -6,19 +6,26 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.Settings;
 import android.widget.Toast;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityOptionsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import privat.funprogramer.vocabularytrainer.R;
 import privat.funprogramer.vocabularytrainer.model.Collection;
 import privat.funprogramer.vocabularytrainer.persistance.CollectionsManager;
 
 import java.io.File;
+import java.util.Arrays;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
+
+    public static final int IMPORT_ACTION = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +35,18 @@ public class MainActivity extends AppCompatActivity {
 
         Toolbar toolbar = findViewById(R.id.mainActivityToolbar);
         setSupportActionBar(toolbar);
+
+        ActivityResultLauncher<String[]> openImportFile = registerForActivityResult(new ActivityResultContracts.OpenDocument(),
+                uri -> {
+
+                }
+        );
+
+        FloatingActionButton importFAB = findViewById(R.id.importFAB);
+        importFAB.setOnClickListener(view -> {
+            openImportFile.launch(new String[]{"application/json"}, ActivityOptionsCompat);
+        });
+
 
         // Request All files permission if needed
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {

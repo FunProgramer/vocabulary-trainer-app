@@ -23,4 +23,5 @@
     <string name="check_answer_button">Check Answer</string>
     <string name="select_language_direction">Select direction of language</string>
     <string name="cancel">Cancel</string>
+    <string name="add_collection_import">Import collection</string>
 </resources>

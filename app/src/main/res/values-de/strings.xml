@@ -18,4 +18,5 @@
     <string name="check_answer_button">Antwort überprüfen</string>
     <string name="select_language_direction">Sprachrichtung wählen</string>
     <string name="cancel">Abbrechen</string>
+    <string name="add_collection_import">Sammlung hinzufügen</string>
 </resources>
