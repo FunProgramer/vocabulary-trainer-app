@@ -1,5 +1,6 @@
 package privat.funprogramer.vocabularytrainer.main_activity;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -15,6 +16,7 @@ import privat.funprogramer.vocabularytrainer.R;
 import privat.funprogramer.vocabularytrainer.exceptions.ImportFailedException;
 import privat.funprogramer.vocabularytrainer.model.Collection;
 import privat.funprogramer.vocabularytrainer.persistance.CollectionsManager;
+import privat.funprogramer.vocabularytrainer.util.DialogUtil;
 
 import java.util.List;
 
@@ -38,8 +40,7 @@ public class MainActivity extends AppCompatActivity {
                         try {
                             collectionsManager.importCollection(uri);
                         } catch (ImportFailedException e) {
-                            // TODO: Add info dialog for user.
-                            throw new RuntimeException(e);
+                            DialogUtil.showExceptionDialog(this, e, null);
                         }
                     }
                 });

@@ -8,20 +8,24 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.viewpager2.widget.ViewPager2;
+
+import java.io.IOException;
+
 import privat.funprogramer.vocabularytrainer.R;
 import privat.funprogramer.vocabularytrainer.exceptions.BrokenFileException;
+import privat.funprogramer.vocabularytrainer.exceptions.OpenFailedException;
 import privat.funprogramer.vocabularytrainer.exceptions.UnsupportedFileExtensionException;
 import privat.funprogramer.vocabularytrainer.model.Collection;
 import privat.funprogramer.vocabularytrainer.model.IrregularVerbCollection;
 import privat.funprogramer.vocabularytrainer.model.LanguageDirection;
 import privat.funprogramer.vocabularytrainer.model.VocabularyCollection;
 import privat.funprogramer.vocabularytrainer.persistance.CollectionsManager;
-
-import java.io.IOException;
+import privat.funprogramer.vocabularytrainer.util.DialogUtil;
 
 public class TrainerActivity extends AppCompatActivity {
 
@@ -61,13 +65,11 @@ public class TrainerActivity extends AppCompatActivity {
             collection = collectionsManager.getCollection(fileName);
         } catch (IOException e) {
             Log.v(TAG, "Error getting Collection with filename " + fileName, e);
-        } catch (UnsupportedFileExtensionException e) {
-            //TODO: Dialog to inform user and return to previous activity
-            throw new RuntimeException(e);
-        } catch (BrokenFileException e) {
-            //TODO: Also dialog to inform user and return to previous activity
-            throw new RuntimeException(e);
+        } catch (UnsupportedFileExtensionException | BrokenFileException e) {
+            DialogUtil.showExceptionDialog(this, new OpenFailedException(e),
+                    (dialog, which) -> TrainerActivity.this.finish());
         }
+
 
         assert collection != null;
         if (actionBar != null) actionBar.setTitle(collection.getDisplayName());

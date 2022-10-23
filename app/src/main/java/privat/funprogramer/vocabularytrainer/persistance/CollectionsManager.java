@@ -45,9 +45,19 @@ public class CollectionsManager {
 
     public void removeCollection(String fileName) throws FileNotFoundException, CouldNotDeleteException {
         File fileToDelete = new File(collectionsFolder + "/" + fileName);
+        String displayName = fileName;
+        try {
+            Collection collection = getCollection(fileName);
+            String displayNameTemp = collection.getDisplayName();
+            if (displayNameTemp != null) {
+                displayName = displayNameTemp;
+            }
+        } catch (UnsupportedFileExtensionException | BrokenFileException | IOException e) {
+            e.printStackTrace();
+        }
         if (fileToDelete.exists()) {
             if (!fileToDelete.delete()) {
-                throw new CouldNotDeleteException();
+                throw new CouldNotDeleteException(displayName);
             }
         } else {
             throw new FileNotFoundException();

@@ -1,7 +1,5 @@
 package privat.funprogramer.vocabularytrainer.exceptions;
 
-import java.io.File;
-
 public class ImportFailedException extends Exception {
 
     private final String fileName;

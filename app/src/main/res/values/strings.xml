@@ -23,4 +23,10 @@
     <string name="select_language_direction">Select direction of language</string>
     <string name="cancel">Cancel</string>
     <string name="add_collection_import">Import collection</string>
+    <string name="import_failed_title">File %s could not be imported</string>
+    <string name="open_failed_title">The selected vocabulary collection could not be opened</string>
+    <string name="exception_title">An exception occurred</string>
+    <string name="file_extension_message">The file needs to end with \'.voc.json\' or \'.irreg.verb.json\'</string>
+    <string name="broken_file_message">The file is in a unsupported format or broken.</string>
+    <string name="could_not_delete_message">Could not delete the vocabulary collection %s</string>
 </resources>
