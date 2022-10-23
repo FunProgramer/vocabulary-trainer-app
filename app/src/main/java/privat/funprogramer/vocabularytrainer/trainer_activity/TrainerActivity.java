@@ -13,6 +13,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.viewpager2.widget.ViewPager2;
 import privat.funprogramer.vocabularytrainer.R;
+import privat.funprogramer.vocabularytrainer.exceptions.BrokenFileException;
+import privat.funprogramer.vocabularytrainer.exceptions.UnsupportedFileExtensionException;
 import privat.funprogramer.vocabularytrainer.model.Collection;
 import privat.funprogramer.vocabularytrainer.model.IrregularVerbCollection;
 import privat.funprogramer.vocabularytrainer.model.LanguageDirection;
@@ -53,24 +55,22 @@ public class TrainerActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         String fileName = intent.getStringExtra(Collection.COLLECTION_EXTRA);
-        String collectionsPath = getResources().getString(R.string.vocabulary_collections_path);
         Collection collection = null;
         try {
-            CollectionsManager collectionsManager = new CollectionsManager(collectionsPath);
-            if (fileName.endsWith(".voc.json")) {
-                collection = collectionsManager.getVocabularyCollection(fileName);
-            } else if (fileName.endsWith(".irreg.verb.json")) {
-                collection = collectionsManager.getIrregularVerbCollection(fileName);
-            } else {
-                throw new IllegalArgumentException("The trainer activity can not determine the type of " + fileName +
-                        ". The file name needs to end with 'irreg.verb.json' or 'voc.json'");
-            }
-            if (actionBar != null) actionBar.setTitle(collection.getDisplayName());
+            CollectionsManager collectionsManager = new CollectionsManager(getFilesDir(), this);
+            collection = collectionsManager.getCollection(fileName);
         } catch (IOException e) {
             Log.v(TAG, "Error getting Collection with filename " + fileName, e);
+        } catch (UnsupportedFileExtensionException e) {
+            //TODO: Dialog to inform user and return to previous activity
+            throw new RuntimeException(e);
+        } catch (BrokenFileException e) {
+            //TODO: Also dialog to inform user and return to previous activity
+            throw new RuntimeException(e);
         }
 
         assert collection != null;
+        if (actionBar != null) actionBar.setTitle(collection.getDisplayName());
 
         TestPagerAdapter pagerAdapter;
         if (collection instanceof VocabularyCollection) {
@@ -138,7 +138,7 @@ public class TrainerActivity extends AppCompatActivity {
 
     private void setProgressInfo(int vocabularyFraction) {
         progressInfoTextView.setText(String.format(
-                String.valueOf(getResources().getText(R.string.progress_indication)),
+                "%s/%s",
                 vocabularyFraction,
                 numberVocabularies
         ));

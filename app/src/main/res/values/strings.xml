@@ -19,7 +19,6 @@
     <string name="language_name_infinitive" translatable="false">%s (infinitive)</string>
     <string name="language_name_simple_past" translatable="false">%s (simple past)</string>
     <string name="language_name_past_participle" translatable="false">%s (past participle)</string>
-    <string name="progress_indication" translatable="false">%s/%s</string>
     <string name="check_answer_button">Check Answer</string>
     <string name="select_language_direction">Select direction of language</string>
     <string name="cancel">Cancel</string>

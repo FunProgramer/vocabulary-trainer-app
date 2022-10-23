@@ -10,11 +10,6 @@ public class Vocabulary implements Parcelable {
     private List<String> firstLanguageMeanings;
     private List<String> secondLanguageMeanings;
 
-    public Vocabulary(List<String> firstLanguageMeanings, List<String> secondLanguageMeanings) {
-        this.firstLanguageMeanings = firstLanguageMeanings;
-        this.secondLanguageMeanings = secondLanguageMeanings;
-    }
-
     protected Vocabulary(Parcel in) {
         firstLanguageMeanings = in.createStringArrayList();
         secondLanguageMeanings = in.createStringArrayList();

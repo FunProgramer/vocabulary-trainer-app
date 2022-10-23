@@ -1,18 +1,20 @@
 package privat.funprogramer.vocabularytrainer.persistance;
 
+import android.content.Context;
+import android.net.Uri;
 import android.util.Log;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import com.google.gson.Gson;
-import com.google.gson.stream.JsonReader;
+import privat.funprogramer.vocabularytrainer.exceptions.BrokenFileException;
+import privat.funprogramer.vocabularytrainer.exceptions.CouldNotDeleteException;
+import privat.funprogramer.vocabularytrainer.exceptions.ImportFailedException;
+import privat.funprogramer.vocabularytrainer.exceptions.UnsupportedFileExtensionException;
 import privat.funprogramer.vocabularytrainer.model.Collection;
 import privat.funprogramer.vocabularytrainer.model.IrregularVerbCollection;
 import privat.funprogramer.vocabularytrainer.model.VocabularyCollection;
+import privat.funprogramer.vocabularytrainer.util.IOUtil;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,8 +24,34 @@ public class CollectionsManager {
 
     private final File collectionsFolder;
 
-    public CollectionsManager(String collectionsPath) {
-        collectionsFolder = new File(collectionsPath);
+    private final Context context;
+
+    public CollectionsManager(File collectionsFolder, Context context) {
+        this.collectionsFolder = collectionsFolder;
+        this.context = context;
+    }
+
+    public void importCollection(Uri uri) throws ImportFailedException {
+        String fileName = uri.getLastPathSegment();
+        try (InputStream inputStream = context.getContentResolver().openInputStream(uri)) {
+            String content = IOUtil.inputStreamToString(inputStream);
+            parseAndCheckCollection(uri.getLastPathSegment(), content);
+            File destinationFile = new File(collectionsFolder + "/" + fileName);
+            IOUtil.stringToFileOutputStream(content, new FileOutputStream(destinationFile));
+        } catch (IOException | UnsupportedFileExtensionException | BrokenFileException e) {
+            throw new ImportFailedException(fileName, e);
+        }
+    }
+
+    public void removeCollection(String fileName) throws FileNotFoundException, CouldNotDeleteException {
+        File fileToDelete = new File(collectionsFolder + "/" + fileName);
+        if (fileToDelete.exists()) {
+            if (!fileToDelete.delete()) {
+                throw new CouldNotDeleteException();
+            }
+        } else {
+            throw new FileNotFoundException();
+        }
     }
 
     public List<Collection> getCollections() {
@@ -32,77 +60,47 @@ public class CollectionsManager {
 
         assert files != null;
         for (File file : files) {
-            if (file.getName().endsWith(".voc.json")) {
-                try {
-                    collections.add(getVocabularyCollection(file.getName()));
-                } catch (IOException e) {
-                    Log.w(TAG, "Could not read file " + file, e);
-                }
-            }
-            if (file.getName().endsWith(".irreg.verb.json")) {
-                try {
-                    collections.add(getIrregularVerbCollection(file.getName()));
-                } catch (IOException e) {
-                    Log.w(TAG, "Could not read file "+ file, e);
-                }
+            try {
+                collections.add(getCollection(file.getName()));
+            } catch (IOException | UnsupportedFileExtensionException | BrokenFileException e) {
+                Log.w(TAG, "An exception occurred while reading or checking the following file: "+ file, e);
             }
         }
 
         return collections;
     }
 
-    @NonNull
-    public VocabularyCollection getVocabularyCollection(String fileName) throws IOException {
-        if (!fileName.endsWith(".voc.json")) throw new IllegalArgumentException("fileName should end with '.voc.json'");
+    public <T extends Collection> T getCollection(String fileName)
+            throws IOException, UnsupportedFileExtensionException, BrokenFileException {
         File file = new File(collectionsFolder + "/" + fileName);
-        if (!file.exists()) {
-            throw new FileNotFoundException();
-        }
-        VocabularyCollection collection = readVocabularyCollection(file);
-        if (collection != null && collection.isValidObject()) {
+        if (!file.exists()) throw new FileNotFoundException();
+
+        try (InputStream inputStream = Files.newInputStream(file.toPath())) {
+            String content = IOUtil.inputStreamToString(inputStream);
+            T collection = parseAndCheckCollection(fileName, content);
+            collection.setSourceFileName(file.getName());
             return collection;
+        }
+    }
+
+    private <T extends Collection> T parseAndCheckCollection(String fileName, String fileContent)
+            throws IOException, UnsupportedFileExtensionException, BrokenFileException {
+        Class<? extends Collection> type;
+        if (fileName.endsWith(VocabularyCollection.FILE_EXTENSION)) {
+            type = VocabularyCollection.class;
+        } else if (fileName.endsWith(IrregularVerbCollection.FILE_EXTENSION)) {
+            type = IrregularVerbCollection.class;
         } else {
-            throw new IOException("File " + file + " is empty or broken");
+            throw new UnsupportedFileExtensionException();
         }
-    }
 
-    @Nullable
-    private VocabularyCollection readVocabularyCollection(File collectionFile) throws IOException {
-        FileReader reader = new FileReader(collectionFile);
-        JsonReader jsonReader = new JsonReader(reader);
-        VocabularyCollection vocabularyCollection = new Gson().fromJson(jsonReader, VocabularyCollection.class);
-        if (vocabularyCollection != null) {
-            vocabularyCollection.setSourceFileName(collectionFile.getName());
+        Collection collection = new Gson().fromJson(fileContent, type);
+        if (collection == null || !collection.isValidObject()) {
+            throw new BrokenFileException();
         }
-        return vocabularyCollection;
-    }
 
-    @NonNull
-    public IrregularVerbCollection getIrregularVerbCollection(String fileName) throws IOException {
-        if (!fileName.endsWith(".irreg.verb.json")) {
-            throw new IllegalArgumentException("fileName should end with '.irreg.verb.json'");
-        }
-        File file = new File(collectionsFolder + "/" + fileName);
-        if (!file.exists()) {
-            throw new FileNotFoundException();
-        }
-        IrregularVerbCollection collection = readIrregularVerbCollection(file);
-        if (collection != null && collection.isValidObject()) {
-            return collection;
-        } else {
-            throw new IOException("File " + file + " is empty or broken");
-        }
-    }
-
-    @Nullable
-    private IrregularVerbCollection readIrregularVerbCollection(File collectionFile) throws IOException {
-        FileReader reader = new FileReader(collectionFile);
-        JsonReader jsonReader = new JsonReader(reader);
-        IrregularVerbCollection vocabularyCollection = new Gson().fromJson(jsonReader, IrregularVerbCollection.class);
-        if (vocabularyCollection != null) {
-            vocabularyCollection.setSourceFileName(collectionFile.getName());
-        }
-        return vocabularyCollection;
+        //noinspection unchecked
+        return (T) collection;
     }
 
 }

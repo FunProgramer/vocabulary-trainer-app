@@ -16,13 +16,11 @@ import privat.funprogramer.vocabularytrainer.model.VocabularyCollection;
 import privat.funprogramer.vocabularytrainer.trainer_activity.TrainerActivity;
 
 import java.util.List;
-import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.concurrent.atomic.AtomicInteger;
 
 public class CollectionsAdapter extends
         RecyclerView.Adapter<CollectionsAdapter.CollectionEntry> {
 
-    private List<Collection> collections;
+    private final List<Collection> collections;
     private final Context context;
 
     public static class CollectionEntry extends RecyclerView.ViewHolder {
@@ -44,9 +42,7 @@ public class CollectionsAdapter extends
                                 trainerActivityIntent.putExtra(LanguageDirection.LANGUAGE_DIRECTION_EXTRA, i);
                                 context.startActivity(trainerActivityIntent);
                                 dialogInterface.dismiss();
-                            }).setNegativeButton(R.string.cancel, (dialogInterface, i) -> {
-                                dialogInterface.cancel();
-                            });
+                            }).setNegativeButton(R.string.cancel, (dialogInterface, i) -> dialogInterface.cancel());
 
                     AlertDialog alertDialog = builder.create();
                     alertDialog.show();
@@ -103,10 +99,6 @@ public class CollectionsAdapter extends
     @Override
     public int getItemCount() {
         return collections.size();
-    }
-
-    public void setCollections(List<Collection> collections) {
-        this.collections = collections;
     }
 
 }

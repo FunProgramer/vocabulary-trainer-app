@@ -12,16 +12,6 @@ public class IrregularVerb implements Parcelable {
     private final List<String> secondLanguageSimplePastMeanings;
     private final List<String> secondLanguagePastParticipleMeanings;
 
-    public IrregularVerb(List<String> firstLanguageMeanings,
-                         List<String> secondLanguageInfinitiveMeanings,
-                         List<String> secondLanguageSimplePastMeanings,
-                         List<String> secondLanguagePastParticipleMeanings) {
-        this.firstLanguageMeanings = firstLanguageMeanings;
-        this.secondLanguageInfinitiveMeanings = secondLanguageInfinitiveMeanings;
-        this.secondLanguageSimplePastMeanings = secondLanguageSimplePastMeanings;
-        this.secondLanguagePastParticipleMeanings = secondLanguagePastParticipleMeanings;
-    }
-
     protected IrregularVerb(Parcel in) {
         firstLanguageMeanings = in.createStringArrayList();
         secondLanguageInfinitiveMeanings = in.createStringArrayList();

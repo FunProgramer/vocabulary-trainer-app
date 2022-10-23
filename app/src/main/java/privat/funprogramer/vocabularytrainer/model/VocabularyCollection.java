@@ -4,6 +4,8 @@ import java.util.List;
 
 public class VocabularyCollection extends Collection {
 
+    public static final String FILE_EXTENSION = ".voc.json";
+
     private final List<Vocabulary> vocabularies;
 
     public VocabularyCollection(String displayName, String firstLanguage,

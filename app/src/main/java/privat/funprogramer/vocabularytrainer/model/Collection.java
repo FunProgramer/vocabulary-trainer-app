@@ -16,6 +16,8 @@ public abstract class Collection {
         this.secondLanguage = secondLanguage;
     }
 
+    public abstract boolean isValidObject();
+
     public String[] getLanguageDirections() {
         return new String[]{firstLanguage + " ➔ " + secondLanguage, secondLanguage + " ➔ " + firstLanguage};
     }
