@@ -1,78 +1,102 @@
 package privat.funprogramer.vocabularytrainer.main_activity;
 
-import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.recyclerview.selection.ItemDetailsLookup;
+import androidx.recyclerview.selection.ItemKeyProvider;
+import androidx.recyclerview.selection.SelectionTracker;
 import androidx.recyclerview.widget.RecyclerView;
+
+import java.util.List;
+
 import privat.funprogramer.vocabularytrainer.R;
 import privat.funprogramer.vocabularytrainer.model.Collection;
 import privat.funprogramer.vocabularytrainer.model.LanguageDirection;
 import privat.funprogramer.vocabularytrainer.model.VocabularyCollection;
-import privat.funprogramer.vocabularytrainer.trainer_activity.TrainerActivity;
-
-import java.util.List;
+import privat.funprogramer.vocabularytrainer.util.DialogUtil;
+import privat.funprogramer.vocabularytrainer.util.IntentUtil;
 
 public class CollectionsAdapter extends
         RecyclerView.Adapter<CollectionsAdapter.CollectionEntry> {
 
+    public static final String SELECTION_ID = "privat.funprogramer.vocabularytrainer.CollectionSelection";
+
     private final List<Collection> collections;
     private final Context context;
+    private SelectionTracker<String> tracker = null;
 
     public static class CollectionEntry extends RecyclerView.ViewHolder {
-        private final TextView textView;
-        private final TextView langaugesTextView;
-        private Collection collection;
+        private final TextView displayNameTV = itemView.findViewById(R.id.displayNameTextView);
+        private final TextView languagesTV = itemView.findViewById(R.id.languagesTextView);
+        private final Context context;
+        private String collectionFileName;
 
         public CollectionEntry(@NonNull View itemView, Context context) {
             super(itemView);
+            this.context = context;
+        }
+
+        public void bind(Collection collection, boolean isActivated) {
+            collectionFileName = collection.getFileName();
+            displayNameTV.setText(collection.getDisplayName());
+            String languageSpecification = String.format(
+                    context.getString(R.string.vocabulary_collection_language_specification),
+                    collection.getFirstLanguage(), collection.getSecondLanguage()
+            );
+            languagesTV.setText(languageSpecification);
+
+            itemView.setActivated(isActivated);
+
             // Define click listener for itemView
             itemView.setOnClickListener(v -> {
                 if (collection instanceof VocabularyCollection) {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(context);
-
-                    builder.setTitle(context.getString(R.string.select_language_direction))
-                            .setItems(collection.getLanguageDirections(), (dialogInterface, i) -> {
-                                Intent trainerActivityIntent = new Intent(context, TrainerActivity.class);
-                                trainerActivityIntent.putExtra(Collection.COLLECTION_EXTRA, collection.getSourceFileName());
-                                trainerActivityIntent.putExtra(LanguageDirection.LANGUAGE_DIRECTION_EXTRA, i);
-                                context.startActivity(trainerActivityIntent);
-                                dialogInterface.dismiss();
-                            }).setNegativeButton(R.string.cancel, (dialogInterface, i) -> dialogInterface.cancel());
-
-                    AlertDialog alertDialog = builder.create();
-                    alertDialog.show();
+                    DialogUtil.showSelectLanguageDirectionDialog(context, collection,
+                    (dialogInterface, i) -> {
+                        Intent intent = IntentUtil
+                                .createTrainerActivityIntent(context, collection.getFileName());
+                        intent.putExtra(LanguageDirection.LANGUAGE_DIRECTION_EXTRA, i);
+                        context.startActivity(intent);
+                        dialogInterface.dismiss();
+                    });
                 } else {
-                    Intent trainerActivityIntent = new Intent(context, TrainerActivity.class);
-                    trainerActivityIntent.putExtra(Collection.COLLECTION_EXTRA, collection.getSourceFileName());
-                    context.startActivity(trainerActivityIntent);
+                    context.startActivity(
+                            IntentUtil
+                                    .createTrainerActivityIntent(context, collection.getFileName())
+                    );
                 }
             });
-
-            textView = itemView.findViewById(R.id.vocabularyCollectionTextView);
-            langaugesTextView = itemView.findViewById(R.id.vocabularyCollectionLanguagesTextView);
         }
 
-        public TextView getTextView() {
-            return textView;
-        }
+        public ItemDetailsLookup.ItemDetails<String> getItemDetails() {
+            return new ItemDetailsLookup.ItemDetails<String>() {
+                @Override
+                public int getPosition() {
+                    return getAdapterPosition();
+                }
 
-        public TextView getLangaugesTextView() {
-            return langaugesTextView;
-        }
-
-        public void setCollection(Collection collection) {
-            this.collection = collection;
+                @Nullable
+                @Override
+                public String getSelectionKey() {
+                    return collectionFileName;
+                }
+            };
         }
     }
 
     public CollectionsAdapter(List<Collection> collections, Context context) {
         this.collections = collections;
         this.context = context;
+    }
+
+    public void setTracker(SelectionTracker<String> tracker) {
+        this.tracker = tracker;
     }
 
     @NonNull
@@ -86,14 +110,10 @@ public class CollectionsAdapter extends
 
     @Override
     public void onBindViewHolder(@NonNull CollectionEntry entry, int position) {
-        Collection collection = collections.get(position);
-        entry.getTextView().setText(collection.getDisplayName());
-        String languageSpecification = String.format(
-                context.getString(R.string.vocabulary_collection_language_specification),
-                collection.getFirstLanguage(), collection.getSecondLanguage()
-        );
-        entry.getLangaugesTextView().setText(languageSpecification);
-        entry.setCollection(collections.get(position));
+        if (tracker != null) {
+            Collection collection = collections.get(position);
+            entry.bind(collection, tracker.isSelected(collection.getFileName()));
+        }
     }
 
     @Override

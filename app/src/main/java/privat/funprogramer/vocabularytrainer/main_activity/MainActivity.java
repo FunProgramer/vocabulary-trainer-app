@@ -1,6 +1,5 @@
 package privat.funprogramer.vocabularytrainer.main_activity;
 
-import android.app.Dialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -8,6 +7,11 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts.OpenMultipleDocuments;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.MenuProvider;
+import androidx.recyclerview.selection.ItemKeyProvider;
+import androidx.recyclerview.selection.SelectionPredicates;
+import androidx.recyclerview.selection.SelectionTracker;
+import androidx.recyclerview.selection.StorageStrategy;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -32,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         CollectionsManager collectionsManager = new CollectionsManager(getFilesDir(), this);
-        List<Collection> vocabularyCollectionFiles = collectionsManager.getCollections();
+        List<Collection> collections = collectionsManager.getCollections();
 
         ActivityResultLauncher<String[]> openImportFile =
                 registerForActivityResult(new OpenMultipleDocuments(), uris -> {
@@ -50,8 +54,29 @@ public class MainActivity extends AppCompatActivity {
 
         RecyclerView recyclerView = findViewById(R.id.vocabularyListView);
         recyclerView.setLayoutManager(new LinearLayoutManager(null));
-        CollectionsAdapter adapter = new CollectionsAdapter(vocabularyCollectionFiles, this);
+        CollectionsAdapter adapter = new CollectionsAdapter(collections, this);
         recyclerView.setAdapter(adapter);
+
+        SelectionTracker<String> tracker = new SelectionTracker.Builder<>(
+                CollectionsAdapter.SELECTION_ID,
+                recyclerView,
+                new CollectionKeyProvider(ItemKeyProvider.SCOPE_MAPPED, collections),
+                new CollectionDetailsLookup(recyclerView),
+                StorageStrategy.createStringStorage()
+        ).withSelectionPredicate(
+                SelectionPredicates.createSelectAnything()
+        ).build();
+        adapter.setTracker(tracker);
+
+        tracker.addObserver(new SelectionTracker.SelectionObserver<String>(){
+            @Override
+            public void onSelectionChanged() {
+                if (tracker.hasSelection()) {
+                    toolbar.setTitle("Selected");
+                }
+            }
+        });
+
 
         swipeRefreshLayout.setRefreshing(false);
         swipeRefreshLayout.setOnRefreshListener(() -> {

@@ -29,4 +29,5 @@
     <string name="file_extension_message">The file needs to end with \'.voc.json\' or \'.irreg.verb.json\'</string>
     <string name="broken_file_message">The file is in a unsupported format or broken.</string>
     <string name="could_not_delete_message">Could not delete the vocabulary collection %s</string>
+    <string name="io_exception_message">An Input/Output Exception occurred.%nDetails:%n%s</string>
 </resources>

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="green_200_50">#80A2FAA3</color>
     <color name="green_200">#A2FAA3</color>
     <color name="green_500">#31A631</color>
     <color name="green_700">#056E00</color>

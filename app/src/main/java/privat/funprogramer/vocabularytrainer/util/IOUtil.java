@@ -21,4 +21,11 @@ public class IOUtil {
         bw.close();
     }
 
+    public static String exceptionToStackTraceString(Exception e) {
+        StringWriter sw = new StringWriter();
+        PrintWriter pw = new PrintWriter(sw);
+        e.printStackTrace(pw);
+        return sw.toString();
+    }
+
 }

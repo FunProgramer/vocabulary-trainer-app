@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_activated="true">
+        <layer-list>
+            <item android:drawable="@color/green_200_50"/>
+            <item android:drawable="?android:attr/selectableItemBackground"/>
+        </layer-list>
+    </item>
+    <item android:drawable="?android:attr/selectableItemBackground" />
+</selector>

@@ -8,7 +8,7 @@ public abstract class Collection {
     final String displayName;
     String firstLanguage;
     String secondLanguage;
-    String sourceFileName;
+    String fileName;
 
     public Collection(String displayName, String firstLanguage, String secondLanguage) {
         this.displayName = displayName;
@@ -34,11 +34,11 @@ public abstract class Collection {
         return secondLanguage;
     }
 
-    public void setSourceFileName(String sourceFileName) {
-        this.sourceFileName = sourceFileName;
+    public void setFileName(String sourceFileName) {
+        this.fileName = sourceFileName;
     }
 
-    public String getSourceFileName() {
-        return sourceFileName;
+    public String getFileName() {
+        return fileName;
     }
 }

@@ -32,12 +32,13 @@ public class CollectionsManager {
     }
 
     public void importCollection(Uri uri) throws ImportFailedException {
-        String fileName = uri.getLastPathSegment();
+        String fileName = uri.getLastPathSegment().replaceAll(".*/", "");
         try (InputStream inputStream = context.getContentResolver().openInputStream(uri)) {
             String content = IOUtil.inputStreamToString(inputStream);
             parseAndCheckCollection(uri.getLastPathSegment(), content);
-            File destinationFile = new File(collectionsFolder + "/" + fileName);
-            IOUtil.stringToFileOutputStream(content, new FileOutputStream(destinationFile));
+            IOUtil.stringToFileOutputStream(
+                    content, context.openFileOutput(fileName, Context.MODE_PRIVATE)
+            );
         } catch (IOException | UnsupportedFileExtensionException | BrokenFileException e) {
             throw new ImportFailedException(fileName, e);
         }
@@ -88,7 +89,7 @@ public class CollectionsManager {
         try (InputStream inputStream = Files.newInputStream(file.toPath())) {
             String content = IOUtil.inputStreamToString(inputStream);
             T collection = parseAndCheckCollection(fileName, content);
-            collection.setSourceFileName(file.getName());
+            collection.setFileName(file.getName());
             return collection;
         }
     }
