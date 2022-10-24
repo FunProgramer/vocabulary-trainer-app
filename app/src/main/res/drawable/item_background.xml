@@ -1,10 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<selector xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:state_activated="true">
-        <layer-list>
-            <item android:drawable="@color/green_200_50"/>
-            <item android:drawable="?android:attr/selectableItemBackground"/>
-        </layer-list>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <selector>
+            <item
+                android:drawable="?colorAccent"
+                android:state_activated="true" />
+            <item android:drawable="?attr/scrimBackground" />
+        </selector>
     </item>
-    <item android:drawable="?android:attr/selectableItemBackground" />
-</selector>
+    <item>
+        <ripple android:color="?colorPrimary" />
+    </item>
+</layer-list>
