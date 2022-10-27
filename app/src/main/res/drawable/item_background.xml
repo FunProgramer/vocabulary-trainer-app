@@ -1,14 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="match_parent">
     <item>
         <selector>
             <item
-                android:drawable="?colorAccent"
+                android:drawable="@color/grey_200"
                 android:state_activated="true" />
-            <item android:drawable="?attr/scrimBackground" />
+            <item android:drawable="@android:color/transparent" />
         </selector>
     </item>
     <item>
-        <ripple android:color="?colorPrimary" />
+        <ripple android:color="@color/extra_accent_color" >
+            <item
+                android:id="@android:id/mask"
+                android:drawable="@android:color/white" />
+        </ripple>
     </item>
 </layer-list>

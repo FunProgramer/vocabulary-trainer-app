@@ -44,7 +44,7 @@ public class CollectionsManager {
         }
     }
 
-    public void removeCollection(String fileName) throws FileNotFoundException, CouldNotDeleteException {
+    public void removeCollection(String fileName) throws CouldNotDeleteException {
         File fileToDelete = new File(collectionsFolder + "/" + fileName);
         String displayName = fileName;
         try {
@@ -61,7 +61,7 @@ public class CollectionsManager {
                 throw new CouldNotDeleteException(displayName);
             }
         } else {
-            throw new FileNotFoundException();
+            throw new CouldNotDeleteException(displayName, new FileNotFoundException());
         }
     }
 

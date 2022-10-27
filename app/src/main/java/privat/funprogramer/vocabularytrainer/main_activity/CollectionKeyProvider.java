@@ -10,28 +10,28 @@ import java.util.List;
 import privat.funprogramer.vocabularytrainer.model.Collection;
 
 public class CollectionKeyProvider extends ItemKeyProvider<String> {
-    private final List<Collection> collections;
+    private final CollectionsAdapter collectionsAdapter;
 
     /**
      * Creates a new provider with the given scope and the collections list.
      *
      * @param scope Scope can't be changed at runtime.
-     * @param collections the collections list used to determine position of a key (file name)
+     * @param collectionsAdapter that correspondences to this key provider
      */
-    protected CollectionKeyProvider(int scope, List<Collection> collections) {
+    protected CollectionKeyProvider(int scope, CollectionsAdapter collectionsAdapter) {
         super(scope);
-
-        this.collections = collections;
+        this.collectionsAdapter = collectionsAdapter;
     }
 
     @Nullable
     @Override
     public String getKey(int position) {
-        return collections.get(position).getFileName();
+        return collectionsAdapter.getCollections().get(position).getFileName();
     }
 
     @Override
     public int getPosition(@NonNull String key) {
+        List<Collection> collections = collectionsAdapter.getCollections();
         for (int i = 0; i < collections.size(); i++) {
             if (collections.get(i).getFileName().equals(key)) {
                 return i;

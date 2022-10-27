@@ -2,9 +2,9 @@ package privat.funprogramer.vocabularytrainer.util;
 
 import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import privat.funprogramer.vocabularytrainer.R;
@@ -32,7 +32,7 @@ public class DialogUtil {
             builder.setTitle(R.string.open_failed_title);
         } else if (e instanceof CouldNotDeleteException) {
             CouldNotDeleteException de = (CouldNotDeleteException) e; 
-            builder.setMessage(String.format(context.getString(R.string.could_not_delete_message),
+            builder.setTitle(String.format(context.getString(R.string.could_not_delete_title),
                     de.getDisplayName()));
         } else {
             builder.setTitle(R.string.exception_title);
@@ -46,6 +46,8 @@ public class DialogUtil {
                 builder.setMessage(R.string.file_extension_message);
             } else if (cause instanceof BrokenFileException) {
                 builder.setMessage(R.string.broken_file_message);
+            } else if (cause instanceof FileNotFoundException) {
+                builder.setMessage(R.string.file_not_found_message);
             } else if (cause instanceof IOException) {
                 String stackTrace = IOUtil.exceptionToStackTraceString(e);
                 builder.setMessage(String.format(context.getString(R.string.io_exception_message),
@@ -63,7 +65,20 @@ public class DialogUtil {
 
         builder.setTitle(context.getString(R.string.select_language_direction))
                 .setItems(collection.getLanguageDirections(), itemSelectedListener)
-                .setNegativeButton(R.string.cancel, (dialogInterface, i) -> dialogInterface.cancel());
+                .setNegativeButton(R.string.cancel, null);
+
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+    }
+    
+    public static void showDeleteConfirmationDialog(Context context, int numberOfCollections, 
+                                                    OnClickListener confirmedListener) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        
+        builder.setMessage(String.format(context.getString(R.string.question_delete_collections),
+                numberOfCollections))
+                .setPositiveButton("Delete", confirmedListener)
+                .setNegativeButton(R.string.cancel, null);
 
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
