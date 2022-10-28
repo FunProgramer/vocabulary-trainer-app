@@ -1,7 +1,9 @@
 package privat.funprogramer.vocabularytrainer.persistance;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.net.Uri;
+import android.provider.OpenableColumns;
 import android.util.Log;
 import com.google.gson.Gson;
 import privat.funprogramer.vocabularytrainer.exceptions.BrokenFileException;
@@ -31,17 +33,26 @@ public class CollectionsManager {
         this.context = context;
     }
 
-    public void importCollection(Uri uri) throws ImportFailedException {
+    public String importCollection(Uri uri) throws ImportFailedException {
         String fileName = uri.getLastPathSegment().replaceAll(".*/", "");
+        try (Cursor cursor = context.getContentResolver()
+                .query(uri, null, null, null, null)) {
+            if (cursor != null && cursor.moveToFirst()) {
+                fileName = cursor.getString(
+                        cursor.getColumnIndexOrThrow(OpenableColumns.DISPLAY_NAME)
+                );
+            }
+        }
         try (InputStream inputStream = context.getContentResolver().openInputStream(uri)) {
             String content = IOUtil.inputStreamToString(inputStream);
-            parseAndCheckCollection(uri.getLastPathSegment(), content);
+            parseAndCheckCollection(fileName, content);
             IOUtil.stringToFileOutputStream(
                     content, context.openFileOutput(fileName, Context.MODE_PRIVATE)
             );
         } catch (IOException | UnsupportedFileExtensionException | BrokenFileException e) {
             throw new ImportFailedException(fileName, e);
         }
+        return fileName;
     }
 
     public void removeCollection(String fileName) throws CouldNotDeleteException {

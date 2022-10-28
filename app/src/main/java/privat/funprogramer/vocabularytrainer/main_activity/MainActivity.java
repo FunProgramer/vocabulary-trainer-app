@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts.OpenMultipleDocuments;
@@ -53,11 +54,15 @@ public class MainActivity extends AppCompatActivity {
                 registerForActivityResult(new OpenMultipleDocuments(), uris -> {
                     for (Uri uri : uris) {
                         try {
-                            collectionsManager.importCollection(uri);
+                            String importedFile = collectionsManager.importCollection(uri);
+                            Toast.makeText(this,
+                                    String.format("Successfully imported \"%s\"", importedFile),
+                                    Toast.LENGTH_SHORT).show();
                         } catch (ImportFailedException e) {
                             DialogUtil.showExceptionDialog(this, e, null);
                         }
                     }
+                    updateCollections();
                 });
 
         FloatingActionButton importFAB = findViewById(R.id.importFAB);
