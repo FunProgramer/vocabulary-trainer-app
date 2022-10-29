@@ -2,6 +2,7 @@ package privat.funprogramer.vocabularytrainer.trainer_activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -9,6 +10,7 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -31,6 +33,8 @@ public class TrainerActivity extends AppCompatActivity {
 
     public static final String TAG = "TrainerActivity";
 
+    public static final String NUMBER_OF_VISIBLE_PAGES = "numberOfVisiblePages";
+
     private ViewPager2 pager;
     private int numberVocabularies;
     private TextView progressInfoTextView;
@@ -38,6 +42,7 @@ public class TrainerActivity extends AppCompatActivity {
     private Button nextButton;
     private Button backButton;
     private LinearLayout linearLayout;
+    private TestPagerAdapter pagerAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,7 +79,6 @@ public class TrainerActivity extends AppCompatActivity {
         assert collection != null;
         if (actionBar != null) actionBar.setTitle(collection.getDisplayName());
 
-        TestPagerAdapter pagerAdapter;
         if (collection instanceof VocabularyCollection) {
             int languageDirectionExtra = intent.getIntExtra(LanguageDirection.LANGUAGE_DIRECTION_EXTRA, 0);
             if (languageDirectionExtra == LanguageDirection.REVERSE.ordinal()) {
@@ -128,6 +132,11 @@ public class TrainerActivity extends AppCompatActivity {
                 buttonVisibilityChangedHook();
             }
         });
+
+        if (savedInstanceState != null) {
+            pagerAdapter
+                    .setNumberOfVisiblePages(savedInstanceState.getInt(NUMBER_OF_VISIBLE_PAGES));
+        }
     }
 
     private void buttonVisibilityChangedHook() {
@@ -155,5 +164,11 @@ public class TrainerActivity extends AppCompatActivity {
         } else {
             pager.setCurrentItem(pager.getCurrentItem() - 1);
         }
+    }
+
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        outState.putInt(NUMBER_OF_VISIBLE_PAGES, pagerAdapter.getNumberOfVisiblePages());
+        super.onSaveInstanceState(outState);
     }
 }

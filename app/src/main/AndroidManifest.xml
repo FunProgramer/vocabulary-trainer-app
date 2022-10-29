@@ -17,7 +17,7 @@
             android:name="privat.funprogramer.vocabularytrainer.trainer_activity.TrainerActivity"
             android:exported="true"
             android:parentActivityName="privat.funprogramer.vocabularytrainer.main_activity.MainActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="fullSensor"/>
         <activity
             android:name="privat.funprogramer.vocabularytrainer.main_activity.MainActivity"
             android:exported="true">

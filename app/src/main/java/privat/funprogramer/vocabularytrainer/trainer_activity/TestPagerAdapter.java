@@ -8,4 +8,8 @@ public interface TestPagerAdapter {
 
     void registerOnNumberOfPagesChanged(Callback callback);
 
+    int getNumberOfVisiblePages();
+
+    void setNumberOfVisiblePages(int numberOfVisiblePages);
+
 }

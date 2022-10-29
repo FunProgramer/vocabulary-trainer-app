@@ -40,6 +40,15 @@ public class VocabularyTestFragmentsPagerAdapter extends FragmentStateAdapter im
         return numberOfVisiblePages;
     }
 
+    public int getNumberOfVisiblePages() {
+        return numberOfVisiblePages;
+    }
+
+    public void setNumberOfVisiblePages(int numberOfVisiblePages) {
+        this.numberOfVisiblePages = numberOfVisiblePages;
+        callback.call();
+    }
+
     public void registerOnNumberOfPagesChanged(Callback callback) {
         this.callback = callback;
     }

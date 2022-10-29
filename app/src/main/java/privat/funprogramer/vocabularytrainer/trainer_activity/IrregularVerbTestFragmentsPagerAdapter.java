@@ -44,6 +44,16 @@ public class IrregularVerbTestFragmentsPagerAdapter extends FragmentStateAdapter
         this.callback = callback;
     }
 
+    @Override
+    public int getNumberOfVisiblePages() {
+        return numberOfVisiblePages;
+    }
+
+    @Override
+    public void setNumberOfVisiblePages(int numberOfVisiblePages) {
+        this.numberOfVisiblePages = numberOfVisiblePages;
+    }
+
     private class CorrectAnswerResultReceiver extends ResultReceiver {
 
         /**
