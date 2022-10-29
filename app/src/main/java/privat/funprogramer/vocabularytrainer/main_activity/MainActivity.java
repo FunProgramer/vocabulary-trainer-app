@@ -13,7 +13,6 @@ import androidx.activity.result.contract.ActivityResultContracts.OpenMultipleDoc
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.content.ContextCompat;
 import androidx.recyclerview.selection.ItemKeyProvider;
 import androidx.recyclerview.selection.MutableSelection;
 import androidx.recyclerview.selection.SelectionPredicates;
@@ -58,11 +57,11 @@ public class MainActivity extends AppCompatActivity {
                             Toast.makeText(this,
                                     String.format("Successfully imported \"%s\"", importedFile),
                                     Toast.LENGTH_SHORT).show();
+                            updateCollections();
                         } catch (ImportFailedException e) {
                             DialogUtil.showExceptionDialog(this, e, null);
                         }
                     }
-                    updateCollections();
                 });
 
         FloatingActionButton importFAB = findViewById(R.id.importFAB);
@@ -94,15 +93,13 @@ public class MainActivity extends AppCompatActivity {
                     ));
                     invalidateOptionsMenu();
                     toolbar.setNavigationIcon(R.drawable.ic_baseline_close_24);
-                    toolbar.setBackgroundResource(R.color.green_100);
-                    toolbar.setTitleTextColor(ContextCompat.getColor(MainActivity.this, R.color.black));
+                    toolbar.setBackgroundResource(R.color.green_700);
                     toolbar.setNavigationOnClickListener(view -> tracker.clearSelection());
                 } else {
                     toolbar.setTitle(R.string.app_name);
                     invalidateOptionsMenu();
                     toolbar.setNavigationIcon(null);
                     toolbar.setBackgroundResource(R.color.green_500);
-                    toolbar.setTitleTextColor(ContextCompat.getColor(MainActivity.this, R.color.white));
                 }
             }
         });
