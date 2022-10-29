@@ -23,15 +23,15 @@
     <string name="select_language_direction">Select direction of language</string>
     <string name="cancel">Cancel</string>
     <string name="add_collection_import">Import collection</string>
-    <string name="import_failed_title">File %s could not be imported</string>
-    <string name="open_failed_title">The selected vocabulary collection could not be opened</string>
+    <string name="import_failed_title">The File \"%s\" could not be imported</string>
+    <string name="open_failed_title">Failed to open selected collection</string>
     <string name="exception_title">An exception occurred</string>
-    <string name="could_not_delete_title">Could not delete the vocabulary collection %s</string>
-    <string name="file_extension_message">The file needs to end with \'.voc.json\' or \'.irreg.verb.json\'</string>
+    <string name="could_not_delete_title">Failed to delete the collection \"%s\"</string>
+    <string name="file_extension_message">The filename needs to end with \".voc.json\" or \".irreg.verb.json\"</string>
     <string name="broken_file_message">The file is in a unsupported format or broken.</string>
     <string name="io_exception_message">An Input/Output Exception occurred.%nDetails:%n%s</string>
     <string name="delete_collection">Delete Collection</string>
     <string name="selection">%d selected</string>
-    <string name="question_delete_collections">Are you sure to delete %d collections?</string>
+    <string name="question_delete_collections">Are you sure to delete %d collection(s)?</string>
     <string name="file_not_found_message">The file was not found!</string>
 </resources>

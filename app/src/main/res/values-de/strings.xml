@@ -19,4 +19,15 @@
     <string name="select_language_direction">Sprachrichtung wählen</string>
     <string name="cancel">Abbrechen</string>
     <string name="add_collection_import">Sammlung hinzufügen</string>
+    <string name="import_failed_title">Datei %s konnte nicht importiert werden</string>
+    <string name="open_failed_title">Ausgewählte Sammlung konnte nicht geöffnet werden</string>
+    <string name="exception_title">Ein Fehler ist aufgetreten</string>
+    <string name="could_not_delete_title">Die Sammlung \"%s\" konnte nicht geöffnet werden</string>
+    <string name="file_extension_message">Der Dateiname muss mit \".voc.json\" oder \".irreg.verb.json\" enden</string>
+    <string name="broken_file_message">Die Datei ist in einem nicht unterstützen Format oder ist beschädigt.</string>
+    <string name="io_exception_message">Ein Ein-/Ausgabe Fehler ist aufgetreten.%nDetails:%n%s</string>
+    <string name="delete_collection">Sammlung löschen</string>
+    <string name="selection">%d ausgewält</string>
+    <string name="question_delete_collections">Bist du dir sicher, dass du %d Sammlung(en) löschen möchtest?</string>
+    <string name="file_not_found_message">Die Datei wurde nicht gefunden!</string>
 </resources>
