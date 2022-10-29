@@ -131,6 +131,16 @@ public class VocabularyTestFragment extends Fragment {
         });
     }
 
+    @Override
+    public void onResume() {
+        View view = getView();
+        if (view != null) {
+            EditText answerET = view.findViewById(R.id.secondLanguageInfinitiveMeaningTextEdit);
+            answerET.requestFocus();
+        }
+        super.onResume();
+    }
+
     private String buildCorrectAnswersString(int exclude) {
         StringBuilder correctAnswersStringBuilder = new StringBuilder();
         List<String> secondLanguageMeanings = vocabulary.getSecondLanguageMeanings();
