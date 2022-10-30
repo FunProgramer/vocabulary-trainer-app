@@ -4,7 +4,7 @@
     <color name="green_200">#A2FAA3</color>
     <color name="green_500">#31A631</color>
     <color name="green_700">#056E00</color>
-    <color name="extra_accent_color">@color/material_dynamic_primary50</color>
+    <color name="extra_accent_color">#007FAC</color>
     <color name="grey_200">#6E6F6E</color>
     <color name="grey_700">#50514F</color>
     <color name="black">#FF000000</color>
