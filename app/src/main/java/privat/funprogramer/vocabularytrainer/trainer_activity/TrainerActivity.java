@@ -118,13 +118,13 @@ public class TrainerActivity extends AppCompatActivity {
         pager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
             @Override
             public void onPageSelected(int position) {
-                if (pager.getCurrentItem() != 0) {
+                if (position != 0) {
                     backButton.setVisibility(View.VISIBLE);
                 } else {
                     backButton.setVisibility(View.INVISIBLE);
                 }
 
-                if (pager.getCurrentItem() < pagerAdapter.getItemCount() - 1) {
+                if (position < pagerAdapter.getItemCount() - 1) {
                     nextButton.setVisibility(View.VISIBLE);
                 } else {
                     nextButton.setVisibility(View.INVISIBLE);
