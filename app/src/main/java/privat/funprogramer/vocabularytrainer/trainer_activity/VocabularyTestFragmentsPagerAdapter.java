@@ -46,7 +46,6 @@ public class VocabularyTestFragmentsPagerAdapter extends FragmentStateAdapter im
 
     public void setNumberOfVisiblePages(int numberOfVisiblePages) {
         this.numberOfVisiblePages = numberOfVisiblePages;
-        callback.call();
     }
 
     public void registerOnNumberOfPagesChanged(Callback callback) {
