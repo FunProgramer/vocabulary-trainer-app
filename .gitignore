@@ -1,1 +1,9 @@
-/.idea/workspace.xml
+/.idea/
+*.iml
+*.ipr
+*.iws
+
+# Dart
+.dart_tool/
+build/
+pubspec.lock
