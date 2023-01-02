@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:vocabulary_trainer_app/config.dart';
 
 class AndroidApp extends StatelessWidget {
   const AndroidApp({super.key});
