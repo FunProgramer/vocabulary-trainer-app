@@ -1,0 +1,52 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Vocabulary Collection",
+  "description": "A collection of vocabulary that can be imported into the vocabulary trainer app",
+  "type": "object",
+  "properties": {
+    "title": {
+      "description": "The title of the collection to be displayed by the app",
+      "type": "string"
+    },
+    "language_a": {
+      "description": "One ('the first') of the languages of which the vocabulary is.",
+      "type": "string",
+      "minLength": 2,
+      "maxLength": 2
+    },
+    "language_b": {
+      "description": "One ('the second') of the languages of which the vocabulary is.",
+      "type": "string",
+      "minLength": 2,
+      "maxLength": 2
+    },
+    "vocabularies": {
+      "description": "An array of the individual vocabulary objects",
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "object",
+        "properties": {
+          "language_a": {
+            "description": "The corresponding word in language A. If an answer exactly matches this String it's fully correct.",
+            "type": "string"
+          },
+          "language_a_regex": {
+            "description": "The regex (JS dialect) to check if an answer is good enough to mark it as correct, in language A.",
+            "type": "string"
+          },
+          "language_b": {
+            "description": "The corresponding word in language B. If an answer exactly matches this String it's fully correct.",
+            "type": "string"
+          },
+          "language_b_regex": {
+            "description": "The regex (JS dialect) to check if an answer is good enough to mark it as correct, in language B.",
+            "type": "string"
+          }
+        },
+        "required": ["language_a", "language_a_regex", "language_b", "language_b_regex"]
+      }
+    }
+  },
+  "required": ["title", "language_a", "language_b", "vocabularies"]
+}
