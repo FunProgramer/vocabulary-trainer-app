@@ -59,6 +59,7 @@ android {
             signingConfig signingConfigs.debug
         }
     }
+    namespace 'com.github.funprogramer.vocabulary_trainer_app'
 }
 
 flutter {
