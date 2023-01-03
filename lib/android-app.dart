@@ -8,8 +8,14 @@ class AndroidApp extends StatelessWidget {
     return MaterialApp(
       title: 'Vocabulary Trainer',
       theme: ThemeData(
-          primarySwatch: Colors.green,
+        brightness: Brightness.light,
+        primarySwatch: Colors.green,
       ),
+      darkTheme: ThemeData(
+        brightness: Brightness.dark,
+        primarySwatch: Colors.green,
+      ),
+      themeMode: ThemeMode.system,
       home: Scaffold(
         appBar: AppBar(title: const Text("Vocabulary Trainer"),),
         body: const Center(
