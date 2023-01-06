@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:vocabulary_trainer_app/dao/vocabulary_collection_dao.dart';
+import 'package:vocabulary_trainer_app/dao.dart';
 import 'package:vocabulary_trainer_app/database.dart';
 import 'package:vocabulary_trainer_app/model.dart';
 
@@ -104,7 +104,7 @@ class _HomePageState extends State<HomePage> {
             subtitle: Row(
               children: [
                 Text(collection.languageA),
-                const Icon(Icons.compare_arrows),
+                const Text(" - "),
                 Text(collection.languageB)
               ],
             ),

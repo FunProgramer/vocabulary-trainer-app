@@ -2,7 +2,7 @@ import 'dart:async';
 import 'package:floor/floor.dart';
 import 'package:sqflite/sqflite.dart' as sqflite;
 
-import 'dao/vocabulary_collection_dao.dart';
+import 'dao.dart';
 import 'model.dart';
 
 part 'database.g.dart';
