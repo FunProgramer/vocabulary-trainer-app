@@ -166,6 +166,9 @@ doc/api/
 #.flutter-plugins
 #.flutter-plugins-dependencies
 
+# Project specific: generated dart files (from floor)
+*.g.dart
+
 
 ### -------------------------- Swift.gitignore  ------------------------ ###
 
