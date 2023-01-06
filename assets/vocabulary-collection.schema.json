@@ -8,13 +8,13 @@
       "description": "The title of the collection to be displayed by the app",
       "type": "string"
     },
-    "language_a": {
+    "languageA": {
       "description": "One ('the first') of the languages of which the vocabulary is.",
       "type": "string",
       "minLength": 2,
       "maxLength": 2
     },
-    "language_b": {
+    "languageB": {
       "description": "One ('the second') of the languages of which the vocabulary is.",
       "type": "string",
       "minLength": 2,
@@ -27,26 +27,26 @@
       "items": {
         "type": "object",
         "properties": {
-          "language_a": {
+          "languageA": {
             "description": "The corresponding word in language A. If an answer exactly matches this String it's fully correct.",
             "type": "string"
           },
-          "language_a_regex": {
+          "languageARegex": {
             "description": "The regex (JS dialect) to check if an answer is good enough to mark it as correct, in language A.",
             "type": "string"
           },
-          "language_b": {
+          "languageB": {
             "description": "The corresponding word in language B. If an answer exactly matches this String it's fully correct.",
             "type": "string"
           },
-          "language_b_regex": {
+          "languageBRegex": {
             "description": "The regex (JS dialect) to check if an answer is good enough to mark it as correct, in language B.",
             "type": "string"
           }
         },
-        "required": ["language_a", "language_a_regex", "language_b", "language_b_regex"]
+        "required": ["languageA", "languageARegex", "languageB", "languageBRegex"]
       }
     }
   },
-  "required": ["title", "language_a", "language_b", "vocabularies"]
+  "required": ["title", "languageA", "languageB", "vocabularies"]
 }

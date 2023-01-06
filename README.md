@@ -2,6 +2,21 @@
 
 An android app to learn vocabularies and irregular verbs, developed with flutter.
 
+## Build
+
+Before you can run the normal flutter build command, 
+please run the following command to generate the required database code:
+
+```shell
+flutter packages pub run build_runner build
+```
+
+After that just the normal build command:
+
+```shell
+flutter build
+```
+
 ## Database Structure
 
 Database structure looks like this as ERM-Diagram:
@@ -10,8 +25,8 @@ Database structure looks like this as ERM-Diagram:
 
 Transformed to a RDBMS-Diagram (text form) the structure looks like this:
 
-> VocabularyCollection(<u>ID</u>, title, language_a, language_b)\
-Vocabulary(<u>ID</u>, language_a, language_a_regex, language_b, language_b_regex, collectionID(FK))
+> VocabularyCollection(<u>id</u>, title, languageA, languageB)\
+Vocabulary(<u>id</u>, languageA, languageARegex, languageB, languageBRegex, collectionID(FK))
 >
 
 To find out more about the meanings of the attributes look at
