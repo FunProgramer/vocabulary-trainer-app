@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:vocabulary_trainer_app/platform/android/home_ui.dart';
 import 'package:vocabulary_trainer_app/database.dart';
-import 'package:vocabulary_trainer_app/model/vocabulary_collection.dart';
+import 'package:vocabulary_trainer_app/model.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();

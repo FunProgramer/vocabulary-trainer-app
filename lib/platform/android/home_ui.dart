@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:vocabulary_trainer_app/dao/vocabulary_collection_dao.dart';
 import 'package:vocabulary_trainer_app/database.dart';
-import 'package:vocabulary_trainer_app/model/vocabulary_collection.dart';
+import 'package:vocabulary_trainer_app/model.dart';
 
 class AndroidApp extends StatelessWidget {
   final AppDatabase appDatabase;
@@ -21,29 +21,24 @@ class AndroidApp extends StatelessWidget {
         primarySwatch: Colors.green,
       ),
       themeMode: ThemeMode.system,
-      home: Scaffold(
-        appBar: AppBar(title: const Text("Vocabulary Trainer"),),
-        body: Center(
-          child: CollectionsListView(
-            dao: appDatabase.vocabularyCollectionDao,
-          )
-        ),
+      home: HomePage(
+        dao: appDatabase.vocabularyCollectionDao,
       ),
     );
   }
 
 }
 
-class CollectionsListView extends StatefulWidget {
+class HomePage extends StatefulWidget {
   final VocabularyCollectionDao dao;
 
-  const CollectionsListView({Key? key, required this.dao}) : super(key: key);
+  const HomePage({Key? key, required this.dao}) : super(key: key);
 
   @override
-  State<CollectionsListView> createState() => _CollectionsListViewState();
+  State<HomePage> createState() => _HomePageState();
 }
 
-class _CollectionsListViewState extends State<CollectionsListView> {
+class _HomePageState extends State<HomePage> {
   bool _loading = false;
   String? _error;
   List<VocabularyCollection>? _vocabularyCollections;
@@ -118,9 +113,14 @@ class _CollectionsListViewState extends State<CollectionsListView> {
       );
     }
 
-    return RefreshIndicator(
-      onRefresh: _refreshData,
-      child: widget,
+    return Scaffold(
+      appBar: AppBar(title: const Text("Vocabulary Trainer"),),
+      body: Center(
+          child: RefreshIndicator(
+            onRefresh: _refreshData,
+            child: widget,
+          )
+      ),
     );
   }
 }

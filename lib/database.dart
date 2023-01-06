@@ -3,7 +3,7 @@ import 'package:floor/floor.dart';
 import 'package:sqflite/sqflite.dart' as sqflite;
 
 import 'dao/vocabulary_collection_dao.dart';
-import 'model/vocabulary_collection.dart';
+import 'model.dart';
 
 part 'database.g.dart';
 

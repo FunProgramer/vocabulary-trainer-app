@@ -1,5 +1,5 @@
 import 'package:floor/floor.dart';
-import 'package:vocabulary_trainer_app/model/vocabulary_collection.dart';
+import 'package:vocabulary_trainer_app/model.dart';
 
 @dao
 abstract class VocabularyCollectionDao {
