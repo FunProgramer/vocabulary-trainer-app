@@ -1,6 +1,6 @@
 # Vocabulary Trainer
 
-An android app to learn vocabularies and irregular verbs, developed with flutter.
+An app to learn vocabularies, developed with flutter.
 
 ## Build
 
