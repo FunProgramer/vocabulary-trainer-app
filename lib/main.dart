@@ -12,9 +12,9 @@ Future<void> main() async {
 
   database.vocabularyCollectionDao.insertVocabularyCollection(
       VocabularyCollection(
-        "Unit 1 (Test Collection)",
-        "English",
-        "German"
+        title: "Unit 1 (Test Collection)",
+        languageA: "English",
+        languageB: "German"
       )
   );
 
