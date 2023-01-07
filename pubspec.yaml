@@ -32,6 +32,7 @@ dependencies:
   flutter:
     sdk: flutter
   floor: ^1.4.0
+  sqflite: ^2.2.2
 
 
 
