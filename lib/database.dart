@@ -7,7 +7,7 @@ import 'model.dart';
 
 part 'database.g.dart';
 
-@Database(version: 1, entities: [VocabularyCollection])
+@Database(version: 2, entities: [VocabularyCollection, Vocabulary])
 abstract class AppDatabase extends FloorDatabase {
   VocabularyCollectionDao get vocabularyCollectionDao;
 }
