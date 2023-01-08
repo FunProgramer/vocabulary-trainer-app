@@ -1,7 +1,7 @@
 import 'package:floor/floor.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:vocabulary_trainer_app/database.dart';
-import 'package:vocabulary_trainer_app/model.dart';
+import 'package:vocabulary_trainer_app/entity.dart';
 
 @dao
 abstract class VocabularyCollectionDao {

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:vocabulary_trainer_app/dao.dart';
 import 'package:vocabulary_trainer_app/database.dart';
-import 'package:vocabulary_trainer_app/model.dart';
+import 'package:vocabulary_trainer_app/entity.dart';
 
 class AndroidApp extends StatelessWidget {
   final AppDatabase appDatabase;
