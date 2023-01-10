@@ -4,6 +4,11 @@ An app to learn vocabularies, developed with flutter.
 
 ## Build
 
+First you need to download all dart packages.
+```shell
+flutter pub get
+```
+
 Before you can run the normal flutter build command, 
 please run the following command to generate the required database code:
 
