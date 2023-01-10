@@ -35,6 +35,6 @@ Vocabulary(<u>id</u>, languageA, languageARegex, languageB, languageBRegex, coll
 >
 
 To find out more about the meanings of the attributes look at
-the file ["assets/vocabulary-collection.schema.json"](assets/vocabulary-collection.schema.json).\
+the file ["assets/vocabulary-collection.schema.json"](schema/vocabulary-collection.schema.json).\
 *Note: The Vocabulary object (mentioned here) is the equivalent to 
 the "vocabularies" key in the schema file.*
