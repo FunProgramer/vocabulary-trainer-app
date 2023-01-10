@@ -41,4 +41,13 @@ class Vocabulary {
       required this.languageARegex,
       required this.languageB,
       required this.languageBRegex});
+
+  factory Vocabulary.fromJson(Map<String, dynamic> json) {
+    return Vocabulary(
+        languageA: json['languageA'],
+        languageARegex: json['languageARegex'],
+        languageB: json['languageB'],
+        languageBRegex: json['languageBRegex']
+    );
+  }
 }

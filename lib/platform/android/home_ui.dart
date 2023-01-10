@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:vocabulary_trainer_app/dao.dart';
 import 'package:vocabulary_trainer_app/database.dart';
 import 'package:vocabulary_trainer_app/entity.dart';
+import 'package:vocabulary_trainer_app/platform/android/details_ui.dart';
+import 'package:vocabulary_trainer_app/platform/android/util_ui.dart';
 
 class AndroidApp extends StatelessWidget {
   final AppDatabase appDatabase;
@@ -68,30 +70,30 @@ class _HomePageState extends State<HomePage> {
   
   @override
   Widget build(BuildContext context) {
-    Widget widget;
+    Widget localWidget;
 
     if (_error != null) {
-      widget = ListPlaceholder(
+      localWidget = ListPlaceholder(
               icon: Icons.error,
               headline: "An error occurred",
               moreInfo: "More info: $_error");
     }
 
     if (_loading && _vocabularyCollections == null) {
-      widget = const ListPlaceholder();
+      localWidget = const ListPlaceholder();
     } else if (_vocabularyCollections == null) {
-      widget = const ListPlaceholder(
+      localWidget = const ListPlaceholder(
               icon: Icons.error,
               headline: "An error occurred",
               moreInfo: "More info: No data present (There is no information why)");
     } else if (_vocabularyCollections!.isEmpty) {
-      widget = const ListPlaceholder(
+      localWidget = const ListPlaceholder(
               icon: Icons.list,
               headline: "No collections",
               moreInfo: "Click on the plus icon in the bottom right corner to add one.");
     } else {
       List<VocabularyCollection> collections = _vocabularyCollections!;
-      widget = ListView.builder(
+      localWidget = ListView.builder(
         physics: const AlwaysScrollableScrollPhysics(),
         itemCount: collections.length,
         itemBuilder: (context, index) {
@@ -118,8 +120,21 @@ class _HomePageState extends State<HomePage> {
       body: Center(
           child: RefreshIndicator(
             onRefresh: _refreshData,
-            child: widget,
+            child: localWidget,
           )
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () async {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) {
+                  return CollectionDetails.fromFile();
+                  },
+              )
+          );
+        },
+        child: const Icon(Icons.add),
       ),
     );
   }
@@ -138,25 +153,16 @@ class ListPlaceholder extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final textTheme = Theme.of(context).textTheme;
-    var windowSize = MediaQuery.of(context).size;
     // SingleChildScrollView and the physics property
     // is needed for the RefreshIndicator to work
     return SingleChildScrollView(
         physics: const AlwaysScrollableScrollPhysics(),
-        child: SizedBox(
-          height: windowSize.height - 100,
-          width: windowSize.width,
-          child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-            Icon(icon),
-            const SizedBox(height: 10),
-            Text(
-              headline,
-              style: textTheme.headline5,
-            ),
-            Text(moreInfo)
-          ]),
-        ));
+        child: PlaceholderDisplay(
+            icon: icon,
+            headline: headline,
+            moreInfo: moreInfo
+        )
+    );
   }
 
 }
