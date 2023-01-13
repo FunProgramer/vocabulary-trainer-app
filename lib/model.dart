@@ -12,13 +12,13 @@ class FullVocabularyCollection {
       this.title, this.languageA, this.languageB, this.vocabularies);
 
   factory FullVocabularyCollection.fromJson(Map<String, dynamic> json) {
-    final List<Map<String, dynamic>> jsonVocabularies = json['vocabularies'];
+    final List<dynamic> jsonVocabularies = json['vocabularies'];
     final List<Vocabulary> vocabularies = List.generate(jsonVocabularies.length,
             (index) => Vocabulary.fromJson(jsonVocabularies[index]));
     return FullVocabularyCollection(
         json['title'],
         json['languageA'],
-        json['LanguageB'],
+        json['languageB'],
         vocabularies
     );
   }

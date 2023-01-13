@@ -48,7 +48,7 @@ class _CollectionDetailsState extends State<CollectionDetails> {
     try {
       FullVocabularyCollection? vocabularyCollection =
           await widget.futureCollection;
-      if (_vocabularyCollection == null) {
+      if (vocabularyCollection == null) {
         setState(() {
           _loading = false;
           _error = "Failed to load data.";
@@ -59,15 +59,16 @@ class _CollectionDetailsState extends State<CollectionDetails> {
           _vocabularyCollection = vocabularyCollection;
         });
       }
-    } on BrokenFileException {
-      setState(() {
-        _loading = false;
-        _error =
-            "The provided file is not in the expected format or was corrupted.";
-      });
     } on FilePickingAbortedException {
       Navigator.pop(context);
     } catch (e) {
+      if (e.runtimeType == BrokenFileException) {
+        setState(() {
+          _loading = false;
+          _error =
+          "The provided file is not in the expected format or was corrupted.\n${e.toString()}";
+        });
+      }
       setState(() {
         _loading = false;
         _error = e.toString();
