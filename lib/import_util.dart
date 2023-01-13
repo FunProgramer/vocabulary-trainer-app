@@ -3,7 +3,8 @@ import 'dart:io';
 
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/services.dart';
-import 'package:json_schema2/json_schema2.dart';
+import 'package:json_schema3/json_schema3.dart';
+import 'package:json_schema3/src/json_schema/models/validation_results.dart';
 import 'package:vocabulary_trainer_app/exception.dart';
 import 'package:vocabulary_trainer_app/model.dart';
 
@@ -19,10 +20,10 @@ Future<FullVocabularyCollection> readVocabularyCollectionFromJSONFile() async {
     File collectionFile = File(fileResult.files.single.path!);
     String json = await collectionFile.readAsString();
 
-    bool isValid = await _validateJSON(json);
+    var validationResults = await _validateJSON(json);
 
-    if (!isValid) {
-      throw BrokenFileException();
+    if (!validationResults.isValid) {
+      throw BrokenFileException(validationResults.errors.toString());
     }
 
     return _serializeJSON(json);
@@ -31,12 +32,12 @@ Future<FullVocabularyCollection> readVocabularyCollectionFromJSONFile() async {
   }
 }
 
-Future<bool> _validateJSON(String json) async {
+Future<ValidationResults> _validateJSON(String json) async {
   final schemaString =
       await rootBundle.loadString("schema/vocabulary-collection.schema.json");
 
-  final schema = JsonSchema.createSchema(schemaString);
-  return schema.validate(schemaString, parseJson: true);
+  final schema = await JsonSchema.createAsync(schemaString);
+  return schema.validate(json, parseJson: true);
 }
 
 Future<FullVocabularyCollection> _serializeJSON(String json) async {
