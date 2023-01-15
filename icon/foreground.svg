@@ -8,7 +8,10 @@
    version="1.1"
    id="svg5"
    sodipodi:docname="foreground.svg"
-   inkscape:version="1.1.2 (0a00cf5339, 2022-02-04)"
+   inkscape:version="1.2.2 (1:1.2.2+202212051552+b0a8486541)"
+   inkscape:export-filename="android-foreground.png"
+   inkscape:export-xdpi="96"
+   inkscape:export-ydpi="96"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns="http://www.w3.org/2000/svg"
@@ -31,14 +34,16 @@
      inkscape:snap-others="false"
      inkscape:object-nodes="false"
      inkscape:zoom="1.4042969"
-     inkscape:cx="163.07093"
-     inkscape:cy="266.32545"
-     inkscape:window-width="2560"
-     inkscape:window-height="1372"
+     inkscape:cx="163.78303"
+     inkscape:cy="267.03755"
+     inkscape:window-width="1920"
+     inkscape:window-height="1051"
      inkscape:window-x="0"
      inkscape:window-y="0"
      inkscape:window-maximized="1"
-     inkscape:current-layer="layer1" />
+     inkscape:current-layer="layer1"
+     inkscape:showpageshadow="2"
+     inkscape:deskcolor="#d1d1d1" />
   <defs
      id="defs2">
     <inkscape:path-effect
