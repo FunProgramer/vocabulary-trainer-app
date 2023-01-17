@@ -1,8 +1,10 @@
 import 'package:floor/floor.dart';
 import 'package:sqflite/sqflite.dart';
-import 'package:vocabulary_trainer_app/database.dart';
-import 'package:vocabulary_trainer_app/entity.dart';
-import 'package:vocabulary_trainer_app/model.dart';
+
+import 'database.dart';
+import '../models/complete_vocabulary_collection.dart';
+import '../models/vocabulary.dart';
+import '../models/vocabulary_collection.dart';
 
 @dao
 abstract class VocabularyCollectionDao {
@@ -32,16 +34,16 @@ abstract class VocabularyDao {
 
 }
 
-class FullVocabularyCollectionDao {
+class CompleteVocabularyCollectionDao {
   final AppDatabase _database;
   final VocabularyCollectionDao _vocabularyCollectionDao;
   final VocabularyDao _vocabularyDao;
 
-  FullVocabularyCollectionDao(this._database)
+  CompleteVocabularyCollectionDao(this._database)
       : _vocabularyDao = _database.vocabularyDao,
         _vocabularyCollectionDao = _database.vocabularyCollectionDao;
 
-  Future<FullVocabularyCollection?> findFullVocabularyCollectionById(
+  Future<CompleteVocabularyCollection?> findFullVocabularyCollectionById(
       int id) async {
     VocabularyCollection? vocabularyCollection =
         await _vocabularyCollectionDao.findVocabularyCollectionById(id);
@@ -50,7 +52,7 @@ class FullVocabularyCollectionDao {
     List<Vocabulary> vocabularies =
         await _vocabularyDao.findAllVocabularyByCollectionId(id);
 
-    return FullVocabularyCollection(
+    return CompleteVocabularyCollection(
         vocabularyCollection.title,
         vocabularyCollection.languageA,
         vocabularyCollection.languageB,

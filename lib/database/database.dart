@@ -3,19 +3,25 @@ import 'package:floor/floor.dart';
 import 'package:sqflite/sqflite.dart' as sqflite;
 
 import 'dao.dart';
-import 'entity.dart';
+import '../models/vocabulary.dart';
+import '../models/vocabulary_collection.dart';
 
 part 'database.g.dart';
+
+class DatabaseInstance {
+  static AppDatabase? appDatabase;
+
+}
 
 @Database(version: 2, entities: [VocabularyCollection, Vocabulary])
 abstract class AppDatabase extends FloorDatabase {
   VocabularyCollectionDao get vocabularyCollectionDao;
   VocabularyDao get vocabularyDao;
-  FullVocabularyCollectionDao? fullVocabularyCollectionDao;
+  CompleteVocabularyCollectionDao? _completeVocabularyCollectionDao;
 
-  FullVocabularyCollectionDao getFullVocabularyCollectionDao() {
-    fullVocabularyCollectionDao ??= FullVocabularyCollectionDao(this);
-    return fullVocabularyCollectionDao!;
+  CompleteVocabularyCollectionDao getCompleteVocabularyCollectionDao() {
+    _completeVocabularyCollectionDao ??= CompleteVocabularyCollectionDao(this);
+    return _completeVocabularyCollectionDao!;
   }
 }
 

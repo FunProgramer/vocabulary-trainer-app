@@ -5,8 +5,8 @@ class PlaceholderDisplay extends StatelessWidget {
   final String headline;
   final String moreInfo;
 
-  const PlaceholderDisplay({super.key, this.icon, required this.headline, required this.moreInfo});
-
+  const PlaceholderDisplay(
+      {super.key, this.icon, required this.headline, required this.moreInfo});
 
   @override
   Widget build(BuildContext context) {
@@ -24,23 +24,6 @@ class PlaceholderDisplay extends StatelessWidget {
         ),
         Text(moreInfo)
       ]),
-    );
-  }
-
-}
-
-class LoadingDisplay extends StatelessWidget {
-  final String infoText;
-
-  const LoadingDisplay({super.key, required this.infoText});
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        const LinearProgressIndicator(),
-        Text(infoText)
-      ],
     );
   }
 

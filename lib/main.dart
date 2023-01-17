@@ -1,15 +1,39 @@
 import 'package:flutter/material.dart';
-import 'package:vocabulary_trainer_app/platform/android/home_ui.dart';
-import 'package:vocabulary_trainer_app/database.dart';
+import 'package:vocabulary_trainer_app/database/database.dart';
+
+import 'screens/home.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  final database = await $FloorAppDatabase
+  DatabaseInstance.appDatabase = await $FloorAppDatabase
       .databaseBuilder("app_data.db")
       .addMigrations([migration1to2])
       .build();
 
-  runApp(AndroidApp(appDatabase: database));
+  runApp(VocabularyTrainerApp());
+}
+
+class VocabularyTrainerApp extends StatelessWidget {
+
+  VocabularyTrainerApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Vocabulary Trainer',
+      theme: ThemeData(
+        brightness: Brightness.light,
+        primarySwatch: Colors.green,
+      ),
+      darkTheme: ThemeData(
+        brightness: Brightness.dark,
+        primarySwatch: Colors.green,
+      ),
+      themeMode: ThemeMode.system,
+      home: HomePage(),
+    );
+  }
+
 }
 

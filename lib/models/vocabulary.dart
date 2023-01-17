@@ -1,20 +1,5 @@
 import 'package:floor/floor.dart';
-
-@entity
-class VocabularyCollection {
-  @primaryKey
-  int? id;
-
-  final String title;
-  final String languageA;
-  final String languageB;
-
-  VocabularyCollection(
-      {this.id,
-      required this.title,
-      required this.languageA,
-      required this.languageB});
-}
+import 'vocabulary_collection.dart';
 
 @Entity(foreignKeys: [
   ForeignKey(
@@ -36,11 +21,11 @@ class Vocabulary {
 
   Vocabulary(
       {this.id,
-      this.collectionId,
-      required this.languageA,
-      required this.languageARegex,
-      required this.languageB,
-      required this.languageBRegex});
+        this.collectionId,
+        required this.languageA,
+        required this.languageARegex,
+        required this.languageB,
+        required this.languageBRegex});
 
   factory Vocabulary.fromJson(Map<String, dynamic> json) {
     return Vocabulary(
