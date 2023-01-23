@@ -11,12 +11,12 @@ Future<void> main() async {
       .addMigrations([migration1to2])
       .build();
 
-  runApp(VocabularyTrainerApp());
+  runApp(const VocabularyTrainerApp());
 }
 
 class VocabularyTrainerApp extends StatelessWidget {
 
-  VocabularyTrainerApp({super.key});
+  const VocabularyTrainerApp({super.key});
 
   @override
   Widget build(BuildContext context) {
