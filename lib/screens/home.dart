@@ -27,7 +27,7 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: AppBar(title: const Text("Vocabulary Trainer")),
       body: Center(
-          child: DataFetcher(
+          child: DataFetcher<List<VocabularyCollection>>(
             loadData: () async {
               List<VocabularyCollection> vocabularyCollections =
                 await widget.dao.findAllVocabularyCollections();
@@ -55,12 +55,22 @@ class _HomePageState extends State<HomePage> {
                 );
               }
             },
-            onFinished: (data) {
+            onFinished: (dynamic data) {
               return ListView.builder(
                 itemCount: data.length,
                 itemBuilder: (context, index) {
                   var collection = data[index];
                   return ListTile(
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) {
+                                return CollectionDetails.fromDatabase(collection.id);
+                              },
+                          )
+                      );
+                    },
                     leading: const CircleAvatar(
                         child: Icon(Icons.book_outlined)
                     ),
