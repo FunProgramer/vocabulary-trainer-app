@@ -43,7 +43,7 @@ class CompleteVocabularyCollectionDao {
       : _vocabularyDao = _database.vocabularyDao,
         _vocabularyCollectionDao = _database.vocabularyCollectionDao;
 
-  Future<CompleteVocabularyCollection?> findFullVocabularyCollectionById(
+  Future<CompleteVocabularyCollection?> findCompleteVocabularyCollectionById(
       int id) async {
     VocabularyCollection? vocabularyCollection =
         await _vocabularyCollectionDao.findVocabularyCollectionById(id);
@@ -59,7 +59,7 @@ class CompleteVocabularyCollectionDao {
         vocabularies);
   }
 
-  Future<void> insertFullVocabularyCollection(
+  Future<void> insertCompleteVocabularyCollection(
       VocabularyCollection vocabularyCollection,
       List<Vocabulary> vocabularies) async {
     DatabaseExecutor dbExec = _database.database;
