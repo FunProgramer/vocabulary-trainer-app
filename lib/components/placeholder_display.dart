@@ -22,7 +22,10 @@ class PlaceholderDisplay extends StatelessWidget {
           headline,
           style: textTheme.headline5,
         ),
-        Text(moreInfo)
+        Text(
+            moreInfo,
+          textAlign: TextAlign.center,
+        )
       ]),
     );
   }
