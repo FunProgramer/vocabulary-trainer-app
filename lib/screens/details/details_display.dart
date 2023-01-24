@@ -1,7 +1,10 @@
+import 'package:customizable_space_bar/customizable_space_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:sliver_table/sliver_table.dart';
+import 'package:vocabulary_trainer_app/screens/details/hidable_info.dart';
+import 'package:vocabulary_trainer_app/screens/details/table_elements.dart';
 
 import '../../models/complete_vocabulary_collection.dart';
-import '../../models/vocabulary.dart';
 
 class DetailsDisplay extends StatelessWidget {
   final bool importMode;
@@ -13,53 +16,90 @@ class DetailsDisplay extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final textTheme = Theme.of(context).textTheme;
+    final windowWidth = MediaQuery.of(context).size.width;
+    final theme = Theme.of(context);
 
-    return ListView.separated(
-        itemBuilder: (context, index) {
-          if (index == 0) {
-            return Column(children: [
-              Text(
-                vocabularyCollection.title,
-                style: textTheme.headline3,
-              ),
-              Visibility(
-                  visible: importMode,
-                  child: Row(
-                    children: const [
-                      Icon(Icons.info_outline),
-                      Text("Collection currently not imported."
-                          " Click on 'Import' in the bar above,"
-                          " to import this collection.")
-                    ],
-                  ),
-              ),
-              Row(
-                children: [
-                  const Icon(Icons.language),
-                  Text(
-                    "Languages",
-                    style: textTheme.labelLarge,
-                  ),
-                  Expanded(child: Container()),
-                  Text("${vocabularyCollection.languageA}, ${vocabularyCollection.languageB}")
-                ],
-              )
-            ]);
+    SliverTableController tableController = SliverTableController(
+        rowsCount: vocabularyCollection.vocabularies.length,
+        colsCount: 2,
+        cellWidth: windowWidth / 2,
+        leftHeaderCellWidth: 0,
+        cellBuilder: (context, row, col) {
+          var vocabulary = vocabularyCollection.vocabularies[row];
+
+          if (col == 0) {
+            return TableElementA(text: vocabulary.languageA);
           } else {
-            var i = index - 1;
-            Vocabulary vocabulary = vocabularyCollection.vocabularies[i];
-            return Row(
-              children: [
-                Text(vocabulary.languageA),
-                const Expanded(child: Text("-")),
-                Text(vocabulary.languageB)
-              ],
-            );
+            return TableElementB(text: vocabulary.languageB);
           }
         },
-        separatorBuilder: (context, index) => const Divider(),
-        itemCount: vocabularyCollection.vocabularies.length + 1
+        topHeaderBuilder: (context, index) {
+          String text;
+
+          if (index == 0) {
+            text = vocabularyCollection.languageA;
+          } else {
+            text = vocabularyCollection.languageB;
+          }
+          return TableHeader(text);
+        },
+        leftHeaderBuilder: (context, index) => Container());
+
+    return CustomScrollView(
+      slivers: [
+        SliverAppBar(
+          automaticallyImplyLeading: false,
+          pinned: true,
+          expandedHeight: 150,
+          backgroundColor: theme.canvasColor,
+          flexibleSpace: CustomizableSpaceBar(
+            builder: (context, scrollingRate) {
+              return Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(children: [
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      vocabularyCollection.title,
+                      style: TextStyle(fontSize: 50 - 18 * scrollingRate),
+                    ),
+                  ),
+                  HidableInfo(
+                    scrollingRate: scrollingRate,
+                    child: Column(
+                      children: [
+                        Visibility(
+                            visible: importMode,
+                            child: Row(
+                              children: const [
+                                Icon(Icons.info_outline),
+                                Flexible(
+                                    child: Text(
+                                  "Collection currently not imported."
+                                  " Click on 'Import' in the bar above,"
+                                  " to import this collection.",
+                                  overflow: TextOverflow.clip,
+                                ))
+                              ],
+                            )
+                        ),
+                        Row(
+                          children: [
+                            const Icon(Icons.list),
+                            Text("${vocabularyCollection.vocabularies.length} Vocabularies")
+                          ],
+                        )
+                      ],
+                    ),
+                  ),
+                ]),
+              );
+            },
+          ),
+        ),
+        SliverTableHeader(tableController: tableController),
+        SliverTableBody(tableController: tableController)
+      ],
     );
   }
 }
