@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 import '../../components/data_fetcher.dart';
 import '../../database/database.dart';
@@ -80,9 +81,15 @@ class _CollectionDetailsState extends State<CollectionDetails> {
           }
       );
     }
+    // Pop Dialog
+    if (dContext != null) {
+      Navigator.pop(dContext!);
+    }
+    // Pop CollectionDetails (this widget)
     if (mounted) {
       Navigator.pop(context);
     }
+    Fluttertoast.showToast(msg: "Successfully imported Vocabulary Collection");
   }
 
   @override
