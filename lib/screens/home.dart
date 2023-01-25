@@ -20,14 +20,18 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  List<VocabularyCollection>? _vocabularyCollections;
-  
+  final List<int> _selectedItems = [];
+  Key dataFetcherKey = UniqueKey();
+
   @override
   Widget build(BuildContext context) {
+    var theme = Theme.of(context);
+
     return Scaffold(
       appBar: AppBar(title: const Text("Vocabulary Trainer")),
       body: Center(
           child: DataFetcher<List<VocabularyCollection>>(
+            key: dataFetcherKey,
             loadData: () async {
               List<VocabularyCollection> vocabularyCollections =
                 await widget.dao.findAllVocabularyCollections();
@@ -59,21 +63,50 @@ class _HomePageState extends State<HomePage> {
               return ListView.builder(
                 itemCount: data.length,
                 itemBuilder: (context, index) {
-                  var collection = data[index];
+                  VocabularyCollection collection = data[index];
+                  bool selected = _selectedItems.contains(collection.id);
+
+                  CircleAvatar leadingAvatar = CircleAvatar(
+                    child: Icon(selected ? Icons.check : Icons.book_outlined),
+                  );
+
+                  Function() onTap = () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) {
+                            return CollectionDetails.fromDatabase(collection.id!);
+                          },
+                        )
+                    );
+                  };
+
+                  select () {
+                    if (selected) {
+                      setState(() {
+                        _selectedItems.remove(collection.id);
+                      });
+                    } else {
+                      setState(() {
+                        _selectedItems.add(collection.id!);
+                      });
+                    }
+                  }
+
+                  if (_selectedItems.isNotEmpty) {
+                    onTap = select;
+                  }
+
                   return ListTile(
-                    onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) {
-                                return CollectionDetails.fromDatabase(collection.id);
-                              },
-                          )
-                      );
+                    onTap: onTap,
+                    onLongPress: () {
+                      setState(() {
+                        _selectedItems.add(collection.id!);
+                      });
                     },
-                    leading: const CircleAvatar(
-                        child: Icon(Icons.book_outlined)
-                    ),
+                    selected: selected,
+                    selectedTileColor: theme.highlightColor,
+                    leading: leadingAvatar,
                     title: Text(collection.title),
                     subtitle: Row(
                       children: [
@@ -90,7 +123,7 @@ class _HomePageState extends State<HomePage> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
-          Navigator.push(
+          bool? shouldRefresh = await Navigator.push(
               context,
               MaterialPageRoute(
                 builder: (context) {
@@ -98,6 +131,15 @@ class _HomePageState extends State<HomePage> {
                   },
               )
           );
+
+          if (shouldRefresh != null && shouldRefresh) {
+            // Force reload, by creating a new DataFetcher-Widget
+            dataFetcherKey = UniqueKey();
+          }
+
+          setState(() {
+            _selectedItems.clear();
+          });
         },
         child: const Icon(Icons.add),
       ),
