@@ -87,7 +87,7 @@ class _CollectionDetailsState extends State<CollectionDetails> {
     }
     // Pop CollectionDetails (this widget)
     if (mounted) {
-      Navigator.pop(context);
+      Navigator.pop(context, true);
     }
     Fluttertoast.showToast(msg: "Successfully imported Vocabulary Collection");
   }
