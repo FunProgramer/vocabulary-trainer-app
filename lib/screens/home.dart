@@ -82,15 +82,13 @@ class _HomePageState extends State<HomePage> {
                   };
 
                   select () {
-                    if (selected) {
-                      setState(() {
+                    setState(() {
+                      if (selected) {
                         _selectedItems.remove(collection.id);
-                      });
-                    } else {
-                      setState(() {
+                      } else {
                         _selectedItems.add(collection.id!);
-                      });
-                    }
+                      }
+                    });
                   }
 
                   if (_selectedItems.isNotEmpty) {
