@@ -128,7 +128,10 @@ class _CollectionDetailsState extends State<CollectionDetails> {
               String error = "Not available";
 
               if (exception is FilePickingAbortedException) {
-                Navigator.pop(context);
+                WidgetsBinding.instance.addPostFrameCallback((_) {
+                  Navigator.pop(context);
+                });
+                error = "User aborted file picking. Navigating back to previous page in a few seconds...";
               } else if (exception is NoDataException) {
                 error = "No data found. That means usually means, "
                     "that the requested Vocabulary Collection does not exist.";
@@ -144,12 +147,12 @@ class _CollectionDetailsState extends State<CollectionDetails> {
                 moreInfo: "More info:\n$error");
             },
             onFinished: (dynamic data) {
-          WidgetsBinding.instance.addPostFrameCallback((_) {
-            setState(() {
-              _vocabularyCollection = data;
-            });
-          });
-          return DetailsDisplay(vocabularyCollection: data, importMode: widget.importMode);
+              WidgetsBinding.instance.addPostFrameCallback((_) {
+                setState(() {
+                  _vocabularyCollection = data;
+                });
+              });
+            return DetailsDisplay(vocabularyCollection: data, importMode: widget.importMode);
             },
         )
       ),
