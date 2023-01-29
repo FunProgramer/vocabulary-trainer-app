@@ -18,9 +18,8 @@ abstract class VocabularyCollectionDao {
   Future<void> insertVocabularyCollection(
       VocabularyCollection vocabularyCollection);
 
-  @delete
-  Future<void> removeVocabularyCollections(
-      List<VocabularyCollection> vocabularyCollections);
+  @Query("DELETE FROM VocabularyCollection WHERE id = :id")
+  Future<void> deleteVocabularyCollectionById(int id);
 
 }
 
@@ -31,6 +30,9 @@ abstract class VocabularyDao {
 
   @insert
   Future<void> insertVocabulary(Vocabulary vocabulary);
+
+  @Query("DELETE FROM Vocabulary WHERE collectionId = :collectionId")
+  Future<void> deleteVocabulariesByCollectionId(int collectionId);
 
 }
 
@@ -73,6 +75,15 @@ class CompleteVocabularyCollectionDao {
     for (Vocabulary vocabulary in vocabularies) {
       vocabulary.collectionId = collectionID;
       _vocabularyDao.insertVocabulary(vocabulary);
+    }
+  }
+
+  Future<void> deleteVocabularyCollectionsAndVocabulariesById(
+      List<int> collectionIds) async {
+    for (int collectionId in collectionIds) {
+      await _vocabularyDao.deleteVocabulariesByCollectionId(collectionId);
+      await _vocabularyCollectionDao
+          .deleteVocabularyCollectionById(collectionId);
     }
   }
   
