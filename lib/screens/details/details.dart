@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:vocabulary_trainer_app/components/error_dialog.dart';
+import 'package:vocabulary_trainer_app/components/loading_dialog.dart';
 
 import '../../components/data_fetcher.dart';
 import '../../database/database.dart';
@@ -53,13 +55,10 @@ class _CollectionDetailsState extends State<CollectionDetails> {
         barrierDismissible: false,
         builder: (context) {
           dContext = context;
-          return const AlertDialog(
-            title: Text ("Import Vocabulary Collection"),
-            content: LoadingDisplay(
-              infoText: "Importing",
-            ),
-          );
-        },
+        return const LoadingDialog(
+            title: "Import Vocabulary Collection", infoText: "Importing"
+        );
+      },
     );
     try {
       await widget.dao.insertCompleteVocabularyCollection(
@@ -73,10 +72,8 @@ class _CollectionDetailsState extends State<CollectionDetails> {
       showDialog(
           context: context,
           builder: (context) {
-            return AlertDialog(
-              icon: const Icon(Icons.error_outline),
-              title: const Text("An error occurred while trying to import"),
-              content: Text("More info:\n${e.toString}"),
+            return ErrorDialog(
+                dialogContext: context, errorString: e.toString()
             );
           }
       );
