@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:vocabulary_trainer_app/components/error_dialog.dart';
+import 'package:vocabulary_trainer_app/components/loading_dialog.dart';
 
 import '../components/data_fetcher.dart';
 import '../components/loading_display.dart';
@@ -34,10 +36,8 @@ class _HomePageState extends State<HomePage> {
       builder: (context) {
         return AlertDialog(
           title: const Text("Delete Vocabulary Collections?"),
-          content: Text(
-              "Are you sure to delete ${_selectedItems.length} "
-                  "Vocabulary Collection(s)?"
-          ),
+          content: Text("Are you sure to delete ${_selectedItems.length} "
+              "Vocabulary Collection(s)?"),
           actions: [
             TextButton(
               child: const Text("No"),
@@ -55,17 +55,15 @@ class _HomePageState extends State<HomePage> {
                   barrierDismissible: false,
                   builder: (context) {
                     dContext = context;
-                    return const AlertDialog(
-                      title: Text("Delete Vocabulary Collections"),
-                      content: LoadingDisplay(
-                        infoText: "Deleting",
-                      ),
-                    );
+                    return const LoadingDialog(
+                        title: "Delete Vocabulary Collection",
+                        infoText: "Deleting");
                   },
                 );
                 try {
                   await widget.completeCollectionDao
-                      .deleteVocabularyCollectionsAndVocabulariesById(_selectedItems);
+                      .deleteVocabularyCollectionsAndVocabulariesById(
+                          _selectedItems);
                 } catch (e) {
                   if (dContext != null) {
                     Navigator.pop(dContext!);
@@ -73,17 +71,8 @@ class _HomePageState extends State<HomePage> {
                   showDialog(
                       context: context,
                       builder: (context) {
-                        return AlertDialog(
-                          icon: const Icon(Icons.error_outline),
-                          title: const Text(
-                              "An error occurred while trying to import"),
-                          content: Text("More info:\n${e.toString()}"),
-                          actions: [
-                            TextButton(
-                                child: const Text("Ok"),
-                                onPressed: () => Navigator.pop(context))
-                          ],
-                        );
+                        return ErrorDialog(
+                            dialogContext: context, errorString: e.toString());
                       });
                 }
                 // Pop Dialog
