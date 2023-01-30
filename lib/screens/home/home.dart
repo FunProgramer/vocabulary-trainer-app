@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:vocabulary_trainer_app/components/error_dialog.dart';
 import 'package:vocabulary_trainer_app/components/loading_dialog.dart';
+import 'package:vocabulary_trainer_app/screens/home/selectable_list_tile.dart';
+import 'package:vocabulary_trainer_app/screens/home/selection_app_bar.dart';
 
-import '../components/data_fetcher.dart';
-import '../components/loading_display.dart';
-import '../database/database.dart';
-import '../exception.dart';
-import '../components/placeholder_display.dart';
-import '../database/dao.dart';
-import '../models/vocabulary_collection.dart';
-import 'details/details.dart';
+import '../../components/data_fetcher.dart';
+import '../../components/loading_display.dart';
+import '../../database/database.dart';
+import '../../exception.dart';
+import '../../components/placeholder_display.dart';
+import '../../database/dao.dart';
+import '../../models/vocabulary_collection.dart';
+import '../details/details.dart';
 
 class HomePage extends StatefulWidget {
   final VocabularyCollectionDao collectionDao =
@@ -26,6 +28,12 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   final List<int> _selectedItems = [];
   Key dataFetcherKey = UniqueKey();
+
+  void removeSelection() {
+    setState(() {
+      _selectedItems.clear();
+    });
+  }
 
   Future<void> deleteSelectedItems() async {
     if (_selectedItems.isEmpty) {
@@ -93,33 +101,11 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    var theme = Theme.of(context);
-    List<Widget> actions = [];
-    bool hasSelection = _selectedItems.isNotEmpty;
-
-    IconButton removeSelectionButton = IconButton(
-      icon: const Icon(Icons.arrow_back),
-      onPressed: () {
-        setState(() {
-          _selectedItems.clear();
-        });
-      },
-    );
-
-    IconButton deleteSelectedItemsButton = IconButton(
-        icon: const Icon(Icons.delete), onPressed: deleteSelectedItems);
-
-    if (hasSelection) {
-      actions.add(deleteSelectedItemsButton);
-    }
-
     return Scaffold(
-      appBar: AppBar(
-        title: Text(hasSelection
-            ? "${_selectedItems.length} selected"
-            : "Vocabulary Trainer"),
-        leading: hasSelection ? removeSelectionButton : null,
-        actions: actions,
+      appBar: SelectionAppBar(
+        selectionLength: _selectedItems.length,
+        deleteSelectedItems: deleteSelectedItems,
+        removeSelection: removeSelection
       ),
       body: Center(
           child: DataFetcher<List<VocabularyCollection>>(
@@ -156,50 +142,26 @@ class _HomePageState extends State<HomePage> {
                   VocabularyCollection collection = data[index];
                   bool selected = _selectedItems.contains(collection.id);
 
-                  CircleAvatar leadingAvatar = CircleAvatar(
-                    child: Icon(selected ? Icons.check : Icons.book_outlined),
-                  );
-
-                  Function() onTap = () {
-                    Navigator.push(context, MaterialPageRoute(
-                      builder: (context) {
-                        return CollectionDetails.fromDatabase(collection.id!);
+                  return SelectableListTile(
+                      selected: _selectedItems.contains(collection.id),
+                      listHasSelection: _selectedItems.isNotEmpty,
+                      collection: collection,
+                      onTap: () {
+                        Navigator.push(context, MaterialPageRoute(
+                          builder: (context) {
+                            return CollectionDetails.fromDatabase(collection.id!);
+                          },
+                        ));
                       },
-                    ));
-                  };
-
-                  select() {
-                    setState(() {
-                      if (selected) {
-                        _selectedItems.remove(collection.id);
-                      } else {
-                        _selectedItems.add(collection.id!);
+                      selectOrDeselect: () {
+                        setState(() {
+                          if (selected) {
+                            _selectedItems.remove(collection.id);
+                          } else {
+                            _selectedItems.add(collection.id!);
+                          }
+                        });
                       }
-                    });
-                  }
-
-                  if (hasSelection) {
-                    onTap = select;
-                  }
-
-                  return ListTile(
-                    onTap: onTap,
-                    onLongPress: () {
-                      setState(() {
-                        _selectedItems.add(collection.id!);
-                      });
-                    },
-                    selected: selected,
-                    selectedTileColor: theme.highlightColor,
-                    leading: leadingAvatar,
-                    title: Text(collection.title),
-                    subtitle: Row(
-                      children: [
-                        Text(collection.languageA),
-                        const Text(" - "),
-                        Text(collection.languageB)
-                      ],
-                    ),
                   );
                 },
               );

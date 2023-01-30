@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:vocabulary_trainer_app/database/database.dart';
 
-import 'screens/home.dart';
+import 'screens/home/home.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
