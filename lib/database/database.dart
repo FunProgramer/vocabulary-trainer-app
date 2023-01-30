@@ -26,5 +26,14 @@ abstract class AppDatabase extends FloorDatabase {
 }
 
 final migration1to2 = Migration(1, 2, (database) async {
-  await database.execute('CREATE TABLE IF NOT EXISTS `Vocabulary` (`id` INTEGER, `collectionId` INTEGER, `languageA` TEXT NOT NULL, `languageARegex` TEXT NOT NULL, `languageB` TEXT NOT NULL, `languageBRegex` TEXT NOT NULL, FOREIGN KEY (`collectionId`) REFERENCES `VocabularyCollection` (`id`) ON UPDATE NO ACTION ON DELETE NO ACTION, PRIMARY KEY (`id`))');
+  await database.execute('CREATE TABLE '
+      'IF NOT EXISTS `Vocabulary` '
+      '(`id` INTEGER, '
+      '`collectionId` INTEGER, '
+      '`languageA` TEXT NOT NULL, '
+      '`languageARegex` TEXT NOT NULL, '
+      '`languageB` TEXT NOT NULL, '
+      '`languageBRegex` TEXT NOT NULL, '
+      'FOREIGN KEY (`collectionId`) REFERENCES `VocabularyCollection` (`id`) '
+      'ON UPDATE NO ACTION ON DELETE NO ACTION, PRIMARY KEY (`id`))');
 });
