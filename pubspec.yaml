@@ -35,7 +35,7 @@ dependencies:
   sqflite: ^2.2.2
   json_schema3: ^1.0.0
   file_picker: ^5.2.5
-  sliver_table: ^0.0.1
+  sliver_table: ^0.0.2
   customizable_space_bar: ^0.2.0
   fluttertoast: ^8.1.2
 
