@@ -19,32 +19,6 @@ class DetailsDisplay extends StatelessWidget {
     final windowWidth = MediaQuery.of(context).size.width;
     final theme = Theme.of(context);
 
-    SliverTableController tableController = SliverTableController(
-        rowsCount: vocabularyCollection.vocabularies.length,
-        colsCount: 2,
-        cellWidth: windowWidth / 2,
-        leftHeaderCellWidth: 0,
-        cellBuilder: (context, row, col) {
-          var vocabulary = vocabularyCollection.vocabularies[row];
-
-          if (col == 0) {
-            return TableElementA(text: vocabulary.languageA);
-          } else {
-            return TableElementB(text: vocabulary.languageB);
-          }
-        },
-        topHeaderBuilder: (context, index) {
-          String text;
-
-          if (index == 0) {
-            text = vocabularyCollection.languageA;
-          } else {
-            text = vocabularyCollection.languageB;
-          }
-          return TableHeader(text);
-        },
-        leftHeaderBuilder: (context, index) => Container());
-
     return CustomScrollView(
       slivers: [
         SliverAppBar(
@@ -97,8 +71,32 @@ class DetailsDisplay extends StatelessWidget {
             },
           ),
         ),
-        SliverTableHeader(tableController: tableController),
-        SliverTableBody(tableController: tableController)
+        SliverTable(
+            rowsCount: vocabularyCollection.vocabularies.length,
+            colsCount: 2,
+            cellWidth: windowWidth / 2,
+            leftHeaderCellWidth: 0,
+            cellBuilder: (context, row, col) {
+              var vocabulary = vocabularyCollection.vocabularies[row];
+
+              if (col == 0) {
+                return TableElementA(text: vocabulary.languageA);
+              } else {
+                return TableElementB(text: vocabulary.languageB);
+              }
+            },
+            topHeaderBuilder: (context, index) {
+              String text;
+
+              if (index == 0) {
+                text = vocabularyCollection.languageA;
+              } else {
+                text = vocabularyCollection.languageB;
+              }
+              return TableHeader(text);
+            },
+            leftHeaderBuilder: (context, index) => Container()
+        )
       ],
     );
   }
