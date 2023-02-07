@@ -114,6 +114,22 @@ class _CollectionDetailsState extends State<CollectionDetails> {
           icon: const Icon(Icons.psychology),
           tooltip: S.of(context).learnVocabularies,
         ));
+      } else {
+        actions.add(IconButton(
+          onPressed: () {
+            showDialog(
+                context: context,
+                builder: (context) {
+                  TrainingBuilder trainingBuilder = TrainingBuilder();
+                  trainingBuilder.vocabularyCollection = _vocabularyCollection;
+
+                  return TrainingCreationDialog(trainingBuilder: trainingBuilder);
+                },
+            );
+          },
+          icon: const Icon(Icons.psychology),
+          tooltip: "Learn vocabularies",
+        ));
       }
     }
 
