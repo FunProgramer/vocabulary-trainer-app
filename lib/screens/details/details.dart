@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:vocabulary_trainer_app/components/error_dialog.dart';
 import 'package:vocabulary_trainer_app/components/loading_dialog.dart';
+import 'package:vocabulary_trainer_app/screens/training_creation_dialog.dart';
+import 'package:vocabulary_trainer_app/services/training.dart';
 
 import '../../components/data_fetcher.dart';
 import '../../database/database.dart';
@@ -99,6 +101,22 @@ class _CollectionDetailsState extends State<CollectionDetails> {
             onPressed: _importVocabularyCollection,
             icon: const Icon(Icons.save_alt),
             tooltip: "Import Vocabulary Collection",
+        ));
+      } else {
+        actions.add(IconButton(
+          onPressed: () {
+            showDialog(
+                context: context,
+                builder: (context) {
+                  TrainingBuilder trainingBuilder = TrainingBuilder();
+                  trainingBuilder.vocabularyCollection = _vocabularyCollection;
+
+                  return TrainingCreationDialog(trainingBuilder: trainingBuilder);
+                },
+            );
+          },
+          icon: const Icon(Icons.psychology),
+          tooltip: "Learn vocabularies",
         ));
       }
     }
