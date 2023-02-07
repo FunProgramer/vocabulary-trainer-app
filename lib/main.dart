@@ -31,7 +31,7 @@ class VocabularyTrainerApp extends StatelessWidget {
         primarySwatch: Colors.green,
       ),
       themeMode: ThemeMode.system,
-      home: HomePage(),
+      home: HomeScreen(),
     );
   }
 

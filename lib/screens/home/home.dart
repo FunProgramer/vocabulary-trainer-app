@@ -13,19 +13,19 @@ import '../../database/dao.dart';
 import '../../models/vocabulary_collection.dart';
 import '../details/details.dart';
 
-class HomePage extends StatefulWidget {
+class HomeScreen extends StatefulWidget {
   final VocabularyCollectionDao collectionDao =
       DatabaseInstance.appDatabase!.vocabularyCollectionDao;
   final CompleteVocabularyCollectionDao completeCollectionDao =
       DatabaseInstance.appDatabase!.getCompleteVocabularyCollectionDao();
 
-  HomePage({Key? key}) : super(key: key);
+  HomeScreen({Key? key}) : super(key: key);
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  State<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomeScreenState extends State<HomeScreen> {
   final List<int> _selectedItems = [];
   Key dataFetcherKey = UniqueKey();
 
