@@ -77,7 +77,7 @@ class _TrainingCreationDialogState extends State<TrainingCreationDialog> {
       actions.add(TextButton(
           onPressed: () {
             pageController.previousPage(
-                duration: const Duration(milliseconds: 500),
+                duration: const Duration(milliseconds: 200),
                 curve: Curves.linear);
           },
           child: const Text("Back")
@@ -98,7 +98,7 @@ class _TrainingCreationDialogState extends State<TrainingCreationDialog> {
             ? null
             : () {
                 pageController.nextPage(
-                    duration: const Duration(milliseconds: 500),
+                    duration: const Duration(milliseconds: 200),
                     curve: Curves.linear);
               },
         child: const Text("Next"),
