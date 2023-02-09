@@ -30,6 +30,7 @@ class _TrainingScreenState extends State<TrainingScreen> {
   @override
   Widget build(BuildContext context) {
     List<ExercisePage> pages = [];
+    int finishedExercises = -1;
 
     for (int i = 0; i < widget.training.exercises.length; i++) {
       if (i > 0 && states[i-1] == ExerciseState.notAnswered) {
@@ -64,6 +65,7 @@ class _TrainingScreenState extends State<TrainingScreen> {
         exercise: exercise,
         initialAnswer: answers[i],
       ));
+      finishedExercises++;
     }
 
     return Scaffold(
@@ -72,6 +74,22 @@ class _TrainingScreenState extends State<TrainingScreen> {
       ),
       body: Column(
         children: [
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Row(
+              children: [
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: LinearProgressIndicator(
+                      value: finishedExercises/widget.training.exercises.length
+                    ),
+                  ),
+                ),
+                Text("$finishedExercises/${widget.training.exercises.length}")
+              ],
+            ),
+          ),
           Expanded(
             child: PageView(
               controller: pageController,
