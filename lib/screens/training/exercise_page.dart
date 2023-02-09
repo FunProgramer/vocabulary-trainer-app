@@ -29,6 +29,11 @@ class ExercisePage extends StatefulWidget {
 class _ExercisePageState extends State<ExercisePage> {
   String _answer = "";
 
+  void submit() {
+    if (_answer == "") return;
+    widget.submit(_answer);
+  }
+
   @override
   Widget build(BuildContext context) {
     List<Widget> bottomActions = [];
@@ -40,10 +45,7 @@ class _ExercisePageState extends State<ExercisePage> {
           child: const Text("Skip"),
         ),
         ElevatedButton(
-          onPressed: () {
-            if (_answer == "") return;
-            widget.submit(_answer);
-          },
+          onPressed: submit,
           child: const Text("Submit"),
         ),
       ]);
@@ -166,11 +168,15 @@ class _ExercisePageState extends State<ExercisePage> {
                         children: [
                           Text(widget.exercise.requestedLanguageName),
                           TextField(
+                            autofocus: true,
                             enabled: widget.state == ExerciseState.notAnswered,
                             controller: TextEditingController(
                                 text: widget.initialAnswer),
                             onChanged: (value) {
                               _answer = value;
+                            },
+                            onSubmitted: (value) {
+                              submit();
                             },
                             style: textTheme.titleLarge,
                           )
