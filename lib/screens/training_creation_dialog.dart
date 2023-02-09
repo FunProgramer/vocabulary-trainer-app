@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:vocabulary_trainer_app/components/option_selection_page.dart';
+import 'package:vocabulary_trainer_app/screens/training/training.dart';
 import 'package:vocabulary_trainer_app/services/training.dart';
 
 class TrainingCreationDialog extends StatefulWidget {
@@ -88,7 +89,9 @@ class _TrainingCreationDialogState extends State<TrainingCreationDialog> {
     if (page == pages.length - 1) {
       actions.add(TextButton(
         onPressed: () {
-          print("Start training clicked.");
+          Navigator.push(context, MaterialPageRoute(builder: (context) {
+            return TrainingScreen(training: widget.trainingBuilder.build());
+          },));
         },
         child: const Text("Start training"),
       ));
@@ -109,7 +112,7 @@ class _TrainingCreationDialogState extends State<TrainingCreationDialog> {
       title: const Text("Learn vocabularies"),
       content: SizedBox(
         width: 300,
-        height: 200,
+        height: 250,
         child: PageView( // PageView in dialog is not working
           controller: pageController,
           children: pages,
