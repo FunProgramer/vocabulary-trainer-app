@@ -1,6 +1,7 @@
 import 'package:vocabulary_trainer_app/models/complete_vocabulary_collection.dart';
 import 'package:vocabulary_trainer_app/services/random.dart';
 
+import '../models/exercise_state.dart';
 import '../models/vocabulary.dart';
 
 class Training {
@@ -17,6 +18,9 @@ class Exercise {
   final String requestedLanguageName;
   final String requestedLanguage;
   final RegExp _requestedLanguageRegex;
+
+  ExerciseState state = ExerciseState.notAnswered;
+  String answer = "";
 
   Exercise._withStandardLanguageDirection(
       String languageAName, String languageBName, Vocabulary vocabulary)
@@ -38,6 +42,11 @@ class Exercise {
     answer = answer.trim();
 
     return _requestedLanguageRegex.hasMatch(answer);
+  }
+
+  @override
+  String toString() {
+    return "$providedLanguage - ${answer == "" ? '?' : answer}";
   }
 }
 
