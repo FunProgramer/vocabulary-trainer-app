@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:vocabulary_trainer_app/components/error_dialog.dart';
 import 'package:vocabulary_trainer_app/components/loading_dialog.dart';
+import 'package:vocabulary_trainer_app/screens/about.dart';
 import 'package:vocabulary_trainer_app/screens/home/selectable_list_tile.dart';
 import 'package:vocabulary_trainer_app/screens/home/selection_app_bar.dart';
 
@@ -101,11 +102,39 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    var theme = Theme.of(context);
+
     return Scaffold(
       appBar: SelectionAppBar(
         selectionLength: _selectedItems.length,
         deleteSelectedItems: deleteSelectedItems,
-        removeSelection: removeSelection
+        removeSelection: removeSelection,
+        defaultActions: [
+          PopupMenuButton(
+            itemBuilder: (context) {
+              return [
+                PopupMenuItem(
+                  onTap: () {
+                    WidgetsBinding.instance.addPostFrameCallback((_) {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) {
+                            return const AboutScreen();
+                          })
+                      );
+                    });
+                  },
+                  child: Row(
+                    children: [
+                      Icon(Icons.info_outline, color: theme.textTheme.bodySmall?.color),
+                      const SizedBox(width: 8),
+                      const Text("About this app")
+                    ],
+                  ),
+                )
+              ];
+            },
+          )
+        ],
       ),
       body: Center(
           child: DataFetcher<List<VocabularyCollection>>(
