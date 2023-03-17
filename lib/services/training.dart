@@ -52,16 +52,8 @@ class Exercise {
 
 class TrainingBuilder {
   CompleteVocabularyCollection? vocabularyCollection;
-  LanguageDirection _languageDirection = LanguageDirection.standard;
-  ExerciseOrder _exerciseOrder = ExerciseOrder.standard;
-
-  set languageDirection(LanguageDirection value) {
-    _languageDirection = value;
-  }
-
-  set exerciseOrder(ExerciseOrder value) {
-    _exerciseOrder = value;
-  }
+  LanguageDirection languageDirection = LanguageDirection.standard;
+  ExerciseOrder exerciseOrder = ExerciseOrder.standard;
   
   Training build() {
    if (vocabularyCollection == null) {
@@ -71,11 +63,11 @@ class TrainingBuilder {
    List<Vocabulary> vocabularies = [...vocabularyCollection!.vocabularies];
    List<Exercise> exercises = [];
 
-   if (_exerciseOrder == ExerciseOrder.random) {
+   if (exerciseOrder == ExerciseOrder.random) {
      vocabularies.shuffle();
    }
 
-   switch (_languageDirection) {
+   switch (languageDirection) {
      case LanguageDirection.standard:
        exercises = vocabularies.map((e) {
           return Exercise._withStandardLanguageDirection(

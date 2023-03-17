@@ -15,7 +15,6 @@ class TrainingCreationDialog extends StatefulWidget {
 
 class _TrainingCreationDialogState extends State<TrainingCreationDialog> {
   final PageController pageController = PageController();
-  final List<TrainingCreationOption?> selectedOptions = List.filled(2, null);
   int page = 0;
 
   @override
@@ -34,10 +33,9 @@ class _TrainingCreationDialogState extends State<TrainingCreationDialog> {
       OptionSelectionPage<LanguageDirection>(
         optionSelected: (value) {
           setState(() {
-            selectedOptions[0] = value;
+            if (value == null) return;
+            widget.trainingBuilder.languageDirection = value;
           });
-          if (value == null) return;
-          widget.trainingBuilder.languageDirection = value;
         },
         question: "In which language direction do you want to learn the vocabulary?",
         options: [
@@ -51,12 +49,13 @@ class _TrainingCreationDialogState extends State<TrainingCreationDialog> {
               "Random for each vocabulary",
               LanguageDirection.random),
         ],
-        selectedOption: selectedOptions[0] as LanguageDirection?,
+        selectedOption: widget.trainingBuilder.languageDirection,
       ),
       OptionSelectionPage<ExerciseOrder>(
         optionSelected: (value) {
           setState(() {
-            selectedOptions[1] = value;
+            if (value == null) return;
+            widget.trainingBuilder.exerciseOrder = value;
           });
           if (value == null) return;
           widget.trainingBuilder.exerciseOrder = value;
@@ -70,7 +69,7 @@ class _TrainingCreationDialogState extends State<TrainingCreationDialog> {
               "Random order",
               ExerciseOrder.random),
         ],
-        selectedOption: selectedOptions[1] as ExerciseOrder?,
+        selectedOption: widget.trainingBuilder.exerciseOrder,
       )
     ];
 
@@ -97,9 +96,7 @@ class _TrainingCreationDialogState extends State<TrainingCreationDialog> {
       ));
     } else {
       actions.add(TextButton(
-        onPressed: selectedOptions[page] == null
-            ? null
-            : () {
+        onPressed: () {
                 pageController.nextPage(
                     duration: const Duration(milliseconds: 200),
                     curve: Curves.linear);
