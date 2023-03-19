@@ -20,7 +20,7 @@ class Exercise {
   final RegExp _requestedLanguageRegex;
 
   ExerciseState state = ExerciseState.notAnswered;
-  String answer = "";
+  String _answer = "";
 
   Exercise._withStandardLanguageDirection(
       String languageAName, String languageBName, Vocabulary vocabulary)
@@ -38,10 +38,16 @@ class Exercise {
         requestedLanguage = vocabulary.languageA,
         _requestedLanguageRegex = RegExp("^${vocabulary.languageARegex}\$");
 
-  bool checkAnswer(String answer) {
-    answer = answer.trim();
+  String get answer => _answer;
 
-    return _requestedLanguageRegex.hasMatch(answer);
+  void checkAnswer(String answer) {
+    _answer = answer.trim();
+
+    if (_requestedLanguageRegex.hasMatch(_answer)) {
+      state = ExerciseState.correctAnswered;
+    } else {
+      state = ExerciseState.wrongAnswered;
+    }
   }
 
   @override

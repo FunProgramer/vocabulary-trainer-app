@@ -21,6 +21,12 @@ class _TrainingScreenState extends State<TrainingScreen> {
     super.initState();
   }
 
+  void goToNextPage() {
+    pageController.nextPage(
+        duration: const Duration(milliseconds: 200),
+        curve: Curves.linear);
+  }
+
   @override
   Widget build(BuildContext context) {
     List<ExercisePage> pages = [];
@@ -28,37 +34,25 @@ class _TrainingScreenState extends State<TrainingScreen> {
 
     var exercises = widget.training.exercises;
     for (int i = 0; i < exercises.length; i++) {
+      // Stop adding pages if the last exercise was not answered
       if (i > 0 && exercises[i-1].state == ExerciseState.notAnswered) {
         break;
       }
       Exercise exercise = exercises[i];
       pages.add(ExercisePage(
-        submit: (answer) {
+        onSubmit: (answer) {
           setState(() {
-            exercise.answer = answer;
-            if (exercise.checkAnswer(answer)) {
-              exercise.state = ExerciseState.correctAnswered;
-            } else {
-              exercise.state = ExerciseState.wrongAnswered;
-            }
+            exercise.checkAnswer(answer);
           });
         },
-        nextPage: () {
-          pageController.nextPage(
-              duration: const Duration(milliseconds: 200),
-              curve: Curves.linear);
-        },
-        skip: () {
+        onNextPageRequested: goToNextPage,
+        onSkip: () {
           setState(() {
             exercise.state = ExerciseState.skipped;
           });
-          pageController.nextPage(
-              duration: const Duration(milliseconds: 200),
-              curve: Curves.linear);
+          goToNextPage();
         },
-        state: exercise.state,
-        exercise: exercise,
-        initialAnswer: exercise.answer,
+        exercise: exercise
       ));
       finishedExercises++;
     }
