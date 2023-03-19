@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter/services.dart';
+import 'package:vocabulary_trainer_app/services/url_open.dart';
 
 class AboutScreen extends StatelessWidget {
   const AboutScreen({Key? key}) : super(key: key);
@@ -31,24 +31,24 @@ class AboutScreen extends StatelessWidget {
                 ElevatedButton.icon(
                   onPressed: () async {
                     const uriText = "https://github.com/FunProgramer/vocabulary-trainer-app";
-                    var uri = Uri.parse(uriText);
-                    if (await canLaunchUrl(uri)) {
-                      await launchUrl(uri, mode: LaunchMode.inAppWebView);
-                    } else {
+                    bool opened = await openUrl(context, uriText);
+                    if (!opened) {
                       final snackBar = SnackBar(
-                        content: const Text("Couldn't to open the GitHub Website."),
+                        content: const Text(
+                            "Couldn't to open the GitHub Website."),
                         action: SnackBarAction(
                           label: "Copy URL",
                           onPressed: () async {
-                            await Clipboard
-                                .setData(const ClipboardData(text: uriText));
-                            },
+                            await Clipboard.setData(
+                                const ClipboardData(text: uriText));
+                          },
                         ),
                       );
 
-                      if (!context.mounted) return;
-                      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                      if (context.mounted) {
+                        ScaffoldMessenger.of(context).showSnackBar(snackBar);
                       }
+                    }
                   },
                   icon: const Icon(Icons.code),
                   label: const Text("Source Code"),
