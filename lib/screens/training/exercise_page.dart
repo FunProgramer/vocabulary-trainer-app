@@ -1,25 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:vocabulary_trainer_app/models/exercise_state.dart';
+import 'package:vocabulary_trainer_app/screens/training/exercise_card.dart';
 
 import '../../services/training.dart';
 
 class ExercisePage extends StatefulWidget {
-  final Function(String answer) submit;
-  final Function() skip;
-  final Function() nextPage;
+  final Function(String answer) onSubmit;
+  final Function() onSkip;
+  final Function() onNextPageRequested;
 
-  final ExerciseState state;
   final Exercise exercise;
-  final String initialAnswer;
 
   const ExercisePage(
       {Key? key,
-      required this.submit,
-      required this.nextPage,
-      required this.skip,
-      required this.state,
-      required this.exercise,
-      required this.initialAnswer})
+      required this.onSubmit,
+      required this.onSkip,
+      required this.onNextPageRequested,
+      required this.exercise})
       : super(key: key);
 
   @override
@@ -31,17 +28,17 @@ class _ExercisePageState extends State<ExercisePage> {
 
   void submit() {
     if (_answer == "") return;
-    widget.submit(_answer);
+    widget.onSubmit(_answer);
   }
 
   @override
   Widget build(BuildContext context) {
     List<Widget> bottomActions = [];
 
-    if (widget.state == ExerciseState.notAnswered) {
+    if (widget.exercise.state == ExerciseState.notAnswered) {
       bottomActions.addAll([
         TextButton(
-          onPressed: widget.skip,
+          onPressed: widget.onSkip,
           child: const Text("Skip"),
         ),
         ElevatedButton(
@@ -51,81 +48,65 @@ class _ExercisePageState extends State<ExercisePage> {
       ]);
     } else {
       bottomActions.add(ElevatedButton(
-          onPressed: widget.nextPage, child: const Text("Next")));
+          onPressed: widget.onNextPageRequested,
+          child: const Text("Next"))
+      );
     }
 
-    Card? alertCard;
+    Widget? alertCard;
 
-    switch (widget.state) {
+    switch (widget.exercise.state) {
       case ExerciseState.notAnswered:
         break;
       case ExerciseState.skipped:
-        alertCard = Card(
+        alertCard = ExerciseCard(
           color: Colors.grey,
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  children: const [
-                    Icon(Icons.info),
-                    Text(
-                      "You skipped this exercise.",
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                    )
-                  ],
-                ),
-                Text("Correct answer: ${widget.exercise.requestedLanguage}")
+          children: [
+            Row(
+              children: const [
+                Icon(Icons.info),
+                Text(
+                  "You skipped this exercise.",
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                )
               ],
             ),
-          ),
+            Text("Correct answer: ${widget.exercise.requestedLanguage}")
+          ]
         );
         break;
       case ExerciseState.correctAnswered:
-        alertCard = Card(
+        alertCard = ExerciseCard(
           color: Colors.green,
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  children: const [
-                    Icon(Icons.check_circle),
-                    Text(
-                      "Correct answer!",
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                    )
-                  ],
-                ),
-                Text("Original answer: ${widget.exercise.requestedLanguage}")
+          children: [
+            Row(
+              children: const [
+                Icon(Icons.check_circle),
+                Text(
+                  "Correct answer!",
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                )
               ],
             ),
-          ),
+            Text("Original answer: ${widget.exercise.requestedLanguage}")
+          ],
         );
         break;
       case ExerciseState.wrongAnswered:
-        alertCard = Card(
-          color: Theme.of(context).colorScheme.error,
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  children: const [
-                    Icon(Icons.cancel),
-                    Text(
-                      "Wrong answer!",
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                    )
-                  ],
-                ),
-                Text("Correct answer: ${widget.exercise.requestedLanguage}")
-              ],
-            ),
-          ),
+        alertCard = ExerciseCard(
+            color: Theme.of(context).colorScheme.error,
+            children: [
+              Row(
+                children: const [
+                  Icon(Icons.cancel),
+                  Text(
+                    "Wrong answer!",
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  )
+                ],
+              ),
+              Text("Correct answer: ${widget.exercise.requestedLanguage}")
+            ]
         );
     }
 
@@ -137,65 +118,41 @@ class _ExercisePageState extends State<ExercisePage> {
           child: SingleChildScrollView(
             child: Column(
               children: [
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Card(
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: SizedBox(
-                        width: double.infinity,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(widget.exercise.providedLanguageName),
-                            Text(
-                              widget.exercise.providedLanguage,
-                              style: textTheme.titleLarge,
-                            )
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
+                ExerciseCard(
+                    children: [
+                      Text(widget.exercise.providedLanguageName),
+                      Text(
+                        widget.exercise.providedLanguage,
+                        style: textTheme.titleLarge,
+                      )
+                    ]
                 ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Card(
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(widget.exercise.requestedLanguageName),
-                          TextField(
-                            autofocus: true,
-                            enabled: widget.state == ExerciseState.notAnswered,
-                            controller: TextEditingController(
-                                text: widget.initialAnswer),
-                            onChanged: (value) {
-                              _answer = value;
-                            },
-                            onSubmitted: (value) {
-                              submit();
-                            },
-                            style: textTheme.titleLarge,
-                          )
-                        ],
-                      ),
-                    ),
-                  ),
+                ExerciseCard(
+                  children: [
+                    Text(widget.exercise.requestedLanguageName),
+                    TextField(
+                      autofocus: true,
+                      enabled: widget.exercise.state
+                          == ExerciseState.notAnswered,
+                      controller: TextEditingController(
+                          text: widget.exercise.answer),
+                      onChanged: (value) {
+                        _answer = value;
+                      },
+                      onSubmitted: (value) {
+                        submit();
+                      },
+                      style: textTheme.titleLarge,
+                    )
+                  ]
                 ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Builder(
-                    builder: (context) {
-                      if (alertCard != null) {
-                        return alertCard;
-                      }
-
-                      return Container();
-                    },
-                  ),
+                Builder(
+                  builder: (context) {
+                    if (alertCard != null) {
+                      return alertCard;
+                    }
+                    return Container();
+                  },
                 ),
               ],
             ),

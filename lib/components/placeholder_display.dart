@@ -20,7 +20,7 @@ class PlaceholderDisplay extends StatelessWidget {
         const SizedBox(height: 10),
         Text(
           headline,
-          style: textTheme.headline5,
+          style: textTheme.headlineSmall,
         ),
         Text(
             moreInfo,
