@@ -1,18 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:vocabulary_trainer_app/components/error_dialog.dart';
-import 'package:vocabulary_trainer_app/components/loading_dialog.dart';
-import 'package:vocabulary_trainer_app/screens/about.dart';
-import 'package:vocabulary_trainer_app/screens/home/selectable_list_tile.dart';
-import 'package:vocabulary_trainer_app/screens/home/selection_app_bar.dart';
 
-import '../../components/data_fetcher.dart';
+import '../../components/error_dialog.dart';
+import '../../components/loading_dialog.dart';
 import '../../components/loading_display.dart';
-import '../../database/database.dart';
-import '../../exception.dart';
+import '../../components/data_fetcher.dart';
 import '../../components/placeholder_display.dart';
+import '../../database/database.dart';
 import '../../database/dao.dart';
+import '../../exception.dart';
 import '../../models/vocabulary_collection.dart';
+
 import '../details/details.dart';
+import '../about.dart';
+
+import 'selectable_list_tile.dart';
+import 'selection_app_bar.dart';
 
 class HomeScreen extends StatefulWidget {
   final VocabularyCollectionDao collectionDao =
