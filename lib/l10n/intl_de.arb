@@ -42,7 +42,7 @@
   "skip": "ÜBERSPRINGEN",
   "submit": "ÜBERPRÜFEN",
   "skippedExercise": "Du hast diese Übung übersprungen",
-  "correctAnswer": "Richtige Antwort: {requestedAnswer",
+  "correctAnswer": "Richtige Antwort: {requestedAnswer}",
   "correctAnswerInfo": "Richtige Antwort!",
   "wrongAnswer": "Falsche Antwort!",
   "originalAnswer": "Ursprüngliche Antwort: {requestedAnswer}",
