@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:vocabulary_trainer_app/models/exercise_state.dart';
 import 'package:vocabulary_trainer_app/screens/training/exercise_card.dart';
 
+import '../../generated/l10n.dart';
 import '../../services/training.dart';
 
 class ExercisePage extends StatefulWidget {
@@ -39,17 +40,17 @@ class _ExercisePageState extends State<ExercisePage> {
       bottomActions.addAll([
         TextButton(
           onPressed: widget.onSkip,
-          child: const Text("Skip"),
+          child: Text(S.of(context).skip),
         ),
         ElevatedButton(
           onPressed: submit,
-          child: const Text("Submit"),
+          child: Text(S.of(context).submit),
         ),
       ]);
     } else {
       bottomActions.add(ElevatedButton(
           onPressed: widget.onNextPageRequested,
-          child: const Text("Next"))
+          child: Text(S.of(context).next))
       );
     }
 
@@ -63,15 +64,15 @@ class _ExercisePageState extends State<ExercisePage> {
           color: Colors.grey,
           children: [
             Row(
-              children: const [
-                Icon(Icons.info),
+              children: [
+                const Icon(Icons.info),
                 Text(
-                  "You skipped this exercise.",
-                  style: TextStyle(fontWeight: FontWeight.bold),
+                  S.of(context).skippedExercise,
+                  style: const TextStyle(fontWeight: FontWeight.bold),
                 )
               ],
             ),
-            Text("Correct answer: ${widget.exercise.requestedLanguage}")
+            Text(S.of(context).correctAnswer(widget.exercise.requestedLanguage))
           ]
         );
         break;
@@ -80,15 +81,15 @@ class _ExercisePageState extends State<ExercisePage> {
           color: Colors.green,
           children: [
             Row(
-              children: const [
-                Icon(Icons.check_circle),
+              children: [
+                const Icon(Icons.check_circle),
                 Text(
-                  "Correct answer!",
-                  style: TextStyle(fontWeight: FontWeight.bold),
+                  S.of(context).correctAnswerInfo,
+                  style: const TextStyle(fontWeight: FontWeight.bold),
                 )
               ],
             ),
-            Text("Original answer: ${widget.exercise.requestedLanguage}")
+            Text(S.of(context).originalAnswer(widget.exercise.requestedLanguage))
           ],
         );
         break;
@@ -97,15 +98,15 @@ class _ExercisePageState extends State<ExercisePage> {
             color: Theme.of(context).colorScheme.error,
             children: [
               Row(
-                children: const [
-                  Icon(Icons.cancel),
+                children: [
+                  const Icon(Icons.cancel),
                   Text(
-                    "Wrong answer!",
-                    style: TextStyle(fontWeight: FontWeight.bold),
+                    S.of(context).wrongAnswer,
+                    style: const TextStyle(fontWeight: FontWeight.bold),
                   )
                 ],
               ),
-              Text("Correct answer: ${widget.exercise.requestedLanguage}")
+              Text(S.of(context).correctAnswer(widget.exercise.requestedLanguage))
             ]
         );
     }

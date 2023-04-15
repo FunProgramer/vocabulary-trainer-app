@@ -8,6 +8,7 @@ import '../../components/placeholder_display.dart';
 import '../../database/database.dart';
 import '../../database/dao.dart';
 import '../../exception.dart';
+import '../../generated/l10n.dart';
 import '../../models/vocabulary_collection.dart';
 
 import '../details/details.dart';
@@ -46,18 +47,21 @@ class _HomeScreenState extends State<HomeScreen> {
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: const Text("Delete Vocabulary Collections?"),
-          content: Text("Are you sure to delete ${_selectedItems.length} "
-              "Vocabulary Collection(s)?"),
+          title: Text(
+              S.of(context).deleteVocabularyCollections(_selectedItems.length)
+          ),
+          content: Text(
+              S.of(context).deleteVocabularyCollectionsFull(_selectedItems.length)
+          ),
           actions: [
             TextButton(
-              child: const Text("No"),
+              child: Text(S.of(context).no),
               onPressed: () {
                 Navigator.pop(context);
               },
             ),
             TextButton(
-              child: const Text("Yes"),
+              child: Text(S.of(context).yes),
               onPressed: () async {
                 BuildContext? dContext;
                 Navigator.pop(context);
@@ -66,9 +70,9 @@ class _HomeScreenState extends State<HomeScreen> {
                   barrierDismissible: false,
                   builder: (context) {
                     dContext = context;
-                    return const LoadingDialog(
-                        title: "Delete Vocabulary Collection",
-                        infoText: "Deleting");
+                    return LoadingDialog(
+                        title: S.of(context).deletingVocabularyCollection,
+                        infoText: S.of(context).deleting);
                   },
                 );
                 try {
@@ -129,7 +133,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     children: [
                       Icon(Icons.info_outline, color: theme.textTheme.bodySmall?.color),
                       const SizedBox(width: 8),
-                      const Text("About this app")
+                      Text(S.of(context).aboutApp)
                     ],
                   ),
                 )
@@ -149,21 +153,20 @@ class _HomeScreenState extends State<HomeScreen> {
               }
               return vocabularyCollections;
             },
-            loadingWidget: const LoadingDisplay(
-              infoText: "Loading data...",
+            loadingWidget: LoadingDisplay(
+              infoText: S.of(context).loadingData,
             ),
             onError: (exception) {
               if (exception is NoDataException) {
-                return const PlaceholderDisplay(
+                return PlaceholderDisplay(
                     icon: Icons.list,
-                    headline: "No collections",
-                    moreInfo: "Click on the plus icon in the bottom right"
-                        " corner to add one.");
+                    headline: S.of(context).noCollections,
+                    moreInfo: S.of(context).addCollectionHint);
               } else {
                 return PlaceholderDisplay(
                     icon: Icons.error,
-                    headline: "An error occurred",
-                    moreInfo: "More info:\n${exception.toString()}");
+                    headline: S.of(context).anErrorOccurred,
+                    moreInfo: S.of(context).moreInfoError(exception.toString()));
               }
             },
             onFinished: (dynamic data) {

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:vocabulary_trainer_app/services/url_open.dart';
 
+import '../generated/l10n.dart';
+
 class AboutScreen extends StatelessWidget {
   const AboutScreen({Key? key}) : super(key: key);
 
@@ -11,7 +13,7 @@ class AboutScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text("About this app"),
+        title: Text(S.of(context).aboutApp),
       ),
       body: SingleChildScrollView(
         child: Center(
@@ -23,35 +25,34 @@ class AboutScreen extends StatelessWidget {
                 ),
                 Text("Vocabulary Trainer", style: textTheme.headlineMedium),
                 Text(
-                  "An app to learn vocabularies, developed with flutter.",
+                  S.of(context).appDescription,
                   style: textTheme.bodyLarge,
                 ),
-                const Text("Created by FunProgramer"),
+                Text(S.of(context).author),
                 const SizedBox(height: 20),
                 ElevatedButton.icon(
                   onPressed: () async {
                     const uriText = "https://github.com/FunProgramer/vocabulary-trainer-app";
                     bool opened = await openUrl(context, uriText);
                     if (!opened) {
+                      if (context.mounted) {
                       final snackBar = SnackBar(
-                        content: const Text(
-                            "Couldn't to open the GitHub Website."),
+                        content: Text(S.of(context).errorOpenGitHub),
                         action: SnackBarAction(
-                          label: "Copy URL",
+                          label: S.of(context).copyUrl,
                           onPressed: () async {
                             await Clipboard.setData(
                                 const ClipboardData(text: uriText));
                           },
                         ),
                       );
-
-                      if (context.mounted) {
+                      
                         ScaffoldMessenger.of(context).showSnackBar(snackBar);
                       }
                     }
                   },
                   icon: const Icon(Icons.code),
-                  label: const Text("Source Code"),
+                  label: Text(S.of(context).sourceCode),
                 )
               ]
           )

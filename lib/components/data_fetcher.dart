@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../generated/l10n.dart';
 import '../models/data_fetching_state.dart';
 
 class DataFetcher<T> extends StatefulWidget {
@@ -47,7 +48,7 @@ class _DataFetcherState<T> extends State<DataFetcher> {
 
     switch(_state.state) {
       case LoadingState.initial:
-        resultWidget = const Text("Loading not started. Will be started soon.");
+        resultWidget = Text(S.of(context).loadingNotStarted);
         break;
       case LoadingState.loading:
         resultWidget = widget.loadingWidget;

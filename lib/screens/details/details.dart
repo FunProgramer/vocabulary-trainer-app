@@ -7,6 +7,7 @@ import 'package:vocabulary_trainer_app/services/training.dart';
 
 import '../../components/data_fetcher.dart';
 import '../../database/database.dart';
+import '../../generated/l10n.dart';
 import 'details_display.dart';
 import '../../database/dao.dart';
 import '../../../exception.dart';
@@ -57,8 +58,9 @@ class _CollectionDetailsState extends State<CollectionDetails> {
         barrierDismissible: false,
         builder: (context) {
           dContext = context;
-        return const LoadingDialog(
-            title: "Import Vocabulary Collection", infoText: "Importing"
+        return LoadingDialog(
+            title: S.of(context).importVocabularyCollection, 
+            infoText: S.of(context).importing
         );
       },
     );
@@ -87,8 +89,8 @@ class _CollectionDetailsState extends State<CollectionDetails> {
     // Pop CollectionDetails (this widget)
     if (mounted) {
       Navigator.pop(context, true);
+      Fluttertoast.showToast(msg: S.of(context).successfulImport);
     }
-    Fluttertoast.showToast(msg: "Successfully imported Vocabulary Collection");
   }
 
   @override
@@ -100,7 +102,7 @@ class _CollectionDetailsState extends State<CollectionDetails> {
         actions.add(IconButton(
             onPressed: _importVocabularyCollection,
             icon: const Icon(Icons.save_alt),
-            tooltip: "Import Vocabulary Collection",
+            tooltip: S.of(context).importVocabularyCollection,
         ));
       } else {
         actions.add(IconButton(
@@ -116,14 +118,14 @@ class _CollectionDetailsState extends State<CollectionDetails> {
             );
           },
           icon: const Icon(Icons.psychology),
-          tooltip: "Learn vocabularies",
+          tooltip: S.of(context).learnVocabularies,
         ));
       }
     }
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Collection Details"),
+        title: Text(S.of(context).collectionDetails),
         actions: actions,
       ),
       body: Center(
@@ -137,29 +139,29 @@ class _CollectionDetailsState extends State<CollectionDetails> {
               return vocabularyCollection;
             },
             loadingWidget: LoadingDisplay(
-              infoText: widget.importMode ? "Reading file..." : "Loading data...",
+              infoText: widget.importMode ? S.of(context).readingFile : 
+                  S.of(context).loadingData,
             ),
             onError: (exception) {
-              String error = "Not available";
+              String error = S.of(context).notAvailable;
 
               if (exception is FilePickingAbortedException) {
                 WidgetsBinding.instance.addPostFrameCallback((_) {
                   Navigator.pop(context);
                 });
-                error = "User aborted file picking. Navigating back to previous page in a few seconds...";
+                error = S.of(context).filePickingAborted;
               } else if (exception is NoDataException) {
-                error = "No data found. That means usually means, "
-                    "that the requested Vocabulary Collection does not exist.";
+                error = S.of(context).noData;
               } else if (exception is BrokenFileException) {
-                error = "The provided JSON-File is not in the correct format.";
+                error = S.of(context).brokenFile;
               } else {
                 error = exception.toString();
               }
 
               return PlaceholderDisplay(
                 icon: Icons.error,
-                headline: "An error occurred",
-                moreInfo: "More info:\n$error");
+                headline: S.of(context).anErrorOccurred,
+                moreInfo: S.of(context).moreInfoError(exception.toString()));
             },
             onFinished: (dynamic data) {
               WidgetsBinding.instance.addPostFrameCallback((_) {

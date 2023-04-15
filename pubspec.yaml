@@ -39,6 +39,8 @@ dependencies:
   customizable_space_bar: ^0.2.0
   fluttertoast: ^8.1.2
   url_launcher: ^6.1.10
+  flutter_localizations:
+    sdk: flutter
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -107,3 +109,5 @@ flutter_icons:
   ios: true
   remove_alpha_ios: true
   image_path: icon/icon.png
+flutter_intl:
+  enabled: true
