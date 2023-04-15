@@ -20,7 +20,7 @@ typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'de';
 
-  static String m0(requestedAnswer) => "Richtige Antwort: {requestedAnswer";
+  static String m0(requestedAnswer) => "Richtige Antwort: ${requestedAnswer}";
 
   static String m1(howMany) =>
       "${Intl.plural(howMany, one: 'Vokabel Sammlung löschen?', other: '${howMany} Vokabel Sammlungen löschen?')}";
