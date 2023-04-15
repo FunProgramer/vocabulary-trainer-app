@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../generated/l10n.dart';
+
 class ErrorDialog extends StatelessWidget {
   final BuildContext dialogContext;
   final String errorString;
@@ -12,11 +14,11 @@ class ErrorDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     return AlertDialog(
       icon: const Icon(Icons.error_outline),
-      title: const Text("An error occurred"),
-      content: Text("More info:\n$errorString"),
+      title: Text(S.of(context).anErrorOccurred),
+      content: Text(S.of(context).moreInfoError(errorString)),
       actions: [
         TextButton(
-            child: const Text("Ok"),
+            child: Text(MaterialLocalizations.of(context).okButtonLabel),
             onPressed: () => Navigator.pop(dialogContext))
       ],
     );

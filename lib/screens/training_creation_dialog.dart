@@ -3,6 +3,8 @@ import 'package:vocabulary_trainer_app/components/option_selection_page.dart';
 import 'package:vocabulary_trainer_app/screens/training/training.dart';
 import 'package:vocabulary_trainer_app/services/training.dart';
 
+import '../generated/l10n.dart';
+
 class TrainingCreationDialog extends StatefulWidget {
   final TrainingBuilder trainingBuilder;
 
@@ -25,7 +27,7 @@ class _TrainingCreationDialogState extends State<TrainingCreationDialog> {
         onPressed: () {
           Navigator.pop(context);
         },
-        child: const Text("Cancel"),
+        child: Text(MaterialLocalizations.of(context).cancelButtonLabel),
       ),
     ];
 
@@ -37,7 +39,7 @@ class _TrainingCreationDialogState extends State<TrainingCreationDialog> {
             widget.trainingBuilder.languageDirection = value;
           });
         },
-        question: "In which language direction do you want to learn the vocabulary?",
+        question: S.of(context).questionLanguageDirection,
         options: [
           SelectableOption<LanguageDirection>(
               "${collection.languageA} → ${collection.languageB}",
@@ -46,7 +48,7 @@ class _TrainingCreationDialogState extends State<TrainingCreationDialog> {
               "${collection.languageB} → ${collection.languageA}",
               LanguageDirection.reverse),
           SelectableOption(
-              "Random for each vocabulary",
+              S.of(context).randomForVocabulary,
               LanguageDirection.random),
         ],
         selectedOption: widget.trainingBuilder.languageDirection,
@@ -60,13 +62,13 @@ class _TrainingCreationDialogState extends State<TrainingCreationDialog> {
           if (value == null) return;
           widget.trainingBuilder.exerciseOrder = value;
         },
-        question: "In which order to you want to learn the vocabulary?",
+        question: S.of(context).questionExerciseOrder,
         options: [
           SelectableOption<ExerciseOrder>(
-              "Standard order",
+              S.of(context).standardOrder,
               ExerciseOrder.standard),
           SelectableOption(
-              "Random order",
+              S.of(context).randomOrder,
               ExerciseOrder.random),
         ],
         selectedOption: widget.trainingBuilder.exerciseOrder,
@@ -80,7 +82,7 @@ class _TrainingCreationDialogState extends State<TrainingCreationDialog> {
                 duration: const Duration(milliseconds: 200),
                 curve: Curves.linear);
           },
-          child: const Text("Back")
+          child: Text(S.of(context).back)
       ));
     }
 
@@ -92,7 +94,7 @@ class _TrainingCreationDialogState extends State<TrainingCreationDialog> {
             return TrainingScreen(training: widget.trainingBuilder.build());
           },));
         },
-        child: const Text("Start training"),
+        child: Text(S.of(context).startTraining),
       ));
     } else {
       actions.add(TextButton(
@@ -101,12 +103,12 @@ class _TrainingCreationDialogState extends State<TrainingCreationDialog> {
                     duration: const Duration(milliseconds: 200),
                     curve: Curves.linear);
               },
-        child: const Text("Next"),
+        child: Text(S.of(context).next),
       ));
     }
 
     return AlertDialog(
-      title: const Text("Learn vocabularies"),
+      title: Text(S.of(context).learnVocabularies),
       content: SizedBox(
         width: 300,
         height: 250,

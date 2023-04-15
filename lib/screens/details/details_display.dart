@@ -4,6 +4,7 @@ import 'package:sliver_table/sliver_table.dart';
 import 'package:vocabulary_trainer_app/screens/details/hidable_info.dart';
 import 'package:vocabulary_trainer_app/screens/details/table_elements.dart';
 
+import '../../generated/l10n.dart';
 import '../../models/complete_vocabulary_collection.dart';
 
 class DetailsDisplay extends StatelessWidget {
@@ -45,13 +46,11 @@ class DetailsDisplay extends StatelessWidget {
                         Visibility(
                             visible: importMode,
                             child: Row(
-                              children: const [
-                                Icon(Icons.info_outline),
+                              children: [
+                                const Icon(Icons.info_outline),
                                 Flexible(
                                     child: Text(
-                                  "Collection currently not imported."
-                                  " Click on 'Import' in the bar above,"
-                                  " to import this collection.",
+                                  S.of(context).collectionNotImported,
                                   overflow: TextOverflow.clip,
                                 ))
                               ],
@@ -60,7 +59,7 @@ class DetailsDisplay extends StatelessWidget {
                         Row(
                           children: [
                             const Icon(Icons.list),
-                            Text("${vocabularyCollection.vocabularies.length} Vocabularies")
+                            Text(S.of(context).vocabularyCount(vocabularyCollection.vocabularies.length))
                           ],
                         )
                       ],

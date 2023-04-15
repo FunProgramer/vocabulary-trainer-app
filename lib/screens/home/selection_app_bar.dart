@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../generated/l10n.dart';
+
 class SelectionAppBar extends StatelessWidget implements PreferredSizeWidget {
   final int selectionLength;
   final Function() removeSelection;
@@ -28,8 +30,8 @@ class SelectionAppBar extends StatelessWidget implements PreferredSizeWidget {
         icon: const Icon(Icons.delete), onPressed: deleteSelectedItems);
 
     return AppBar(
-      title: Text(
-          hasSelection ? "$selectionLength selected" : "Vocabulary Trainer"),
+      title: Text(hasSelection ? S.of(context).selectionInfo(selectionLength)
+          : "Vocabulary Trainer"),
       leading: hasSelection ? removeSelectionButton : null,
       actions: hasSelection ? [deleteSelectedItemsButton] : defaultActions,
     );

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../generated/l10n.dart';
 import '../../models/exercise_state.dart';
 import '../../services/training.dart';
 import 'exercise_page.dart';
@@ -59,7 +60,7 @@ class _TrainingScreenState extends State<TrainingScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text("Training: ${widget.training.collectionTitle}"),
+        title: Text(S.of(context).trainingTitle(widget.training.collectionTitle)),
       ),
       body: Column(
         children: [
