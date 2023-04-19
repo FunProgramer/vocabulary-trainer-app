@@ -161,7 +161,7 @@ class _CollectionDetailsState extends State<CollectionDetails> {
               return PlaceholderDisplay(
                 icon: Icons.error,
                 headline: S.of(context).anErrorOccurred,
-                moreInfo: S.of(context).moreInfoError(exception.toString()));
+                moreInfo: S.of(context).moreInfoError(error));
             },
             onFinished: (dynamic data) {
               WidgetsBinding.instance.addPostFrameCallback((_) {
