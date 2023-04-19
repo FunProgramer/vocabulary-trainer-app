@@ -25,7 +25,7 @@
   "deletingVocabularyCollection": "Vokabel Sammlung löschen",
   "deleting": "Wird gelöscht",
   "loadingData": "Daten werden geladen...",
-  "noCollections": "Kein Sammlungen",
+  "noCollections": "Keine Sammlungen",
   "addCollectionHint": "Klicke auf das Plus-Symbol in der unteren rechten Ecke um eine hinzuzufügen.",
   "selectionInfo": "{selectionLength} ausgewählt",
   "importVocabularyCollection": "Vokabel Sammlung importieren",
