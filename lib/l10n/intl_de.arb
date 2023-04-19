@@ -36,7 +36,7 @@
   "notAvailable": "Nicht verfügbar",
   "filePickingAborted": "Der Benutzer hat die Datei-Auswahl abgebrochen. In ein paar Sekunden wird zurücknavigiert...",
   "noData": "Keine Daten gefunden. Das bedeutet normalerweise, dass die Vokabel Sammlung nicht existiert",
-  "brokenFile": "Die angegebene JSON-Datei is nicht im richtigen Format.",
+  "brokenFile": "Die angegebene JSON-Datei ist nicht im richtigen Format.",
   "collectionNotImported": "Sammlung aktuell nicht importiert. Klicke auf das Importieren-Icon in der Leiste oben, um diese Sammlung zu importieren.",
   "vocabularyCount": "{vocabularyLength} Vokabeln",
   "skip": "ÜBERSPRINGEN",
