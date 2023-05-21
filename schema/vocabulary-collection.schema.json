@@ -9,13 +9,13 @@
       "type": "string"
     },
     "languageA": {
-      "description": "One ('the first') of the languages of which the vocabulary is.",
+      "description": "One ('the first') of the languages of which the vocabulary is in format of ISO 639-1.",
       "type": "string",
       "minLength": 2,
       "maxLength": 2
     },
     "languageB": {
-      "description": "One ('the second') of the languages of which the vocabulary is.",
+      "description": "One ('the second') of the languages of which the vocabulary is in format of ISO 639-1.",
       "type": "string",
       "minLength": 2,
       "maxLength": 2

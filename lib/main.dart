@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_localized_locales/flutter_localized_locales.dart';
 import 'package:vocabulary_trainer_app/database/database.dart';
 
 import 'screens/home/home.dart';
@@ -25,6 +26,7 @@ class VocabularyTrainerApp extends StatelessWidget {
     return MaterialApp(
       title: 'Vocabulary Trainer',
       localizationsDelegates: const [
+        LocaleNamesLocalizationsDelegate(),
         S.delegate,
         GlobalCupertinoLocalizations.delegate,
         GlobalMaterialLocalizations.delegate

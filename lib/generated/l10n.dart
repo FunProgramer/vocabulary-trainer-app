@@ -523,6 +523,16 @@ class S {
       args: [collectionTitle],
     );
   }
+
+  /// `Unknown Language: {code}`
+  String unknownLanguage(Object code) {
+    return Intl.message(
+      'Unknown Language: $code',
+      name: 'unknownLanguage',
+      desc: '',
+      args: [code],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

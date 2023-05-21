@@ -36,7 +36,9 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static String m6(collectionTitle) => "Training: ${collectionTitle}";
 
-  static String m7(vocabularyLength) => "${vocabularyLength} Vocabularies";
+  static String m7(code) => "Unknown Language: ${code}";
+
+  static String m8(vocabularyLength) => "${vocabularyLength} Vocabularies";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
@@ -104,7 +106,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "successfulImport": MessageLookupByLibrary.simpleMessage(
             "Successfully imported Vocabulary Collection"),
         "trainingTitle": m6,
-        "vocabularyCount": m7,
+        "unknownLanguage": m7,
+        "vocabularyCount": m8,
         "wrongAnswer": MessageLookupByLibrary.simpleMessage("Wrong answer!"),
         "yes": MessageLookupByLibrary.simpleMessage("YES")
       };

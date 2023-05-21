@@ -88,9 +88,9 @@ class DetailsDisplay extends StatelessWidget {
               String text;
 
               if (index == 0) {
-                text = vocabularyCollection.languageA;
+                text = vocabularyCollection.languageAName(context);
               } else {
-                text = vocabularyCollection.languageB;
+                text = vocabularyCollection.languageBName(context);
               }
               return TableHeader(text);
             },

@@ -37,7 +37,9 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static String m6(collectionTitle) => "Training: ${collectionTitle}";
 
-  static String m7(vocabularyLength) => "${vocabularyLength} Vokabeln";
+  static String m7(code) => "Unbekannte Sprache: ${code}";
+
+  static String m8(vocabularyLength) => "${vocabularyLength} Vokabeln";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
@@ -52,7 +54,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Erstellt von FunProgramer"),
         "back": MessageLookupByLibrary.simpleMessage("ZURÜCK"),
         "brokenFile": MessageLookupByLibrary.simpleMessage(
-            "Die angegebene JSON-Datei is nicht im richtigen Format."),
+            "Die angegebene JSON-Datei ist nicht im richtigen Format."),
         "collectionDetails":
             MessageLookupByLibrary.simpleMessage("Details der Sammlung"),
         "collectionNotImported": MessageLookupByLibrary.simpleMessage(
@@ -83,7 +85,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "next": MessageLookupByLibrary.simpleMessage("WEITER"),
         "no": MessageLookupByLibrary.simpleMessage("NEIN"),
         "noCollections":
-            MessageLookupByLibrary.simpleMessage("Kein Sammlungen"),
+            MessageLookupByLibrary.simpleMessage("Keine Sammlungen"),
         "noData": MessageLookupByLibrary.simpleMessage(
             "Keine Daten gefunden. Das bedeutet normalerweise, dass die Vokabel Sammlung nicht existiert"),
         "notAvailable": MessageLookupByLibrary.simpleMessage("Nicht verfügbar"),
@@ -111,7 +113,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "successfulImport": MessageLookupByLibrary.simpleMessage(
             "Die Vokabel Sammlung wurde erfolgreich importiert"),
         "trainingTitle": m6,
-        "vocabularyCount": m7,
+        "unknownLanguage": m7,
+        "vocabularyCount": m8,
         "wrongAnswer": MessageLookupByLibrary.simpleMessage("Falsche Antwort!"),
         "yes": MessageLookupByLibrary.simpleMessage("JA")
       };

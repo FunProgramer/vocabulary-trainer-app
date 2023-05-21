@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:vocabulary_trainer_app/models/complete_vocabulary_collection.dart';
 import 'package:vocabulary_trainer_app/services/random.dart';
 
@@ -61,7 +62,7 @@ class TrainingBuilder {
   LanguageDirection languageDirection = LanguageDirection.standard;
   ExerciseOrder exerciseOrder = ExerciseOrder.standard;
   
-  Training build() {
+  Training build(BuildContext context) {
    if (vocabularyCollection == null) {
      throw Exception("Trying to build Training without Vocabulary Collection!");
    }
@@ -77,16 +78,16 @@ class TrainingBuilder {
      case LanguageDirection.standard:
        exercises = vocabularies.map((e) {
           return Exercise._withStandardLanguageDirection(
-              vocabularyCollection!.languageA,
-              vocabularyCollection!.languageB,
+              vocabularyCollection!.languageAName(context),
+              vocabularyCollection!.languageBName(context),
               e);
         }).toList();
        break;
      case LanguageDirection.reverse:
        exercises = vocabularies.map((e) {
          return Exercise._withReverseLanguageDirection(
-             vocabularyCollection!.languageA,
-             vocabularyCollection!.languageB,
+             vocabularyCollection!.languageAName(context),
+             vocabularyCollection!.languageBName(context),
              e);
        }).toList();
        break;
@@ -95,13 +96,13 @@ class TrainingBuilder {
          int n = rand(0, 2);
          if (n == 0) {
            return Exercise._withStandardLanguageDirection(
-               vocabularyCollection!.languageA,
-               vocabularyCollection!.languageB,
+               vocabularyCollection!.languageAName(context),
+               vocabularyCollection!.languageBName(context),
                e);
          } else {
            return Exercise._withReverseLanguageDirection(
-               vocabularyCollection!.languageA,
-               vocabularyCollection!.languageB,
+               vocabularyCollection!.languageAName(context),
+               vocabularyCollection!.languageBName(context),
                e);
          }
        }).toList();

@@ -91,7 +91,9 @@ class _TrainingCreationDialogState extends State<TrainingCreationDialog> {
       actions.add(TextButton(
         onPressed: () {
           Navigator.push(context, MaterialPageRoute(builder: (context) {
-            return TrainingScreen(training: widget.trainingBuilder.build());
+            return TrainingScreen(
+                training: widget.trainingBuilder.build(context)
+            );
           },));
         },
         child: Text(S.of(context).startTraining),
