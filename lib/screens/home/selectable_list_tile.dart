@@ -40,9 +40,9 @@ class SelectableListTile extends StatelessWidget {
       title: Text(collection.title),
       subtitle: Row(
         children: [
-          Text(collection.languageA),
+          Text(collection.languageAName(context)),
           const Text(" - "),
-          Text(collection.languageB)
+          Text(collection.languageBName(context))
         ],
       ),
     );

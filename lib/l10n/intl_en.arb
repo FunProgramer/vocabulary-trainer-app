@@ -46,5 +46,6 @@
   "correctAnswerInfo": "Correct answer!",
   "wrongAnswer": "Wrong answer!",
   "originalAnswer": "Original answer: {requestedAnswer}",
-  "trainingTitle": "Training: {collectionTitle}"
+  "trainingTitle": "Training: {collectionTitle}",
+  "unknownLanguage": "Unknown Language: {code}"
 }
