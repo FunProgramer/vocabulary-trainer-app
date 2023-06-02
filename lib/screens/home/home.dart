@@ -110,115 +110,126 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
 
-    return Scaffold(
-      appBar: SelectionAppBar(
-        selectionLength: _selectedItems.length,
-        deleteSelectedItems: deleteSelectedItems,
-        removeSelection: removeSelection,
-        defaultActions: [
-          PopupMenuButton(
-            itemBuilder: (context) {
-              return [
-                PopupMenuItem(
-                  onTap: () {
-                    WidgetsBinding.instance.addPostFrameCallback((_) {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) {
-                            return const AboutScreen();
-                          })
-                      );
-                    });
-                  },
-                  child: Row(
-                    children: [
-                      Icon(Icons.info_outline, color: theme.textTheme.bodySmall?.color),
-                      const SizedBox(width: 8),
-                      Text(S.of(context).aboutApp)
-                    ],
-                  ),
-                )
-              ];
-            },
-          )
-        ],
-      ),
-      body: Center(
-          child: DataFetcher<List<VocabularyCollection>>(
-            key: dataFetcherKey,
-            loadData: () async {
-              List<VocabularyCollection> vocabularyCollections =
-                await widget.collectionDao.findAllVocabularyCollections();
-              if (vocabularyCollections.isEmpty) {
-                throw NoDataException();
-              }
-              return vocabularyCollections;
-            },
-            loadingWidget: LoadingDisplay(
-              infoText: S.of(context).loadingData,
-            ),
-            onError: (exception) {
-              if (exception is NoDataException) {
-                return PlaceholderDisplay(
-                    icon: Icons.list,
-                    headline: S.of(context).noCollections,
-                    moreInfo: S.of(context).addCollectionHint);
-              } else {
-                return PlaceholderDisplay(
-                    icon: Icons.error,
-                    headline: S.of(context).anErrorOccurred,
-                    moreInfo: S.of(context).moreInfoError(exception.toString()));
-              }
-            },
-            onFinished: (dynamic data) {
-              return ListView.builder(
-                itemCount: data.length,
-                itemBuilder: (context, index) {
-                  VocabularyCollection collection = data[index];
-                  bool selected = _selectedItems.contains(collection.id);
-
-                  return SelectableListTile(
-                      selected: _selectedItems.contains(collection.id),
-                      listHasSelection: _selectedItems.isNotEmpty,
-                      collection: collection,
-                      onTap: () {
-                        Navigator.push(context, MaterialPageRoute(
-                          builder: (context) {
-                            return CollectionDetails.fromDatabase(collection.id!);
-                          },
-                        ));
-                      },
-                      selectOrDeselect: () {
-                        setState(() {
-                          if (selected) {
-                            _selectedItems.remove(collection.id);
-                          } else {
-                            _selectedItems.add(collection.id!);
-                          }
-                        });
-                      }
-                  );
-                },
-              );
-            },
-      )),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () async {
-          bool? shouldRefresh = await Navigator.push(context, MaterialPageRoute(
-            builder: (context) {
-              return CollectionDetails.fromFile();
-            },
-          ));
-
-          if (shouldRefresh != null && shouldRefresh) {
-            // Force reload, by creating a new DataFetcher-Widget
-            dataFetcherKey = UniqueKey();
-          }
-
+    return WillPopScope(
+      onWillPop: () async {
+        if (_selectedItems.isNotEmpty) {
           setState(() {
             _selectedItems.clear();
           });
-        },
-        child: const Icon(Icons.add),
+          return false;
+        }
+        return true;
+      },
+      child: Scaffold(
+        appBar: SelectionAppBar(
+          selectionLength: _selectedItems.length,
+          deleteSelectedItems: deleteSelectedItems,
+          removeSelection: removeSelection,
+          defaultActions: [
+            PopupMenuButton(
+              itemBuilder: (context) {
+                return [
+                  PopupMenuItem(
+                    onTap: () {
+                      WidgetsBinding.instance.addPostFrameCallback((_) {
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) {
+                              return const AboutScreen();
+                            })
+                        );
+                      });
+                    },
+                    child: Row(
+                      children: [
+                        Icon(Icons.info_outline, color: theme.textTheme.bodySmall?.color),
+                        const SizedBox(width: 8),
+                        Text(S.of(context).aboutApp)
+                      ],
+                    ),
+                  )
+                ];
+              },
+            )
+          ],
+        ),
+        body: Center(
+            child: DataFetcher<List<VocabularyCollection>>(
+              key: dataFetcherKey,
+              loadData: () async {
+                List<VocabularyCollection> vocabularyCollections =
+                  await widget.collectionDao.findAllVocabularyCollections();
+                if (vocabularyCollections.isEmpty) {
+                  throw NoDataException();
+                }
+                return vocabularyCollections;
+              },
+              loadingWidget: LoadingDisplay(
+                infoText: S.of(context).loadingData,
+              ),
+              onError: (exception) {
+                if (exception is NoDataException) {
+                  return PlaceholderDisplay(
+                      icon: Icons.list,
+                      headline: S.of(context).noCollections,
+                      moreInfo: S.of(context).addCollectionHint);
+                } else {
+                  return PlaceholderDisplay(
+                      icon: Icons.error,
+                      headline: S.of(context).anErrorOccurred,
+                      moreInfo: S.of(context).moreInfoError(exception.toString()));
+                }
+              },
+              onFinished: (dynamic data) {
+                return ListView.builder(
+                  itemCount: data.length,
+                  itemBuilder: (context, index) {
+                    VocabularyCollection collection = data[index];
+                    bool selected = _selectedItems.contains(collection.id);
+
+                    return SelectableListTile(
+                        selected: _selectedItems.contains(collection.id),
+                        listHasSelection: _selectedItems.isNotEmpty,
+                        collection: collection,
+                        onTap: () {
+                          Navigator.push(context, MaterialPageRoute(
+                            builder: (context) {
+                              return CollectionDetails.fromDatabase(collection.id!);
+                            },
+                          ));
+                        },
+                        selectOrDeselect: () {
+                          setState(() {
+                            if (selected) {
+                              _selectedItems.remove(collection.id);
+                            } else {
+                              _selectedItems.add(collection.id!);
+                            }
+                          });
+                        }
+                    );
+                  },
+                );
+              },
+        )),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () async {
+            bool? shouldRefresh = await Navigator.push(context, MaterialPageRoute(
+              builder: (context) {
+                return CollectionDetails.fromFile();
+              },
+            ));
+
+            if (shouldRefresh != null && shouldRefresh) {
+              // Force reload, by creating a new DataFetcher-Widget
+              dataFetcherKey = UniqueKey();
+            }
+
+            setState(() {
+              _selectedItems.clear();
+            });
+          },
+          child: const Icon(Icons.add),
+        ),
       ),
     );
   }
