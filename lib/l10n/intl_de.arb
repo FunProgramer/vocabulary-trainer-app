@@ -47,5 +47,6 @@
   "wrongAnswer": "Falsche Antwort!",
   "originalAnswer": "Ursprüngliche Antwort: {requestedAnswer}",
   "trainingTitle": "Training: {collectionTitle}",
-  "unknownLanguage": "Unbekannte Sprache: {code}"
+  "unknownLanguage": "Unbekannte Sprache: {code}",
+  "showSolution": "Lösung anzeigen"
 }

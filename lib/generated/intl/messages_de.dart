@@ -101,6 +101,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "readingFile":
             MessageLookupByLibrary.simpleMessage("Datei wird gelesen..."),
         "selectionInfo": m5,
+        "showSolution": MessageLookupByLibrary.simpleMessage("Lösung anzeigen"),
         "skip": MessageLookupByLibrary.simpleMessage("ÜBERSPRINGEN"),
         "skippedExercise": MessageLookupByLibrary.simpleMessage(
             "Du hast diese Übung übersprungen"),
