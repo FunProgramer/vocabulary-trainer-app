@@ -34,6 +34,7 @@ class _ExercisePageState extends State<ExercisePage> {
 
   @override
   Widget build(BuildContext context) {
+    var theme = Theme.of(context);
     List<Widget> bottomActions = [];
 
     if (widget.exercise.state == ExerciseState.notAnswered) {
@@ -42,13 +43,13 @@ class _ExercisePageState extends State<ExercisePage> {
           onPressed: widget.onSkip,
           child: Text(S.of(context).skip),
         ),
-        ElevatedButton(
+        FilledButton(
           onPressed: submit,
           child: Text(S.of(context).submit),
         ),
       ]);
     } else {
-      bottomActions.add(ElevatedButton(
+      bottomActions.add(FilledButton(
           onPressed: widget.onNextPageRequested,
           child: Text(S.of(context).next))
       );
@@ -95,7 +96,7 @@ class _ExercisePageState extends State<ExercisePage> {
         break;
       case ExerciseState.wrongAnswered:
         alertCard = ExerciseCard(
-            color: Theme.of(context).colorScheme.error,
+            color: theme.colorScheme.error,
             children: [
               Row(
                 children: [
@@ -111,7 +112,7 @@ class _ExercisePageState extends State<ExercisePage> {
         );
     }
 
-    var textTheme = Theme.of(context).textTheme;
+    var textTheme = theme.textTheme;
 
     return Column(
       children: [
