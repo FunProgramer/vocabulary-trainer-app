@@ -35,10 +35,12 @@ class VocabularyTrainerApp extends StatelessWidget {
       theme: ThemeData(
         brightness: Brightness.light,
         primarySwatch: Colors.green,
+        useMaterial3: true
       ),
       darkTheme: ThemeData(
         brightness: Brightness.dark,
         primarySwatch: Colors.green,
+        useMaterial3: true
       ),
       themeMode: ThemeMode.system,
       home: HomeScreen(),
