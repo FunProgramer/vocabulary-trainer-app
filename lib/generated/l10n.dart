@@ -533,6 +533,16 @@ class S {
       args: [code],
     );
   }
+
+  /// `Show solution`
+  String get showSolution {
+    return Intl.message(
+      'Show solution',
+      name: 'showSolution',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

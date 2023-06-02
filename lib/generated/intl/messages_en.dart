@@ -96,6 +96,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "randomOrder": MessageLookupByLibrary.simpleMessage("Random order"),
         "readingFile": MessageLookupByLibrary.simpleMessage("Reading file..."),
         "selectionInfo": m5,
+        "showSolution": MessageLookupByLibrary.simpleMessage("Show solution"),
         "skip": MessageLookupByLibrary.simpleMessage("SKIP"),
         "skippedExercise":
             MessageLookupByLibrary.simpleMessage("You skipped this exercise."),

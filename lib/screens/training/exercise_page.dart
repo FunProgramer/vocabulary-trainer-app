@@ -40,12 +40,20 @@ class _ExercisePageState extends State<ExercisePage> {
     if (widget.exercise.state == ExerciseState.notAnswered) {
       bottomActions.addAll([
         TextButton(
-          onPressed: widget.onSkip,
+            onPressed: widget.onSkip,
+            child: Text(S.of(context).showSolution)
+        ),
+        TextButton(
+          onPressed: () {
+            widget.onSkip();
+            widget.onNextPageRequested();
+          },
           child: Text(S.of(context).skip),
         ),
-        FilledButton(
+        IconButton(
           onPressed: submit,
-          child: Text(S.of(context).submit),
+          icon: const Icon(Icons.send),
+          tooltip: S.of(context).submit,
         ),
       ]);
     } else {
@@ -161,6 +169,7 @@ class _ExercisePageState extends State<ExercisePage> {
           ),
         ),
         ButtonBar(
+          layoutBehavior: ButtonBarLayoutBehavior.constrained,
           children: bottomActions,
         )
       ],

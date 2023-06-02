@@ -51,7 +51,6 @@ class _TrainingScreenState extends State<TrainingScreen> {
           setState(() {
             exercise.state = ExerciseState.skipped;
           });
-          goToNextPage();
         },
         exercise: exercise
       ));
