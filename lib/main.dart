@@ -1,3 +1,4 @@
+import 'package:dynamic_color/dynamic_color.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_localized_locales/flutter_localized_locales.dart';
@@ -23,27 +24,29 @@ class VocabularyTrainerApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Vocabulary Trainer',
-      localizationsDelegates: const [
-        LocaleNamesLocalizationsDelegate(),
-        S.delegate,
-        GlobalCupertinoLocalizations.delegate,
-        GlobalMaterialLocalizations.delegate
-      ],
-      supportedLocales: S.delegate.supportedLocales,
-      theme: ThemeData(
-        brightness: Brightness.light,
-        primarySwatch: Colors.green,
-        useMaterial3: true
-      ),
-      darkTheme: ThemeData(
-        brightness: Brightness.dark,
-        primarySwatch: Colors.green,
-        useMaterial3: true
-      ),
-      themeMode: ThemeMode.system,
-      home: HomeScreen(),
+    return DynamicColorBuilder(
+      builder: (lightDynamic, darkDynamic) {
+        return MaterialApp(
+          title: 'Vocabulary Trainer',
+          localizationsDelegates: const [
+            LocaleNamesLocalizationsDelegate(),
+            S.delegate,
+            GlobalCupertinoLocalizations.delegate,
+            GlobalMaterialLocalizations.delegate
+          ],
+          supportedLocales: S.delegate.supportedLocales,
+          theme: ThemeData(
+              colorScheme: lightDynamic,
+              useMaterial3: true
+          ),
+          darkTheme: ThemeData(
+              colorScheme: darkDynamic,
+              useMaterial3: true
+          ),
+          themeMode: ThemeMode.system,
+          home: HomeScreen(),
+        );
+      },
     );
   }
 
