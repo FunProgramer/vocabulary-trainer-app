@@ -74,14 +74,25 @@ class _ExercisePageState extends State<ExercisePage> {
           children: [
             Row(
               children: [
-                const Icon(Icons.info),
+                const Icon(
+                  Icons.info,
+                  color: Colors.black,
+                ),
                 Text(
                   S.of(context).skippedExercise,
-                  style: const TextStyle(fontWeight: FontWeight.bold),
+                  style: const TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black
+                  ),
                 )
               ],
             ),
-            Text(S.of(context).correctAnswer(widget.exercise.requestedLanguage))
+            Text(
+              S.of(context).correctAnswer(widget.exercise.requestedLanguage),
+              style: const TextStyle(
+                color: Colors.black
+              ),
+            )
           ]
         );
         break;
@@ -91,14 +102,25 @@ class _ExercisePageState extends State<ExercisePage> {
           children: [
             Row(
               children: [
-                const Icon(Icons.check_circle),
+                const Icon(
+                  Icons.check_circle,
+                  color: Colors.black,
+                ),
                 Text(
                   S.of(context).correctAnswerInfo,
-                  style: const TextStyle(fontWeight: FontWeight.bold),
+                  style: const TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black
+                  ),
                 )
               ],
             ),
-            Text(S.of(context).originalAnswer(widget.exercise.requestedLanguage))
+            Text(
+              S.of(context).originalAnswer(widget.exercise.requestedLanguage),
+              style: const TextStyle(
+                color: Colors.black
+              ),
+            )
           ],
         );
         break;
@@ -108,14 +130,25 @@ class _ExercisePageState extends State<ExercisePage> {
             children: [
               Row(
                 children: [
-                  const Icon(Icons.cancel),
+                  Icon(
+                    Icons.cancel,
+                    color: theme.colorScheme.onError,
+                  ),
                   Text(
                     S.of(context).wrongAnswer,
-                    style: const TextStyle(fontWeight: FontWeight.bold),
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: theme.colorScheme.onError
+                    ),
                   )
                 ],
               ),
-              Text(S.of(context).correctAnswer(widget.exercise.requestedLanguage))
+              Text(
+                S.of(context).correctAnswer(widget.exercise.requestedLanguage),
+                style: TextStyle(
+                  color: theme.colorScheme.onError
+                ),
+              )
             ]
         );
     }
