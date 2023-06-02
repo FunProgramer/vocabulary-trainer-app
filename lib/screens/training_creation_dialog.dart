@@ -92,6 +92,7 @@ class _TrainingCreationDialogState extends State<TrainingCreationDialog> {
     if (page == pages.length - 1) {
       actions.add(TextButton(
         onPressed: () {
+          Navigator.pop(context);
           Navigator.push(context, MaterialPageRoute(builder: (context) {
             return TrainingScreen(
                 training: widget.trainingBuilder.build(context)
