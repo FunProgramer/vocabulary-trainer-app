@@ -42,10 +42,12 @@ class _TrainingCreationDialogState extends State<TrainingCreationDialog> {
         question: S.of(context).questionLanguageDirection,
         options: [
           SelectableOption<LanguageDirection>(
-              "${collection.languageA} → ${collection.languageB}",
+              "${collection.languageAName(context)} → "
+                  "${collection.languageBName(context)}",
               LanguageDirection.standard),
           SelectableOption(
-              "${collection.languageB} → ${collection.languageA}",
+              "${collection.languageBName(context)} → "
+                  "${collection.languageAName(context)}",
               LanguageDirection.reverse),
           SelectableOption(
               S.of(context).randomForVocabulary,
