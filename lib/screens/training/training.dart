@@ -83,6 +83,11 @@ class _TrainingScreenState extends State<TrainingScreen> {
             child: PageView(
               controller: pageController,
               children: pages,
+              onPageChanged: (value) {
+                if (value < finishedExercises) {
+                  FocusManager.instance.primaryFocus?.unfocus();
+                }
+              },
             ),
           )
         ],
