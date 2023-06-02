@@ -63,13 +63,11 @@ class _HomeScreenState extends State<HomeScreen> {
             TextButton(
               child: Text(S.of(context).yes),
               onPressed: () async {
-                BuildContext? dContext;
                 Navigator.pop(context);
                 showDialog(
                   context: context,
                   barrierDismissible: false,
                   builder: (context) {
-                    dContext = context;
                     return LoadingDialog(
                         title: S.of(context).deletingVocabularyCollection,
                         infoText: S.of(context).deleting);
@@ -80,9 +78,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       .deleteVocabularyCollectionsAndVocabulariesById(
                           _selectedItems);
                 } catch (e) {
-                  if (dContext != null) {
-                    Navigator.pop(dContext!);
-                  }
+                  Navigator.pop(context);
                   showDialog(
                       context: context,
                       builder: (context) {
@@ -91,8 +87,8 @@ class _HomeScreenState extends State<HomeScreen> {
                       });
                 }
                 // Pop Dialog
-                if (dContext != null) {
-                  Navigator.pop(dContext!);
+                if (mounted) {
+                  Navigator.pop(context);
                 }
                 setState(() {
                   _selectedItems.clear();

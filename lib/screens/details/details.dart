@@ -52,12 +52,10 @@ class _CollectionDetailsState extends State<CollectionDetails> {
     if (_vocabularyCollection == null) {
       return;
     }
-    BuildContext? dContext;
     showDialog(
         context: context,
         barrierDismissible: false,
         builder: (context) {
-          dContext = context;
         return LoadingDialog(
             title: S.of(context).importVocabularyCollection, 
             infoText: S.of(context).importing
@@ -70,9 +68,7 @@ class _CollectionDetailsState extends State<CollectionDetails> {
               _vocabularyCollection!.vocabularies
           );
     } catch (e) {
-      if (dContext != null) {
-        Navigator.pop(dContext!);
-      }
+      Navigator.pop(context);
       showDialog(
           context: context,
           builder: (context) {
@@ -82,12 +78,10 @@ class _CollectionDetailsState extends State<CollectionDetails> {
           }
       );
     }
-    // Pop Dialog
-    if (dContext != null) {
-      Navigator.pop(dContext!);
-    }
-    // Pop CollectionDetails (this widget)
     if (mounted) {
+      // Pop loading dialog
+      Navigator.pop(context);
+      // Pop Details widget (this)
       Navigator.pop(context, true);
       Fluttertoast.showToast(msg: S.of(context).successfulImport);
     }
