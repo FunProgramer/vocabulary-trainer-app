@@ -80,6 +80,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "Die GitHub Website konnte nicht geöffnet werden."),
         "filePickingAborted": MessageLookupByLibrary.simpleMessage(
             "Der Benutzer hat die Datei-Auswahl abgebrochen. In ein paar Sekunden wird zurücknavigiert..."),
+        "finish": MessageLookupByLibrary.simpleMessage("Beenden"),
         "importVocabularyCollection": MessageLookupByLibrary.simpleMessage(
             "Vokabel Sammlung importieren"),
         "importing": MessageLookupByLibrary.simpleMessage("Wird importiert"),
@@ -111,6 +112,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Zufällige Reihenfolge"),
         "readingFile":
             MessageLookupByLibrary.simpleMessage("Datei wird gelesen..."),
+        "restart": MessageLookupByLibrary.simpleMessage("Neustarten"),
         "selectionInfo": m8,
         "showSolution": MessageLookupByLibrary.simpleMessage("Lösung anzeigen"),
         "skip": MessageLookupByLibrary.simpleMessage("ÜBERSPRINGEN"),

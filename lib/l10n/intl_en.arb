@@ -55,5 +55,7 @@
   "skipped": "Skipped",
   "numberCorrectAnswered": "{number} richtig beantwortet",
   "numberWrongAnswered": "{number} falsch beantwortet",
-  "numberSkipped": "{number} übersprungen"
+  "numberSkipped": "{number} übersprungen",
+  "finish": "Finish",
+  "restart": "Restart"
 }
