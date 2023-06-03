@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:vocabulary_trainer_app/screens/training/finish_page.dart';
 
 import '../../generated/l10n.dart';
 import '../../models/exercise_state.dart';
@@ -30,8 +31,8 @@ class _TrainingScreenState extends State<TrainingScreen> {
 
   @override
   Widget build(BuildContext context) {
-    List<ExercisePage> pages = [];
-    int finishedExercises = -1;
+    List<Widget> pages = [];
+    int finishedExercises = widget.training.getNumberOfFinishedExercises();
 
     var exercises = widget.training.exercises;
     for (int i = 0; i < exercises.length; i++) {
@@ -54,7 +55,10 @@ class _TrainingScreenState extends State<TrainingScreen> {
         },
         exercise: exercise
       ));
-      finishedExercises++;
+    }
+
+    if (finishedExercises == exercises.length) {
+      pages.add(FinishPage(training: widget.training));
     }
 
     return Scaffold(

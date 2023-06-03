@@ -543,6 +543,16 @@ class S {
       args: [],
     );
   }
+
+  /// `Training finished`
+  String get trainingFinished {
+    return Intl.message(
+      'Training finished',
+      name: 'trainingFinished',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
