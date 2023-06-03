@@ -30,15 +30,21 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static String m3(errorString) => "More info:\n${errorString}";
 
-  static String m4(requestedAnswer) => "Original answer: ${requestedAnswer}";
+  static String m4(number) => "${number} richtig beantwortet";
 
-  static String m5(selectionLength) => "${selectionLength} selected";
+  static String m5(number) => "${number} übersprungen";
 
-  static String m6(collectionTitle) => "Training: ${collectionTitle}";
+  static String m6(number) => "${number} falsch beantwortet";
 
-  static String m7(code) => "Unknown Language: ${code}";
+  static String m7(requestedAnswer) => "Original answer: ${requestedAnswer}";
 
-  static String m8(vocabularyLength) => "${vocabularyLength} Vocabularies";
+  static String m8(selectionLength) => "${selectionLength} selected";
+
+  static String m9(collectionTitle) => "Training: ${collectionTitle}";
+
+  static String m10(code) => "Unknown Language: ${code}";
+
+  static String m11(vocabularyLength) => "${vocabularyLength} Vocabularies";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
@@ -62,6 +68,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "correctAnswer": m0,
         "correctAnswerInfo":
             MessageLookupByLibrary.simpleMessage("Correct answer!"),
+        "correctAnswered":
+            MessageLookupByLibrary.simpleMessage("Correct answered"),
         "deleteVocabularyCollections": m1,
         "deleteVocabularyCollectionsFull": m2,
         "deleting": MessageLookupByLibrary.simpleMessage("Deleting"),
@@ -86,7 +94,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "noData": MessageLookupByLibrary.simpleMessage(
             "No data found. That usually means, that the vocabulary collection does not exist."),
         "notAvailable": MessageLookupByLibrary.simpleMessage("Not available"),
-        "originalAnswer": m4,
+        "numberCorrectAnswered": m4,
+        "numberSkipped": m5,
+        "numberWrongAnswered": m6,
+        "originalAnswer": m7,
         "questionExerciseOrder": MessageLookupByLibrary.simpleMessage(
             "In which order to you want to learn the vocabulary?"),
         "questionLanguageDirection": MessageLookupByLibrary.simpleMessage(
@@ -95,9 +106,10 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Random for each vocabulary"),
         "randomOrder": MessageLookupByLibrary.simpleMessage("Random order"),
         "readingFile": MessageLookupByLibrary.simpleMessage("Reading file..."),
-        "selectionInfo": m5,
+        "selectionInfo": m8,
         "showSolution": MessageLookupByLibrary.simpleMessage("Show solution"),
         "skip": MessageLookupByLibrary.simpleMessage("SKIP"),
+        "skipped": MessageLookupByLibrary.simpleMessage("Skipped"),
         "skippedExercise":
             MessageLookupByLibrary.simpleMessage("You skipped this exercise."),
         "sourceCode": MessageLookupByLibrary.simpleMessage("Source Code"),
@@ -108,10 +120,11 @@ class MessageLookup extends MessageLookupByLibrary {
             "Successfully imported Vocabulary Collection"),
         "trainingFinished":
             MessageLookupByLibrary.simpleMessage("Training finished"),
-        "trainingTitle": m6,
-        "unknownLanguage": m7,
-        "vocabularyCount": m8,
+        "trainingTitle": m9,
+        "unknownLanguage": m10,
+        "vocabularyCount": m11,
         "wrongAnswer": MessageLookupByLibrary.simpleMessage("Wrong answer!"),
+        "wrongAnswered": MessageLookupByLibrary.simpleMessage("Wrong answered"),
         "yes": MessageLookupByLibrary.simpleMessage("YES")
       };
 }
