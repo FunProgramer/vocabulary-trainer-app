@@ -11,6 +11,29 @@ class Training {
 
   Training._internalConstructor(this.collectionTitle, this.exercises);
 
+  List<Exercise> getCorrectAnsweredExercises() {
+    return exercises
+        .where((element) => element.state == ExerciseState.correctAnswered)
+        .toList(growable: false);
+  }
+
+  List<Exercise> getWrongAnsweredExercises() {
+    return exercises
+        .where((element) => element.state == ExerciseState.wrongAnswered)
+        .toList(growable: false);
+  }
+
+  List<Exercise> getSkippedExercises() {
+    return exercises
+        .where((element) => element.state == ExerciseState.skipped)
+        .toList(growable: false);
+  }
+
+  int getNumberOfFinishedExercises() {
+    return exercises
+        .where((element) => element.state != ExerciseState.notAnswered).length;
+  }
+
 }
 
 class Exercise {

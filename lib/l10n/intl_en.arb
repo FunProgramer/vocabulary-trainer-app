@@ -48,5 +48,6 @@
   "originalAnswer": "Original answer: {requestedAnswer}",
   "trainingTitle": "Training: {collectionTitle}",
   "unknownLanguage": "Unknown Language: {code}",
-  "showSolution": "Show solution"
+  "showSolution": "Show solution",
+  "trainingFinished": "Training finished"
 }

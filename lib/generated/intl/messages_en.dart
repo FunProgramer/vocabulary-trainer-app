@@ -106,6 +106,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "submit": MessageLookupByLibrary.simpleMessage("SUBMIT"),
         "successfulImport": MessageLookupByLibrary.simpleMessage(
             "Successfully imported Vocabulary Collection"),
+        "trainingFinished":
+            MessageLookupByLibrary.simpleMessage("Training finished"),
         "trainingTitle": m6,
         "unknownLanguage": m7,
         "vocabularyCount": m8,
