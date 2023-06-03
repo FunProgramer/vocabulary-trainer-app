@@ -57,5 +57,7 @@
   "numberWrongAnswered": "{number} falsch beantwortet",
   "numberSkipped": "{number} übersprungen",
   "finish": "Finish",
-  "restart": "Restart"
+  "restart": "Restart",
+  "cancelTraining": "Cancel Training?",
+  "cancelTrainingDescription": "Do you want to cancel this training? The current progress will be lost."
 }

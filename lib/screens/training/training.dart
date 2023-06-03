@@ -61,40 +61,72 @@ class _TrainingScreenState extends State<TrainingScreen> {
       pages.add(FinishPage(training: widget.training));
     }
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(S.of(context).trainingTitle(widget.training.collectionTitle)),
-      ),
-      body: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Row(
-              children: [
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: LinearProgressIndicator(
-                      value: finishedExercises/exercises.length
+    return WillPopScope(
+      onWillPop: () async {
+        if (finishedExercises != exercises.length) {
+          return await showDialog(
+              context: context,
+              builder: (context) {
+                return AlertDialog(
+                  title: Text(S.of(context).cancelTraining),
+                  content: Text(S.of(context).cancelTrainingDescription),
+                  actions: [
+                    TextButton(
+                        onPressed: () {
+                          Navigator.pop(context, false);
+                        },
+                        child: Text(
+                          MaterialLocalizations.of(context).cancelButtonLabel
+                        )
+                    ),
+                    FilledButton(
+                        onPressed: () {
+                          Navigator.pop(context, true);
+                        },
+                        child: Text(S.of(context).yes)
+                    )
+                  ],
+                );
+              }
+          );
+        }
+        return true;
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text(S.of(context).trainingTitle(widget.training.collectionTitle)),
+        ),
+        body: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: LinearProgressIndicator(
+                        value: finishedExercises/exercises.length
+                      ),
                     ),
                   ),
-                ),
-                Text("$finishedExercises/${exercises.length}")
-              ],
+                  Text("$finishedExercises/${exercises.length}")
+                ],
+              ),
             ),
-          ),
-          Expanded(
-            child: PageView(
-              controller: pageController,
-              children: pages,
-              onPageChanged: (value) {
-                if (value < finishedExercises) {
-                  FocusManager.instance.primaryFocus?.unfocus();
-                }
-              },
-            ),
-          )
-        ],
+            Expanded(
+              child: PageView(
+                controller: pageController,
+                children: pages,
+                onPageChanged: (value) {
+                  if (value < finishedExercises) {
+                    FocusManager.instance.primaryFocus?.unfocus();
+                  }
+                },
+              ),
+            )
+          ],
+        ),
       ),
     );
   }

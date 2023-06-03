@@ -633,6 +633,26 @@ class S {
       args: [],
     );
   }
+
+  /// `Cancel Training?`
+  String get cancelTraining {
+    return Intl.message(
+      'Cancel Training?',
+      name: 'cancelTraining',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Do you want to cancel this training? The current progress will be lost.`
+  String get cancelTrainingDescription {
+    return Intl.message(
+      'Do you want to cancel this training? The current progress will be lost.',
+      name: 'cancelTrainingDescription',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
