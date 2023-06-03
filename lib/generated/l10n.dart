@@ -553,6 +553,66 @@ class S {
       args: [],
     );
   }
+
+  /// `Correct answered`
+  String get correctAnswered {
+    return Intl.message(
+      'Correct answered',
+      name: 'correctAnswered',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Wrong answered`
+  String get wrongAnswered {
+    return Intl.message(
+      'Wrong answered',
+      name: 'wrongAnswered',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Skipped`
+  String get skipped {
+    return Intl.message(
+      'Skipped',
+      name: 'skipped',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `{number} richtig beantwortet`
+  String numberCorrectAnswered(Object number) {
+    return Intl.message(
+      '$number richtig beantwortet',
+      name: 'numberCorrectAnswered',
+      desc: '',
+      args: [number],
+    );
+  }
+
+  /// `{number} falsch beantwortet`
+  String numberWrongAnswered(Object number) {
+    return Intl.message(
+      '$number falsch beantwortet',
+      name: 'numberWrongAnswered',
+      desc: '',
+      args: [number],
+    );
+  }
+
+  /// `{number} übersprungen`
+  String numberSkipped(Object number) {
+    return Intl.message(
+      '$number übersprungen',
+      name: 'numberSkipped',
+      desc: '',
+      args: [number],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

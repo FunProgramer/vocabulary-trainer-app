@@ -49,5 +49,11 @@
   "trainingTitle": "Training: {collectionTitle}",
   "unknownLanguage": "Unknown Language: {code}",
   "showSolution": "Show solution",
-  "trainingFinished": "Training finished"
+  "trainingFinished": "Training finished",
+  "correctAnswered": "Correct answered",
+  "wrongAnswered": "Wrong answered",
+  "skipped": "Skipped",
+  "numberCorrectAnswered": "{number} richtig beantwortet",
+  "numberWrongAnswered": "{number} falsch beantwortet",
+  "numberSkipped": "{number} übersprungen"
 }
