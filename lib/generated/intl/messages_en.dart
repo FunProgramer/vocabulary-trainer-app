@@ -60,6 +60,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "back": MessageLookupByLibrary.simpleMessage("BACK"),
         "brokenFile": MessageLookupByLibrary.simpleMessage(
             "The provided JSON-File is not in the correct format."),
+        "cancelTraining":
+            MessageLookupByLibrary.simpleMessage("Cancel Training?"),
+        "cancelTrainingDescription": MessageLookupByLibrary.simpleMessage(
+            "Do you want to cancel this training? The current progress will be lost."),
         "collectionDetails":
             MessageLookupByLibrary.simpleMessage("Collection Details"),
         "collectionNotImported": MessageLookupByLibrary.simpleMessage(
