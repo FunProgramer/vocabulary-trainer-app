@@ -11,6 +11,13 @@ class Training {
 
   Training._internalConstructor(this.collectionTitle, this.exercises);
 
+  void reset() {
+    for (Exercise exercise in exercises) {
+      exercise.state = ExerciseState.notAnswered;
+      exercise.removeAnswer();
+    }
+  }
+
   List<Exercise> getCorrectAnsweredExercises() {
     return exercises
         .where((element) => element.state == ExerciseState.correctAnswered)
@@ -72,6 +79,10 @@ class Exercise {
     } else {
       state = ExerciseState.wrongAnswered;
     }
+  }
+
+  void removeAnswer() {
+    _answer = "";
   }
 
   @override

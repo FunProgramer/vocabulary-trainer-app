@@ -613,6 +613,26 @@ class S {
       args: [number],
     );
   }
+
+  /// `Finish`
+  String get finish {
+    return Intl.message(
+      'Finish',
+      name: 'finish',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Restart`
+  String get restart {
+    return Intl.message(
+      'Restart',
+      name: 'restart',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

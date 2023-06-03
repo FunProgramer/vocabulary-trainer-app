@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 import '../../generated/l10n.dart';
 import '../../services/training.dart';
+import 'training.dart';
 
 class FinishPage extends StatelessWidget {
   final Training training;
@@ -119,6 +120,25 @@ class FinishPage extends StatelessWidget {
               ],
             ),
           ),
+        ),
+        ButtonBar(
+          children: [
+            TextButton(onPressed: () {
+                training.reset();
+                Navigator.pop(context);
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return TrainingScreen(
+                      training: training
+                  );
+                }));
+              }, 
+              child: Text(S.of(context).restart)
+            ),
+            FilledButton(
+                onPressed: () => Navigator.pop(context),
+                child: Text(S.of(context).finish)
+            )
+          ],
         )
       ],
     );
