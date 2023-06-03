@@ -2,6 +2,8 @@
 
 An app to learn vocabularies, developed with flutter.
 
+![Screenshot of Vocabulary Trainer](./Training_Screenshot.png)
+
 ## Build
 
 First you need to download all dart packages.
