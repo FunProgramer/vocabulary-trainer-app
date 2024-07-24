@@ -15,7 +15,7 @@ Before you can run the normal flutter build command,
 please run the following command to generate the required database code:
 
 ```shell
-flutter packages pub run build_runner build
+dart run build_runner build
 ```
 
 After that just the normal build command:
