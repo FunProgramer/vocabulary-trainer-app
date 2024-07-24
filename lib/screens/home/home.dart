@@ -23,7 +23,7 @@ class HomeScreen extends StatefulWidget {
   final CompleteVocabularyCollectionDao completeCollectionDao =
       DatabaseInstance.appDatabase!.getCompleteVocabularyCollectionDao();
 
-  HomeScreen({Key? key}) : super(key: key);
+  HomeScreen({super.key});
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -78,16 +78,19 @@ class _HomeScreenState extends State<HomeScreen> {
                       .deleteVocabularyCollectionsAndVocabulariesById(
                           _selectedItems);
                 } catch (e) {
-                  Navigator.pop(context);
-                  showDialog(
-                      context: context,
-                      builder: (context) {
-                        return ErrorDialog(
-                            dialogContext: context, errorString: e.toString());
-                      });
+                  if (context.mounted) {
+                    Navigator.pop(context);
+                    showDialog(
+                        context: context,
+                        builder: (context) {
+                          return ErrorDialog(
+                              dialogContext: context, errorString: e
+                              .toString());
+                        });
+                  }
                 }
                 // Pop Dialog
-                if (mounted) {
+                if (context.mounted) {
                   Navigator.pop(context);
                 }
                 setState(() {
@@ -106,15 +109,19 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
 
-    return WillPopScope(
-      onWillPop: () async {
+    return PopScope(
+      canPop: false,
+      onPopInvoked: (didPop) async {
+        if (didPop) {
+          return;
+        }
+
         if (_selectedItems.isNotEmpty) {
           setState(() {
             _selectedItems.clear();
           });
-          return false;
         }
-        return true;
+        Navigator.of(context).pop();
       },
       child: Scaffold(
         appBar: SelectionAppBar(

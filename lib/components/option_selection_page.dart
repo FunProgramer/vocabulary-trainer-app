@@ -7,12 +7,11 @@ class OptionSelectionPage<T> extends StatelessWidget {
   final T? selectedOption;
 
   const OptionSelectionPage(
-      {Key? key,
+      {super.key,
         required this.optionSelected,
         required this.options,
         required this.selectedOption,
-        required this.question})
-      : super(key: key);
+        required this.question});
 
   @override
   Widget build(BuildContext context) {

@@ -13,12 +13,11 @@ class ExercisePage extends StatefulWidget {
   final Exercise exercise;
 
   const ExercisePage(
-      {Key? key,
+      {super.key,
       required this.onSubmit,
       required this.onSkip,
       required this.onNextPageRequested,
-      required this.exercise})
-      : super(key: key);
+      required this.exercise});
 
   @override
   State<ExercisePage> createState() => _ExercisePageState();

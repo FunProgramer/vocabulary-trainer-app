@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class TableHeader extends StatelessWidget {
   final String text;
 
-  const TableHeader(this.text, {Key? key}) : super(key: key);
+  const TableHeader(this.text, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +27,7 @@ class TableHeader extends StatelessWidget {
 class TableElementA extends StatelessWidget {
   final String text;
 
-  const TableElementA({Key? key, required this.text}) : super(key: key);
+  const TableElementA({super.key, required this.text});
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +43,7 @@ class TableElementA extends StatelessWidget {
 class TableElementB extends StatelessWidget {
   final String text;
 
-  const TableElementB({Key? key, required this.text}) : super(key: key);
+  const TableElementB({super.key, required this.text});
 
   @override
   Widget build(BuildContext context) {

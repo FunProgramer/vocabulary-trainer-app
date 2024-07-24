@@ -5,8 +5,7 @@ class HidableInfo extends StatelessWidget {
   final Widget child;
 
   const HidableInfo(
-      {Key? key, required this.child, required this.scrollingRate})
-      : super(key: key);
+      {super.key, required this.child, required this.scrollingRate});
 
   @override
   Widget build(BuildContext context) {

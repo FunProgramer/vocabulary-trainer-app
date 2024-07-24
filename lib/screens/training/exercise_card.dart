@@ -4,8 +4,7 @@ class ExerciseCard extends StatelessWidget {
   final Color? color;
   final List<Widget> children;
 
-  const ExerciseCard({Key? key, this.color, required this.children})
-      : super(key: key);
+  const ExerciseCard({super.key, this.color, required this.children});
 
   @override
   Widget build(BuildContext context) {

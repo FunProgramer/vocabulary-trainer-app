@@ -9,12 +9,11 @@ class SelectionAppBar extends StatelessWidget implements PreferredSizeWidget {
   final List<Widget> defaultActions;
 
   const SelectionAppBar(
-      {Key? key,
+      {super.key,
       required this.selectionLength,
       required this.deleteSelectedItems,
       required this.removeSelection,
-      required this.defaultActions})
-      : super(key: key);
+      required this.defaultActions});
 
   @override
   Size get preferredSize => AppBar().preferredSize;

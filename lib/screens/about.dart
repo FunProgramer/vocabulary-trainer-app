@@ -5,7 +5,7 @@ import 'package:vocabulary_trainer_app/services/url_open.dart';
 import '../generated/l10n.dart';
 
 class AboutScreen extends StatelessWidget {
-  const AboutScreen({Key? key}) : super(key: key);
+  const AboutScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

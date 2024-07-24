@@ -10,13 +10,12 @@ class SelectableListTile extends StatelessWidget {
   final Function() selectOrDeselect;
 
   const SelectableListTile(
-      {Key? key,
+      {super.key,
       required this.selected,
       required this.onTap,
       required this.listHasSelection,
       required this.collection,
-      required this.selectOrDeselect})
-      : super(key: key);
+      required this.selectOrDeselect});
 
   @override
   Widget build(BuildContext context) {

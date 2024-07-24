@@ -10,12 +10,11 @@ class DataFetcher<T> extends StatefulWidget {
   final Widget Function(T data) onFinished;
 
   const DataFetcher(
-      {Key? key,
+      {super.key,
       required this.loadData,
       required this.loadingWidget,
       required this.onError,
-      required this.onFinished})
-      : super(key: key);
+      required this.onFinished});
 
   @override
   State<DataFetcher> createState() => _DataFetcherState<T>();

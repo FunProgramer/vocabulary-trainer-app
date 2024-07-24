@@ -6,15 +6,18 @@ import 'package:flutter_custom_tabs/flutter_custom_tabs.dart' as ct;
 Future<bool> openUrl(BuildContext context, String urlText) async {
   if (Platform.isAndroid || Platform.isMacOS) {
     try {
-      await ct.launch(
-        urlText,
-        customTabsOption: ct.CustomTabsOption(
-          toolbarColor: Theme.of(context).primaryColor,
-          enableDefaultShare: true,
-          enableUrlBarHiding: true,
-          showPageTitle: true,
+      await ct.launchUrl(
+        Uri.dataFromString(urlText),
+        customTabsOptions: ct.CustomTabsOptions(
+          colorSchemes: ct.CustomTabsColorSchemes.defaults(
+              colorScheme: ct.CustomTabsColorScheme.system,
+              toolbarColor: Theme.of(context).primaryColor
+          ),
+          shareState: ct.CustomTabsShareState.on,
+          urlBarHidingEnabled: true,
+          showTitle: true,
         ),
-        safariVCOption: ct.SafariViewControllerOption(
+        safariVCOptions: ct.SafariViewControllerOptions(
           preferredBarTintColor: Theme.of(context).primaryColor,
           preferredControlTintColor: Colors.white,
           barCollapsingEnabled: true,

@@ -9,7 +9,7 @@ import 'exercise_page.dart';
 class TrainingScreen extends StatefulWidget {
   final Training training;
 
-  const TrainingScreen({Key? key, required this.training}) : super(key: key);
+  const TrainingScreen({super.key, required this.training});
 
   @override
   State<TrainingScreen> createState() => _TrainingScreenState();

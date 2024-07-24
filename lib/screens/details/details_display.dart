@@ -12,8 +12,7 @@ class DetailsDisplay extends StatelessWidget {
   final CompleteVocabularyCollection vocabularyCollection;
 
   const DetailsDisplay(
-      {Key? key, required this.vocabularyCollection, required this.importMode})
-      : super(key: key);
+      {super.key, required this.vocabularyCollection, required this.importMode});
 
   @override
   Widget build(BuildContext context) {

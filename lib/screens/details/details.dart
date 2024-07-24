@@ -22,10 +22,9 @@ class CollectionDetails extends StatefulWidget {
   final CompleteVocabularyCollectionDao dao;
 
   CollectionDetails._internalConstructor(
-      {Key? key,
-      required this.importMode,
+      {required this.importMode,
       required this.futureCollection})
-      : dao = DatabaseInstance.appDatabase!.getCompleteVocabularyCollectionDao(), super(key: key);
+      : dao = DatabaseInstance.appDatabase!.getCompleteVocabularyCollectionDao();
 
   factory CollectionDetails.fromDatabase(int collectionID) {
     CompleteVocabularyCollectionDao dao =
@@ -68,15 +67,17 @@ class _CollectionDetailsState extends State<CollectionDetails> {
               _vocabularyCollection!.vocabularies
           );
     } catch (e) {
-      Navigator.pop(context);
-      showDialog(
-          context: context,
-          builder: (context) {
-            return ErrorDialog(
-                dialogContext: context, errorString: e.toString()
-            );
-          }
-      );
+      if (mounted) {
+        Navigator.pop(context);
+        showDialog(
+            context: context,
+            builder: (context) {
+              return ErrorDialog(
+                  dialogContext: context, errorString: e.toString()
+              );
+            }
+        );
+      }
     }
     if (mounted) {
       // Pop loading dialog

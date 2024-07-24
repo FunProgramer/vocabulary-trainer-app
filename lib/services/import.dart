@@ -3,7 +3,7 @@ import 'dart:io';
 
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/services.dart';
-import 'package:json_schema3/json_schema3.dart';
+import 'package:json_schema/json_schema.dart';
 
 import '../exception.dart';
 import '../models/complete_vocabulary_collection.dart';
