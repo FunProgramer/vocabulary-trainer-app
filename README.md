@@ -26,11 +26,11 @@ flutter build
 
 ## Database Structure
 
-Database structure looks like this as ERM-Diagram:
+Database structure looks like this as ER model:
 
-![Database structure as erm diagram](./ERM.png "ERM-Diagram")
+![Database structure as erm diagram](./ERM.png "ER Model")
 
-Transformed to a RDBMS-Diagram (text form) the structure looks like this:
+Transformed to a relational database diagram (text form) the structure looks like this:
 
 > VocabularyCollection(<u>id</u>, title, languageA, languageB)\
 Vocabulary(<u>id</u>, languageA, languageARegex, languageB, languageBRegex, collectionID(FK))
